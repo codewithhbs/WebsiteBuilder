@@ -21,58 +21,8 @@ const app = express();
 // ─────────────────────────────────────────────
 app.use(
   helmet({
+    contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
-
-    contentSecurityPolicy: {
-      directives: {
-
-        defaultSrc: ["'self'"],
-
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-          "https:",
-          "http:"
-        ],
-
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "https:",
-          "http:"
-        ],
-
-        imgSrc: [
-          "'self'",
-          "data:",
-          "blob:",
-          "https:",
-          "http:"
-        ],
-
-        connectSrc: [
-          "'self'",
-          "https://webgmbapi.hovermedia.in",
-          "https://*.hovermedia.in",
-          "http://localhost:5173",
-          "http://localhost:5174",
-          "https:",
-          "http:"
-        ],
-
-        fontSrc: [
-          "'self'",
-          "data:",
-          "https:",
-          "http:"
-        ],
-
-        objectSrc: ["'none'"],
-
-        upgradeInsecureRequests: null,
-      },
-    },
   })
 );
 
