@@ -1,7 +1,10 @@
-/* render2.js – Theme 2 hydration engine */
+/* render2.js – Theme 2 hydration engine (Light Edition)
+   Same API contract as before — fully backward compatible.
+   Added: WhatsApp floating button.
+*/
 (function () {
   const params = new URLSearchParams(location.search);
-  const apiBase = "https://webgmbapi.hovermedia.in/api"
+  const apiBase = "https://webgmbapi.hovermedia.in/api";
 
   let slug = params.get("slug");
   if (!slug) {
@@ -44,7 +47,8 @@
     if (!b) return;
     const lg = $("#brandLogo");
     if (b.logo?.url && lg) { lg.src = b.logo.url; lg.style.display = ""; }
-    const fav = $("#favicon"); if (b.favicon?.url && fav) fav.href = b.favicon.url;
+    const fav = $("#favicon");
+    if (b.favicon?.url && fav) fav.href = b.favicon.url;
     if (b.primaryColor) document.documentElement.style.setProperty("--primary", b.primaryColor);
     if (b.secondaryColor) document.documentElement.style.setProperty("--accent", b.secondaryColor);
     const accent = b.primaryColor || "#c9a84c";
@@ -71,7 +75,7 @@
     wrap.innerHTML = list.map((s, i) => {
       const bg = s.image?.url
         ? `background-image:url('${esc(s.image.url)}')`
-        : `background: linear-gradient(135deg, #0b0e17 0%, #1a1040 100%)`;
+        : `background: linear-gradient(135deg, #f8f7f4 0%, #faf8f3 100%)`;
       return `
         <div class="hero-slide${i === 0 ? " active" : ""}">
           <div class="hero-slide-bg" style="${bg}"></div>
@@ -92,11 +96,9 @@
 
     heroSlideEls = $$(".hero-slide");
 
-    // total count
     const totalEl = $("#heroTotalNum");
     if (totalEl) totalEl.textContent = list.length;
 
-    // dots
     const dotsWrap = $("#heroDots");
     if (dotsWrap) {
       dotsWrap.innerHTML = list.map((_, i) =>
@@ -112,7 +114,7 @@
 
     if (list.length > 1) {
       if (heroTimer) clearInterval(heroTimer);
-      heroTimer = setInterval(() => goHero(heroIndex + 1), 5000);
+      heroTimer = setInterval(() => goHero(heroIndex + 1), 5500);
     }
   }
 
@@ -155,7 +157,6 @@
       if (match) cnt.textContent = match;
     }
 
-    // exp years badge
     const yrsEl = $("#expYears");
     if (yrsEl && about.yearsExperience) yrsEl.textContent = about.yearsExperience;
   }
@@ -164,7 +165,7 @@
   function renderServices(services) {
     const wrap = $("#servicesList"); if (!wrap) return;
     if (!services?.length) {
-      wrap.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">No services yet</div>';
+      wrap.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.6);padding:40px;grid-column:1/-1">No services yet</div>';
       return;
     }
     wrap.innerHTML = services.map((s, i) => {
@@ -205,7 +206,10 @@
       const s = services[i];
       $$(".why-tab").forEach((b, j) => b.classList.toggle("active", j === i));
       const img = $("#whyImg"), title = $("#whyTitle"), desc = $("#whyDesc"), num = $(".why-num");
-      if (img) { if (s.image?.url) { img.src = s.image.url; img.style.display = "block"; } else img.style.display = "none"; }
+      if (img) {
+        if (s.image?.url) { img.src = s.image.url; img.style.display = "block"; }
+        else img.style.display = "none";
+      }
       if (title) title.textContent = s.title;
       if (desc) desc.textContent = s.description || "";
       if (num) num.textContent = String(i + 1).padStart(2, "0");
@@ -237,8 +241,8 @@
         <p class="review-text">${esc(r.text || "")}</p>
         <div class="review-author">
           ${r.avatar?.url
-        ? `<img class="review-avatar" src="${esc(r.avatar.url)}" alt="${esc(r.name)}" loading="lazy">`
-        : `<div class="review-avatar-placeholder">👤</div>`}
+            ? `<img class="review-avatar" src="${esc(r.avatar.url)}" alt="${esc(r.name)}" loading="lazy">`
+            : `<div class="review-avatar-placeholder">👤</div>`}
           <div>
             <div class="review-name">${esc(r.name)}</div>
             <div class="review-designation">${esc(r.designation || "")}</div>
@@ -251,7 +255,8 @@
 
     function updateDots() {
       if (!dotsWrap) return;
-      dotsWrap.innerHTML = Array.from({ length: Math.ceil(total / revPerPage) }, (_, i) =>
+      const pages = Math.max(1, Math.ceil(total / revPerPage));
+      dotsWrap.innerHTML = Array.from({ length: pages }, (_, i) =>
         `<div class="rev-dot${i === revIndex ? " active" : ""}" data-idx="${i}"></div>`
       ).join("");
       dotsWrap.querySelectorAll(".rev-dot").forEach(d =>
@@ -260,19 +265,23 @@
     }
 
     function goRev(idx) {
-      const max = Math.ceil(total / revPerPage) - 1;
-      revIndex = Math.max(0, Math.min(idx, max));
       revPerPage = window.innerWidth < 768 ? 1 : 2;
+      const max = Math.max(0, Math.ceil(total / revPerPage) - 1);
+      revIndex = Math.max(0, Math.min(idx, max));
       const cardW = track.querySelector(".review-card")?.offsetWidth || 0;
       const gap = 24;
-      track.style.transform = `translateX(-${revIndex * (cardW + gap)}px)`;
+      track.style.transform = `translateX(-${revIndex * (cardW + gap) * revPerPage}px)`;
       updateDots();
     }
 
     $("#revPrev")?.addEventListener("click", () => goRev(revIndex - 1));
     $("#revNext")?.addEventListener("click", () => goRev(revIndex + 1));
     updateDots();
-    window.addEventListener("resize", () => goRev(revIndex));
+    window.addEventListener("resize", () => {
+      const newPer = window.innerWidth < 768 ? 1 : 2;
+      if (newPer !== revPerPage) { revIndex = 0; goRev(0); }
+      else goRev(revIndex);
+    });
   }
 
   /* ── BANNERS ────────────────────────────────────── */
@@ -292,7 +301,7 @@
       const node = document.createElement("div");
       node.className = "banner-block";
       const bgStyle = b.image?.url
-        ? `style="position:absolute;inset:0;background-image:url('${esc(b.image.url)}');background-size:cover;background-position:center;opacity:0.15;z-index:0;"`
+        ? `style="position:absolute;inset:0;background-image:url('${esc(b.image.url)}');background-size:cover;background-position:center;opacity:0.20;z-index:0;"`
         : "";
       const bgDiv = b.image?.url ? `<div ${bgStyle}></div>` : "";
       node.innerHTML = `
@@ -314,6 +323,47 @@
   function renderContact(contact) {
     const wrap = $("#mapWrap"), frame = $("#mapFrame");
     if (contact?.mapEmbedUrl && wrap && frame) { frame.src = contact.mapEmbedUrl; wrap.style.display = ""; }
+  }
+
+  /* ── WHATSAPP FLOATING BUTTON ───────────────────── */
+  function renderWhatsApp(site) {
+    // Look in several places the admin might store the number
+    const basicInfo = site?.basicInfo || {};
+    const contact = site?.contact || {};
+    let number =
+      basicInfo.whatsapp ||
+      basicInfo.whatsappNumber ||
+      contact.whatsapp ||
+      contact.whatsappNumber ||
+      contact.phone ||
+      "";
+
+    if (!number) return; // nothing to show
+
+    // Clean number: keep digits only (whatsapp wa.me requires no + or spaces)
+    const clean = String(number).replace(/[^\d]/g, "");
+    if (!clean) return;
+
+    const siteName = basicInfo.siteName || "your team";
+    const defaultMsg = encodeURIComponent(`Hello ${siteName}, I'd like to know more about your services.`);
+    const href = `https://wa.me/${clean}?text=${defaultMsg}`;
+
+    // Avoid duplicates if already rendered
+    document.querySelector(".whatsapp-float")?.remove();
+
+    const a = document.createElement("a");
+    a.className = "whatsapp-float";
+    a.href = href;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.setAttribute("aria-label", "Chat on WhatsApp");
+    a.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      <span class="wa-tooltip">Chat with us on WhatsApp</span>
+    `;
+    document.body.appendChild(a);
   }
 
   /* ── FOOTER ─────────────────────────────────────── */
@@ -385,7 +435,6 @@
       document.body.style.overflow = "";
     }
 
-    // all "open modal" triggers
     $$("[id^='openContactModal'], #aboutCta").forEach(btn => {
       if (btn) btn.addEventListener("click", e => { e.preventDefault(); openModal(); });
     });
@@ -482,12 +531,24 @@
     if (pl) { pl.classList.add("gone"); setTimeout(() => pl.remove(), 600); }
   }
 
+  /* ── ERROR / NO-SLUG SCREEN (light theme) ──────── */
+  function errorScreen(title, msg) {
+    document.body.innerHTML = `
+      <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Outfit',sans-serif;text-align:center;padding:40px;background:#faf8f3;color:#14171f">
+        <div>
+          <h2 style="margin:0 0 10px;font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:500">${esc(title)}</h2>
+          <p style="color:#6b7280;margin:0;font-size:15px">${esc(msg)}</p>
+        </div>
+      </div>`;
+  }
+
   /* ── MAIN LOAD ───────────────────────────────────── */
   async function load() {
     if (!slug) {
-      console.log("slug", slug)
-      document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;text-align:center;padding:40px;background:#0b0e17;color:white"><div><h2 style="margin-bottom:8px;font-size:1.5rem">No site found</h2><p style="color:#6b7280">Open via subdomain or add <code>?slug=name</code> to URL</p></div></div>`;
-      hidePreloader(); return;
+      console.log("slug", slug);
+      errorScreen("No site found", "Open via subdomain or add ?slug=name to URL");
+      hidePreloader();
+      return;
     }
 
     try {
@@ -495,7 +556,7 @@
       const data = await res.json();
       if (!data.success) throw new Error(data.message || "Failed to load");
       const s = data.site;
-      console.log("data slug", data)
+      console.log("data slug", data);
 
       renderBasic(s.basicInfo);
       setBound(s);
@@ -507,6 +568,7 @@
       renderBanners(s.banners);
       renderContact(s.contact);
       renderFooter(s.footer);
+      renderWhatsApp(s);
       hideDisabled(s.sections);
       bindContactForm(s.slug);
 
@@ -518,7 +580,6 @@
       initModal();
       initCounters();
 
-      // init AOS after everything renders
       if (window.AOS) {
         AOS.init({
           duration: 700,
@@ -527,10 +588,9 @@
           offset: 60,
         });
       }
-
     } catch (err) {
       console.error(err);
-      document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;text-align:center;padding:40px;background:#0b0e17;color:white"><div><h2 style="margin-bottom:8px">Site unavailable</h2><p style="color:#6b7280">${esc(err.message)}</p></div></div>`;
+      errorScreen("Site unavailable", err.message);
       hidePreloader();
     }
   }
