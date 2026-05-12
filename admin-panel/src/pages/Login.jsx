@@ -28,7 +28,7 @@ export default function Login() {
     } catch (err) {
       toast.error(
         err?.response?.data?.message ||
-          "Invalid credentials"
+        "Invalid credentials"
       );
     } finally {
       setLoading(false);
@@ -36,413 +36,444 @@ export default function Login() {
   };
 
   return (
-    <div
-      className="position-relative overflow-hidden"
-      style={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(135deg, #0f172a 0%, #111827 45%, #1e293b 100%)",
-      }}
-    >
+    <>
+      <div className="login-page">
 
-      {/* BACKGROUND GLOW */}
-      <div
-        style={{
-          position: "absolute",
-          width: 500,
-          height: 500,
-          background:
-            "rgba(59,130,246,0.25)",
-          filter: "blur(120px)",
-          borderRadius: "50%",
-          top: -100,
-          left: -100,
-        }}
-      />
+        {/* LEFT SIDE */}
+        <div className="left-side">
 
-      <div
-        style={{
-          position: "absolute",
-          width: 400,
-          height: 400,
-          background:
-            "rgba(168,85,247,0.18)",
-          filter: "blur(120px)",
-          borderRadius: "50%",
-          bottom: -100,
-          right: -100,
-        }}
-      />
+          <div className="brand-badge">
+            Hovermedia Gmb
+          </div>
 
-      {/* MAIN */}
-      <div className="container position-relative">
-        <div
-          className="row justify-content-center align-items-center"
-          style={{ minHeight: "100vh" }}
-        >
+          <h1>
+            Employee Website
+            <br />
+            Management System
+          </h1>
 
-          {/* LEFT SIDE */}
-          <div className="col-lg-6 d-none d-lg-block pe-5">
+          <p>
+            Manage websites, employees, services,
+            banners and client operations from one
+            powerful dashboard platform.
+          </p>
 
-            <div className="text-white">
+          <div className="features">
 
-              <div
-                className="d-inline-flex align-items-center justify-content-center mb-4"
-                style={{
-                  width: 70,
-                  height: 70,
-                  borderRadius: 20,
-                  background:
-                    "linear-gradient(135deg,#3b82f6,#8b5cf6)",
-                  boxShadow:
-                    "0 20px 50px rgba(59,130,246,0.35)",
-                }}
-              >
-                <i className="bi bi-shield-lock fs-2"></i>
+            <div className="feature-item">
+              <div className="feature-icon">
+                <i className="bi bi-window-stack"></i>
               </div>
 
-              <h1
-                className="fw-bold mb-3"
-                style={{
-                  fontSize: "4rem",
-                  lineHeight: 1.1,
-                }}
-              >
-                Manage Your
-                <br />
-                SaaS Platform
-              </h1>
+              <div>
+                <h6>Website Management</h6>
+                <span>
+                  Manage all client websites
+                </span>
+              </div>
+            </div>
 
-              <p
-                className="text-light opacity-75 mb-5"
-                style={{
-                  fontSize: "1.1rem",
-                  maxWidth: 500,
-                }}
-              >
-                Powerful admin dashboard to manage websites,
-                services, reviews, banners, analytics and users
-                in one place.
+            <div className="feature-item">
+              <div className="feature-icon">
+                <i className="bi bi-people"></i>
+              </div>
+
+              <div>
+                <h6>Employee Management</h6>
+                <span>
+                  Manage team & employees
+                </span>
+              </div>
+            </div>
+
+            <div className="feature-item">
+              <div className="feature-icon">
+                <i className="bi bi-bar-chart"></i>
+              </div>
+
+              <div>
+                <h6>Realtime Dashboard</h6>
+                <span>
+                  Track all operations instantly
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="right-side">
+
+          <div className="login-card">
+
+            <div className="text-center mb-4">
+
+              <div className="logo-box">
+                <i className="bi bi-person-workspace"></i>
+              </div>
+
+              <h2>
+                Employee Login
+              </h2>
+
+              <p>
+                Login to your dashboard
               </p>
 
-              {/* FEATURES */}
-              <div className="d-flex flex-column gap-4">
+            </div>
 
-                <div className="d-flex align-items-center gap-3">
-                  <div className="feature-icon">
-                    <i className="bi bi-lightning-charge"></i>
-                  </div>
+            {/* FORM */}
+            <form onSubmit={onSubmit}>
 
-                  <div>
-                    <h6 className="text-white mb-1">
-                      Super Fast Dashboard
-                    </h6>
+              {/* EMAIL */}
+              <div className="mb-3">
 
-                    <small className="text-light opacity-75">
-                      Optimized admin experience
-                    </small>
-                  </div>
-                </div>
+                <label className="form-label">
+                  Email Address
+                </label>
 
-                <div className="d-flex align-items-center gap-3">
-                  <div className="feature-icon">
-                    <i className="bi bi-shield-check"></i>
-                  </div>
+                <div className="input-box">
 
-                  <div>
-                    <h6 className="text-white mb-1">
-                      Secure Authentication
-                    </h6>
+                  <i className="bi bi-envelope"></i>
 
-                    <small className="text-light opacity-75">
-                      Enterprise level security
-                    </small>
-                  </div>
-                </div>
+                  <input
+                    type="email"
+                    placeholder="Enter email"
+                    required
+                    value={email}
+                    onChange={(e) =>
+                      setEmail(e.target.value)
+                    }
+                  />
 
-                <div className="d-flex align-items-center gap-3">
-                  <div className="feature-icon">
-                    <i className="bi bi-bar-chart"></i>
-                  </div>
-
-                  <div>
-                    <h6 className="text-white mb-1">
-                      Real-time Management
-                    </h6>
-
-                    <small className="text-light opacity-75">
-                      Manage everything instantly
-                    </small>
-                  </div>
                 </div>
 
               </div>
 
-            </div>
+              {/* PASSWORD */}
+              <div className="mb-4">
 
-          </div>
+                <label className="form-label">
+                  Password
+                </label>
 
-          {/* LOGIN CARD */}
-          <div className="col-lg-5 col-md-8">
+                <div className="input-box">
 
-            <div
-              className="card border-0 shadow-lg overflow-hidden"
-              style={{
-                borderRadius: 28,
-                background:
-                  "rgba(255,255,255,0.08)",
-                backdropFilter: "blur(20px)",
-                border:
-                  "1px solid rgba(255,255,255,0.1)",
-              }}
-            >
+                  <i className="bi bi-lock"></i>
 
-              <div className="card-body p-5">
+                  <input
+                    type={
+                      showPassword
+                        ? "text"
+                        : "password"
+                    }
+                    placeholder="Enter password"
+                    required
+                    value={password}
+                    onChange={(e) =>
+                      setPassword(e.target.value)
+                    }
+                  />
 
-                {/* HEADER */}
-                <div className="text-center mb-5">
-
-                  <div
-                    className="mx-auto mb-4 d-flex align-items-center justify-content-center"
-                    style={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: 24,
-                      background:
-                        "linear-gradient(135deg,#3b82f6,#8b5cf6)",
-                      boxShadow:
-                        "0 20px 40px rgba(59,130,246,0.3)",
-                    }}
-                  >
-                    <i className="bi bi-person-lock text-white fs-2"></i>
-                  </div>
-
-                  <h2 className="fw-bold text-white mb-2">
-                    Welcome Back
-                  </h2>
-
-                  <p className="text-light opacity-75 mb-0">
-                    Sign in to continue to your dashboard
-                  </p>
-
-                </div>
-
-                {/* FORM */}
-                <form onSubmit={onSubmit}>
-
-                  {/* EMAIL */}
-                  <div className="mb-4">
-
-                    <label className="form-label text-light small fw-semibold mb-2">
-                      Email Address
-                    </label>
-
-                    <div className="position-relative">
-
-                      <i
-                        className="bi bi-envelope position-absolute"
-                        style={{
-                          left: 18,
-                          top: "50%",
-                          transform: "translateY(-50%)",
-                          color: "#94a3b8",
-                        }}
-                      ></i>
-
-                      <input
-                        type="email"
-                        className="form-control login-input"
-                        placeholder="Enter your email"
-                        required
-                        value={email}
-                        onChange={(e) =>
-                          setEmail(e.target.value)
-                        }
-                      />
-
-                    </div>
-
-                  </div>
-
-                  {/* PASSWORD */}
-                  <div className="mb-4">
-
-                    <label className="form-label text-light small fw-semibold mb-2">
-                      Password
-                    </label>
-
-                    <div className="position-relative">
-
-                      <i
-                        className="bi bi-lock position-absolute"
-                        style={{
-                          left: 18,
-                          top: "50%",
-                          transform: "translateY(-50%)",
-                          color: "#94a3b8",
-                        }}
-                      ></i>
-
-                      <input
-                        type={
-                          showPassword ? "text" : "password"
-                        }
-                        className="form-control login-input"
-                        placeholder="Enter your password"
-                        required
-                        value={password}
-                        onChange={(e) =>
-                          setPassword(e.target.value)
-                        }
-                      />
-
-                      <button
-                        type="button"
-                        className="btn position-absolute border-0"
-                        style={{
-                          right: 10,
-                          top: "50%",
-                          transform: "translateY(-50%)",
-                          color: "#94a3b8",
-                        }}
-                        onClick={() =>
-                          setShowPassword(!showPassword)
-                        }
-                      >
-                        <i
-                          className={`bi ${
-                            showPassword
-                              ? "bi-eye-slash"
-                              : "bi-eye"
-                          }`}
-                        ></i>
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                  {/* OPTIONS */}
-                  <div className="d-flex justify-content-between align-items-center mb-4">
-
-                    <div className="form-check">
-                      <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="remember"
-                      />
-
-                      <label
-                        htmlFor="remember"
-                        className="form-check-label text-light small"
-                      >
-                        Remember me
-                      </label>
-                    </div>
-
-                    <button
-                      type="button"
-                      className="btn btn-link p-0 text-decoration-none small"
-                      style={{ color: "#60a5fa" }}
-                    >
-                      Forgot Password?
-                    </button>
-
-                  </div>
-
-                  {/* SUBMIT */}
                   <button
-                    type="submit"
-                    disabled={loading}
-                    className="btn w-100 login-btn"
+                    type="button"
+                    className="show-btn"
+                    onClick={() =>
+                      setShowPassword(!showPassword)
+                    }
                   >
-                    {loading ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm me-2"></span>
-                        Signing In...
-                      </>
-                    ) : (
-                      <>
-                        Sign In
-                        <i className="bi bi-arrow-right ms-2"></i>
-                      </>
-                    )}
+                    <i
+                      className={`bi ${showPassword
+                          ? "bi-eye-slash"
+                          : "bi-eye"
+                        }`}
+                    ></i>
                   </button>
 
-                </form>
+                </div>
 
               </div>
-            </div>
+
+              {/* BUTTON */}
+              <button
+                type="submit"
+                className="login-btn"
+                disabled={loading}
+              >
+                {loading ? (
+                  <>
+                    <span className="spinner-border spinner-border-sm me-2"></span>
+                    Signing In...
+                  </>
+                ) : (
+                  <>
+                    Sign In
+                    <i className="bi bi-arrow-right ms-2"></i>
+                  </>
+                )}
+              </button>
+
+            </form>
 
           </div>
+
         </div>
+
       </div>
 
-      {/* STYLES */}
-      <style jsx>{`
-        .login-input {
-          height: 58px;
-          border-radius: 16px;
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.1);
-          color: white;
-          padding-left: 50px;
-          font-size: 15px;
-          transition: all 0.3s ease;
+      {/* CSS */}
+      <style>{`
+
+        * {
+          box-sizing: border-box;
         }
 
-        .login-input::placeholder {
+        body {
+          margin: 0;
+          font-family: Inter, sans-serif;
+        }
+
+        .login-page {
+          min-height: 100vh;
+          display: flex;
+          background: #f8fafc;
+        }
+
+        /* LEFT */
+        .left-side {
+          flex: 1;
+          padding: 70px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          background:
+            linear-gradient(
+              135deg,
+              #eff6ff,
+              #f8fafc
+            );
+        }
+
+        .brand-badge {
+          width: fit-content;
+          padding: 10px 18px;
+          border-radius: 999px;
+          background: white;
+          color: #2563eb;
+          font-weight: 600;
+          margin-bottom: 24px;
+          border: 1px solid #dbeafe;
+        }
+
+        .left-side h1 {
+          font-size: 56px;
+          line-height: 1.1;
+          font-weight: 800;
+          color: #0f172a;
+          margin-bottom: 24px;
+        }
+
+        .left-side p {
+          font-size: 17px;
+          color: #64748b;
+          max-width: 550px;
+          line-height: 1.7;
+          margin-bottom: 50px;
+        }
+
+        .features {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+        }
+
+        .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+
+        .feature-icon {
+          width: 56px;
+          height: 56px;
+          border-radius: 18px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          background:
+            linear-gradient(
+              135deg,
+              #2563eb,
+              #7c3aed
+            );
+
+          color: white;
+          font-size: 22px;
+        }
+
+        .feature-item h6 {
+          margin: 0 0 4px;
+          font-size: 16px;
+          font-weight: 700;
+          color: #0f172a;
+        }
+
+        .feature-item span {
+          color: #64748b;
+          font-size: 14px;
+        }
+
+        /* RIGHT */
+        .right-side {
+          width: 480px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 40px;
+          background: white;
+          border-left: 1px solid #e2e8f0;
+        }
+
+        .login-card {
+          width: 100%;
+          max-width: 380px;
+        }
+
+        .logo-box {
+          width: 90px;
+          height: 90px;
+          margin: auto auto 20px;
+
+          border-radius: 28px;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          background:
+            linear-gradient(
+              135deg,
+              #2563eb,
+              #7c3aed
+            );
+
+          color: white;
+          font-size: 36px;
+        }
+
+        .login-card h2 {
+          font-weight: 800;
+          color: #0f172a;
+          margin-bottom: 8px;
+        }
+
+        .login-card p {
+          color: #64748b;
+        }
+
+        .form-label {
+          font-size: 14px;
+          font-weight: 600;
+          color: #334155;
+          margin-bottom: 10px;
+        }
+
+        .input-box {
+          position: relative;
+        }
+
+        .input-box i {
+          position: absolute;
+          left: 18px;
+          top: 50%;
+          transform: translateY(-50%);
           color: #94a3b8;
         }
 
-        .login-input:focus {
-          background: rgba(255,255,255,0.12);
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 4px rgba(59,130,246,0.15);
-          color: white;
+        .input-box input {
+          width: 100%;
+          height: 58px;
+
+          border-radius: 16px;
+          border: 1px solid #dbe3ee;
+
+          background: #f8fafc;
+
+          padding: 0 18px 0 50px;
+
+          transition: 0.3s ease;
+        }
+
+        .input-box input:focus {
+          outline: none;
+          border-color: #2563eb;
+
+          background: white;
+
+          box-shadow:
+            0 0 0 4px rgba(37,99,235,0.1);
+        }
+
+        .show-btn {
+          position: absolute;
+          right: 14px;
+          top: 50%;
+          transform: translateY(-50%);
+
+          border: none;
+          background: transparent;
+
+          color: #64748b;
         }
 
         .login-btn {
+          width: 100%;
           height: 58px;
+
           border: none;
           border-radius: 16px;
-          background: linear-gradient(
-            135deg,
-            #3b82f6,
-            #8b5cf6
-          );
+
+          background:
+            linear-gradient(
+              135deg,
+              #2563eb,
+              #7c3aed
+            );
+
           color: white;
-          font-weight: 600;
           font-size: 16px;
-          transition: all 0.3s ease;
+          font-weight: 700;
+
+          transition: 0.3s ease;
         }
 
         .login-btn:hover {
           transform: translateY(-2px);
+
           box-shadow:
-            0 20px 40px rgba(59,130,246,0.3);
-          color: white;
+            0 18px 35px rgba(37,99,235,0.2);
         }
 
-        .feature-icon {
-          width: 50px;
-          height: 50px;
-          border-radius: 14px;
-          background: rgba(255,255,255,0.08);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 20px;
-          backdrop-filter: blur(10px);
-        }
+        /* MOBILE */
+        @media(max-width: 991px){
 
-        @media (max-width: 768px) {
-          .card-body {
-            padding: 2rem !important;
+          .left-side{
+            display:none;
           }
+
+          .right-side{
+            width:100%;
+            border-left:none;
+          }
+
         }
+
       `}</style>
-    </div>
+
+    </>
   );
 }
