@@ -37,24 +37,48 @@ app.use(
 // CORS
 // ─────────────────────────────────────────────
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+
+  "https://hovermedia.in",
+  "https://www.hovermedia.in",
+
+  "https://gmbwebadmin.hovermedia.in",
+  "https://www.gmbwebadmin.hovermedia.in",
+
+  "https://gmbemployee.hovermedia.in",
+  "https://www.gmbemployee.hovermedia.in",
+
+  "https://webgmbapi.hovermedia.in",
+  "https://www.webgmbapi.hovermedia.in",
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
+    origin: function (origin, callback) {
 
-      "https://hovermedia.in",
-      "https://www.hovermedia.in",
+      // allow server-to-server / postman
+      if (!origin) {
+        return callback(null, true);
+      }
 
-      "https://gmbwebadmin.hovermedia.in",
-      "https://www.gmbwebadmin.hovermedia.in",
+      // exact match
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
 
-      "https://gmbemployee.hovermedia.in",
-      "https://www.gmbemployee.hovermedia.in",
+      // allow *.hovermedia.in
+      if (origin.endsWith(".hovermedia.in")) {
+        return callback(null, true);
+      }
 
-      "https://webgmbapi.hovermedia.in",
-      "https://www.webgmbapi.hovermedia.in",
-    ],
+      return callback(
+        new Error("Not allowed by CORS")
+      );
+    },
+
+    credentials: true,
 
     methods: [
       "GET",
@@ -69,11 +93,8 @@ app.use(
       "Content-Type",
       "Authorization",
     ],
-
-    credentials: true,
   })
 );
-
 
 // ─────────────────────────────────────────────
 // BODY PARSER
