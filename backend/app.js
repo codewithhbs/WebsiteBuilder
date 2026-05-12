@@ -157,17 +157,6 @@ app.use("/api/public", publicRoutes);
 
 
 // ─────────────────────────────────────────────
-// MAIN WEBSITE
-// ─────────────────────────────────────────────
-
-app.get("/", (req, res) => {
-
-  return res.send("HoverMedia Main Website");
-
-});
-
-
-// ─────────────────────────────────────────────
 // LOCAL SLUG ROUTE
 // localhost:5400/pooja-enterprises
 // ─────────────────────────────────────────────
