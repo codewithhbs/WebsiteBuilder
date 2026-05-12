@@ -212,6 +212,7 @@ exports.addHeroSlide = asyncHandler(async (req, res) => {
 
 exports.updateHeroSlide = asyncHandler(async (req, res) => {
   const site = await findOwned(req, req.params.id);
+  console.log("req.params",req.params)
   if (!site) return res.status(404).json({ success: false, message: "Website not found" });
   const slide = site.heroSlides.id(req.params.slideId);
   if (!slide) return res.status(404).json({ success: false, message: "Slide not found" });
@@ -285,9 +286,11 @@ exports.addArrayItem = asyncHandler(async (req, res) => {
 
 exports.updateArrayItem = asyncHandler(async (req, res) => {
   const { section, itemId } = req.params;
+  console.log(req.params)
   const cfg = ARRAY_SECTIONS[section];
   if (!cfg) return res.status(400).json({ success: false, message: "Invalid section" });
   const site = await findOwned(req, req.params.id);
+  console.log("site",site)
   if (!site) return res.status(404).json({ success: false, message: "Website not found" });
   const item = site[section].id(itemId);
   if (!item) return res.status(404).json({ success: false, message: "Item not found" });
