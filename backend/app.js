@@ -3,8 +3,10 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const rateLimit = require("express-rate-limit");
 const cors = require("cors");
+const path = require("path");
+
 const ENV = require("./config/env");
-const path = require("path")
+
 const globalErrorHandler = require("./middlewares/error.middleware");
 const notFound = require("./middlewares/notFound.middleware");
 
@@ -12,17 +14,21 @@ const authRoutes = require("./routes/auth.routes");
 const adminRoutes = require("./routes/admin.routes");
 const employeeRoutes = require("./routes/employee.routes");
 const publicRoutes = require("./routes/public.routes");
+
 const websiteModel = require("./models/website.model");
 
 const app = express();
 
+
 // ─────────────────────────────────────────────
 // SECURITY
 // ─────────────────────────────────────────────
+
 app.use(
   helmet({
     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
+    crossOriginResourcePolicy: false,
   })
 );
 
@@ -30,6 +36,7 @@ app.use(
 // ─────────────────────────────────────────────
 // CORS
 // ─────────────────────────────────────────────
+
 app.use(
   cors({
     origin: [
@@ -47,8 +54,6 @@ app.use(
 
       "https://webgmbapi.hovermedia.in",
       "https://www.webgmbapi.hovermedia.in",
-
-      "null",
     ],
 
     methods: [
@@ -69,11 +74,7 @@ app.use(
   })
 );
 
-app.use(
-  helmet({
-    crossOriginResourcePolicy: false,
-  })
-);
+
 // ─────────────────────────────────────────────
 // BODY PARSER
 // ─────────────────────────────────────────────
@@ -86,6 +87,7 @@ app.use(
   })
 );
 
+
 // ─────────────────────────────────────────────
 // LOGGER
 // ─────────────────────────────────────────────
@@ -95,6 +97,9 @@ if (ENV.NODE_ENV !== "production") {
 }
 
 
+// ─────────────────────────────────────────────
+// STATIC THEMES
+// ─────────────────────────────────────────────
 
 app.use(
   "/themes",
@@ -108,6 +113,7 @@ app.use(
   )
 );
 
+
 // ─────────────────────────────────────────────
 // RATE LIMITER
 // ─────────────────────────────────────────────
@@ -119,28 +125,57 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-app.use(
-  "/api/auth/login",
-  authLimiter
-);
+app.use("/api/auth/login", authLimiter);
+
 
 // ─────────────────────────────────────────────
 // HEALTH CHECK
 // ─────────────────────────────────────────────
 
 app.get("/api/health", (req, res) => {
+
   return res.json({
     success: true,
     status: "ok",
     time: new Date().toISOString(),
   });
+
 });
 
+
 // ─────────────────────────────────────────────
-// ROUTES
+// API ROUTES
 // ─────────────────────────────────────────────
+
+app.use("/api/auth", authRoutes);
+
+app.use("/api/admin", adminRoutes);
+
+app.use("/api/employee", employeeRoutes);
+
+app.use("/api/public", publicRoutes);
+
+
+// ─────────────────────────────────────────────
+// MAIN WEBSITE
+// ─────────────────────────────────────────────
+
+app.get("/", (req, res) => {
+
+  return res.send("HoverMedia Main Website");
+
+});
+
+
+// ─────────────────────────────────────────────
+// LOCAL SLUG ROUTE
+// localhost:5400/pooja-enterprises
+// ─────────────────────────────────────────────
+
 app.get("/:slug", async (req, res) => {
+
   try {
+
     const site = await websiteModel.findOne({
       slug: req.params.slug,
       isLive: true,
@@ -155,15 +190,21 @@ app.get("/:slug", async (req, res) => {
     );
 
   } catch (err) {
+
     console.error(err);
 
-    res.status(500).send("Server Error");
+    return res.status(500).send("Server Error");
   }
+
 });
 
 
+// ─────────────────────────────────────────────
+// SUBDOMAIN ROUTER
+// pooja-enterprises.hovermedia.in
+// ─────────────────────────────────────────────
 
-app.use(async (req, res) => {
+app.use(async (req, res, next) => {
 
   try {
 
@@ -176,14 +217,17 @@ app.use(async (req, res) => {
     if (
       host.endsWith(root) &&
       host !== root &&
-      host !== `www.${root}`
+      host !== `www.${root}` &&
+      !host.startsWith("webgmbapi.") &&
+      !host.startsWith("gmbwebadmin.") &&
+      !host.startsWith("gmbemployee.")
     ) {
 
       slug = host.replace(`.${root}`, "");
     }
 
     if (!slug) {
-      return res.send("HoverMedia Main Website");
+      return next();
     }
 
     const site = await websiteModel.findOne({
@@ -206,32 +250,24 @@ app.use(async (req, res) => {
 
     console.error(err);
 
-    res.status(500).send("Server Error");
+    return res.status(500).send("Server Error");
   }
+
 });
 
-
-app.use("/api/auth", authRoutes);
-
-app.use("/api/admin", adminRoutes);
-
-app.use("/api/employee", employeeRoutes);
-
-app.use("/api/public", publicRoutes);
 
 // ─────────────────────────────────────────────
 // 404
 // ─────────────────────────────────────────────
 
 app.use(notFound);
-app.get("/", (req, res) => {
-  res.send("Hello")
-})
+
 
 // ─────────────────────────────────────────────
 // GLOBAL ERROR
 // ─────────────────────────────────────────────
 
 app.use(globalErrorHandler);
+
 
 module.exports = app;
