@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-bind="seo.title">Loading…</title>
+  <meta name="description" data-bind-attr="seo.description|content" content="" />
+  <link id="favicon" rel="icon" href="" />
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <link rel="stylesheet" href="/themes/theme2/theme2.css">
+  <!-- <link href="theme2.css" rel="stylesheet"> -->
+</head>
+
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="pl-logo"><span class="pl-accent" data-bind="basicInfo.siteName">Studio</span></div>
+    <div class="pl-bar">
+      <div class="pl-fill"></div>
+    </div>
+  </div>
+
+  <!-- TOP BAR -->
+  <div class="topbar" data-section="basicInfo">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <span class="tb-item">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+          </svg>
+          <span data-bind="contact.email">info@company.com</span>
+        </span>
+        <span class="tb-item">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path
+              d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+          </svg>
+          <span data-bind="contact.phone">+1 234 567 890</span>
+        </span>
+        <span class="tb-item">
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+              clip-rule="evenodd" />
+          </svg>
+          <span data-bind="contact.workingHours">Mon–Sat 9am–6pm</span>
+        </span>
+      </div>
+      <div id="topSocialLinks" class="topbar-social"></div>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar-wrap" id="mainHeader">
+    <nav class="navbar">
+      <a class="brand" href="#top">
+        <img id="brandLogo" src="" alt="" style="height:36px;display:none" class="brand-logo">
+        <span class="brand-name" data-bind="basicInfo.siteName"><em>P</em>ooja Enterprises</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a class="nav-link" href="#top">Home</a></li>
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="#services">Services</a></li>
+          <li><a class="nav-link" href="#reviews">Reviews</a></li>
+          <li><a class="nav-link" href="#contact-section">Contact</a></li>
+        </ul>
+        <button class="btn-quote" id="openContactModal">Get a Quote
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="hero-section" data-section="hero">
+    <div class="hero-noise"></div>
+    <div id="heroSlides" class="hero-slides"></div>
+    <div class="hero-controls">
+      <button class="hero-btn" id="heroPrev">&#8592;</button>
+      <div id="heroDots" class="hero-dots"></div>
+      <button class="hero-btn" id="heroNext">&#8594;</button>
+    </div>
+    <div class="hero-index-tag">00<span id="heroCurrentNum">1</span> / 00<span id="heroTotalNum">1</span></div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip" data-section="about">
+    <div class="stats-inner" id="statsInner">
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="0">
+        <span class="stat-num ticker-num" data-target="192">0</span><span class="stat-plus">+</span>
+        <span class="stat-label">Projects Done</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+        <span class="stat-num ticker-num" data-target="16">0</span><span class="stat-plus">+</span>
+        <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+        <span class="stat-num ticker-num" data-target="326">0</span><span class="stat-plus">+</span>
+        <span class="stat-label">Happy Clients</span>
+      </div>
+      <div class="stat-div"></div>
+      <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+        <span class="stat-num ticker-num" data-target="98">0</span><span class="stat-plus">%</span>
+        <span class="stat-label">Satisfaction Rate</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNERS TOP -->
+  <section data-section="banners" data-position="top" class="banner-zone">
+    <div id="bannersTop"></div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="about-section" data-section="about">
+    <div class="about-label" data-aos="fade-right">About Us</div>
+    <div class="about-grid">
+      <div class="about-visual" data-aos="fade-right" data-aos-duration="800">
+        <div class="about-img-frame">
+          <img id="aboutImage" src="" alt="" style="display:none">
+          <div id="aboutImagePlaceholder" class="about-placeholder">
+            <div class="placeholder-pattern"></div>
+            <div class="exp-pill">
+              <span class="exp-num" id="expYears">5</span>
+              <span class="exp-text">Years of<br>Excellence</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-float-card" data-aos="zoom-in" data-aos-delay="400">
+          <div class="afc-num" id="projectCount">100+</div>
+          <div class="afc-label">Projects<br>Delivered</div>
+          <div class="afc-icon">✦</div>
+        </div>
+      </div>
+      <div class="about-content" data-aos="fade-left" data-aos-duration="800">
+        <div class="section-eyebrow">Who We Are</div>
+        <h2 class="section-heading" data-bind="about.heading">Crafting Excellence<br><em>Since Day One</em></h2>
+        <p class="about-body" data-bind="about.longText">We deliver exceptional digital solutions that drive real
+          results for businesses of all sizes.</p>
+        <div id="highlightsList" class="highlights-list"></div>
+        <button class="btn-primary" id="aboutCta">Work With Us
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services-section" data-section="services">
+    <div class="services-header" data-aos="fade-up">
+      <div class="section-eyebrow light">What We Do</div>
+      <h2 class="section-heading light">Our Services</h2>
+      <p class="section-sub light">Comprehensive solutions tailored to your business</p>
+    </div>
+    <div class="services-grid" id="servicesList"></div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-section" id="why">
+    <div class="why-grid">
+      <div class="why-left" data-aos="fade-right">
+        <div class="section-eyebrow">Why Us</div>
+        <h2 class="section-heading">The Smart<br><em>Choice</em> for<br>Your Business</h2>
+        <p class="section-sub">We combine expertise with innovation to deliver results that matter.</p>
+        <div id="whyTabs" class="why-tabs"></div>
+      </div>
+      <div class="why-right" data-aos="fade-left">
+        <div class="why-display" id="whyContent">
+          <img id="whyImg" src="" alt="" style="display:none">
+          <div class="why-text-block">
+            <div class="why-num">01</div>
+            <h4 id="whyTitle"></h4>
+            <p id="whyDesc"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNERS MIDDLE -->
+  <section data-section="banners" data-position="middle" class="banner-zone">
+    <div id="bannersMiddle"></div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="reviews-section" data-section="reviews">
+    <div class="reviews-header" data-aos="fade-up">
+      <div class="section-eyebrow">Testimonials</div>
+      <h2 class="section-heading">Client <em>Stories</em></h2>
+    </div>
+    <div class="reviews-carousel">
+      <button class="rev-arrow rev-prev" id="revPrev">&#8592;</button>
+      <div class="reviews-track-wrap">
+        <div class="reviews-track" id="reviewsTrack"></div>
+      </div>
+      <button class="rev-arrow rev-next" id="revNext">&#8594;</button>
+    </div>
+    <div class="rev-dots" id="revDots"></div>
+  </section>
+
+  <!-- CONTACT SECTION (info only) -->
+  <section id="contact-section" class="contact-info-section" data-section="contact">
+    <div class="contact-info-grid">
+      <div class="ci-left" data-aos="fade-right">
+        <div class="section-eyebrow light">Get In Touch</div>
+        <h2 class="section-heading light" data-bind="contact.heading">Let's Build<br><em>Something</em><br>Together</h2>
+        <p class="section-sub light">Ready to start your project? Reach out and we'll get back to you within 24 hours.
+        </p>
+        <button class="btn-primary btn-light" id="openContactModal2">Start a Project
+          <svg viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      <div class="ci-right" data-aos="fade-left">
+        <div class="ci-cards">
+          <div class="ci-card">
+            <div class="ci-card-icon">
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ci-card-label">Address</div>
+            <div class="ci-card-val" data-bind="contact.address">123 Business Avenue</div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-card-icon">
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+              </svg>
+            </div>
+            <div class="ci-card-label">Phone</div>
+            <div class="ci-card-val" data-bind="contact.phone">+1 234 567 890</div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-card-icon">
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
+            </div>
+            <div class="ci-card-label">Email</div>
+            <div class="ci-card-val" data-bind="contact.email">info@company.com</div>
+          </div>
+          <div class="ci-card">
+            <div class="ci-card-icon">
+              <svg viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                  clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ci-card-label">Hours</div>
+            <div class="ci-card-val" data-bind="contact.workingHours">Mon–Sat 9am–6pm</div>
+          </div>
+        </div>
+        <div id="mapWrap" style="display:none" class="map-wrap">
+          <iframe id="mapFrame" width="100%" height="200" style="border:0;border-radius:12px" loading="lazy"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNERS BOTTOM -->
+  <section data-section="banners" data-position="bottom" class="banner-zone">
+    <div id="bannersBottom"></div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" data-section="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name" data-bind="basicInfo.siteName">Company</div>
+        <p class="footer-tagline" data-bind="footer.tagline"></p>
+        <div id="socialLinks" class="social-links"></div>
+      </div>
+      <div id="footerColumns" class="footer-cols"></div>
+    </div>
+    <div class="footer-bottom">
+      <p data-bind="footer.copyrightText">© 2024 Company. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- POPUP BANNER -->
+  <div id="popupBanner" style="display:none;position:fixed;bottom:24px;right:24px;max-width:340px;z-index:9000"></div>
+
+  <!-- CONTACT MODAL -->
+  <div id="contactModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true" aria-label="Contact Form">
+      <button class="modal-close" id="modalClose" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+      <div class="modal-left">
+        <div class="modal-eyebrow">Let's Talk</div>
+        <h3 class="modal-title">Start Your<br><em>Project Today</em></h3>
+        <p class="modal-sub">Fill out the form and we'll get back to you within 24 hours.</p>
+        <div class="modal-contact-items">
+          <div class="mci"><svg viewBox="0 0 20 20" fill="currentColor">
+              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+            </svg><span data-bind="contact.email">info@company.com</span></div>
+          <div class="mci"><svg viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+            </svg><span data-bind="contact.phone">+1 234 567 890</span></div>
+        </div>
+      </div>
+      <div class="modal-right">
+        <form id="contactForm" class="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Full Name</label>
+              <input name="name" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input name="email" type="email" placeholder="you@example.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input name="phone" placeholder="+91 00000 00000">
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea name="message" rows="4" placeholder="Tell us about your project…"></textarea>
+          </div>
+          <button type="submit" class="btn-submit">Send Message
+            <svg viewBox="0 0 20 20" fill="currentColor">
+              <path
+                d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+            </svg>
+          </button>
+          <div id="formStatus" class="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <!-- <script src="render2.js"></script> -->
+  <script src="/themes/theme2/render2.js"></script>
+
+</body>
+
+</html>
