@@ -219,6 +219,7 @@ app.use(async (req, res, next) => {
   try {
 
     const host = req.hostname.toLowerCase();
+    console.log("host",host)
 
     const root = process.env.ROOT_DOMAIN;
 
@@ -228,9 +229,15 @@ app.use(async (req, res, next) => {
       host.endsWith(root) &&
       host !== root &&
       host !== `www.${root}` &&
-      !host.startsWith("webgmbapi.") &&
-      !host.startsWith("gmbwebadmin.") &&
-      !host.startsWith("gmbemployee.")
+
+      host !== "gmbemployee.hovermedia.in" &&
+      host !== "www.gmbemployee.hovermedia.in" &&
+
+      host !== "gmbwebadmin.hovermedia.in" &&
+      host !== "www.gmbwebadmin.hovermedia.in" &&
+
+      host !== "webgmbapi.hovermedia.in" &&
+      host !== "www.webgmbapi.hovermedia.in"
     ) {
 
       slug = host.replace(`.${root}`, "");
