@@ -80,10 +80,7 @@
         <div class="hero-slide${i === 0 ? " active" : ""}">
           <div class="hero-slide-bg" style="${bg}"></div>
           <div class="hero-content">
-            <div class="hero-badge">
-              <span class="hero-badge-dot"></span>
-              Premium Digital Services
-            </div>
+           
             <h1 class="hero-title">${formatHeroTitle(esc(s.title || ""))}</h1>
             <p class="hero-subtitle">${esc(s.subtitle || "")}</p>
             <div class="hero-actions">

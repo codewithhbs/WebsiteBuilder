@@ -1936,3 +1936,59 @@ svg {
         padding: 12px 20px;
     }
 }
+
+
+/* ============================================================
+   SERVICE ENQUIRE BUTTON (on cards)
+   ============================================================ */
+.service-enquire-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 14px;
+    padding: 7px 0;
+    border-bottom: 1.5px solid transparent;
+    transition: var(--transition);
+}
+
+.service-card:hover .service-enquire-btn,
+.service-card-plain:hover .service-enquire-btn {
+    border-bottom-color: var(--primary);
+    gap: 10px;
+}
+
+/* ============================================================
+   SERVICE MODAL
+   ============================================================ */
+#serviceModal {
+    animation: modal-backdrop-in 0.2s ease;
+}
+
+@keyframes modal-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+#serviceModalBox {
+    animation: modal-slide-in 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modal-slide-in {
+    from { opacity: 0; transform: translateY(20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+#serviceModalBox input:focus,
+#serviceModalBox textarea:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+    outline: none;
+}
+
+#serviceModalBox input,
+#serviceModalBox textarea {
+    transition: border-color 0.2s, box-shadow 0.2s;
+}

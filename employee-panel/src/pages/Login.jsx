@@ -26,6 +26,7 @@ export default function Login() {
       nav("/");
 
     } catch (err) {
+      console.log(err)
       toast.error(
         err?.response?.data?.message ||
         "Invalid email or password"

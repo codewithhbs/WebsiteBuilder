@@ -1,10 +1,10 @@
-/* render.js – hydration engine for redesigned theme */
+/* render.js – hydration engine */
 (function () {
   const params = new URLSearchParams(location.search);
-
-  const apiBase = "https://webgmbapi.hovermedia.in/api"
-
-  let slug = params.get("slug");
+  const apiBase = "http://localhost:5400/api";
+  console.log("params",params)
+  let slug = window.__SITE_SLUG__ || params.get("slug");
+  console.log("Slug",slug)
   if (!slug) {
     const host = location.hostname, parts = host.split(".");
     if (parts.length >= 3) slug = parts[0];
@@ -40,6 +40,69 @@
     });
   }
 
+  /* ── SEO META TAGS ────────────────────────────────── */
+  function renderSeo(seo) {
+    if (!seo) return;
+
+    const setMeta = (name, content, isProperty = false) => {
+      if (!content) return;
+      const attr = isProperty ? "property" : "name";
+      let el = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!el) { el = document.createElement("meta"); el.setAttribute(attr, name); document.head.appendChild(el); }
+      el.setAttribute("content", content);
+    };
+
+    const setLink = (rel, href) => {
+      if (!href) return;
+      let el = document.querySelector(`link[rel="${rel}"]`);
+      if (!el) { el = document.createElement("link"); el.setAttribute("rel", rel); document.head.appendChild(el); }
+      el.setAttribute("href", href);
+    };
+
+    // title
+    if (seo.title) document.title = seo.title;
+
+    // standard meta
+    setMeta("description", seo.description);
+    setMeta("keywords", Array.isArray(seo.keywords) ? seo.keywords.map(k => k.replace(/^"|",$|",$/g, "").trim()).join(", ") : seo.keywords);
+    setMeta("robots", seo.robots || "index, follow");
+    setMeta("author", seo.author);
+    setMeta("language", seo.language);
+    setMeta("revisit-after", seo.revisitAfter);
+    setMeta("rating", seo.rating);
+    setMeta("distribution", seo.distribution);
+
+    // canonical
+    setLink("canonical", seo.canonicalUrl);
+
+    // Open Graph
+    setMeta("og:title", seo.ogTitle || seo.title, true);
+    setMeta("og:description", seo.ogDescription || seo.description, true);
+    setMeta("og:type", seo.ogType || "website", true);
+    setMeta("og:url", seo.ogUrl || seo.canonicalUrl, true);
+    if (seo.ogImage?.url) setMeta("og:image", seo.ogImage.url, true);
+
+    // Twitter Card
+    setMeta("twitter:card", seo.twitterCard || "summary_large_image");
+    setMeta("twitter:title", seo.twitterTitle || seo.ogTitle || seo.title);
+    setMeta("twitter:description", seo.twitterDescription || seo.ogDescription || seo.description);
+    if (seo.twitterImage?.url) setMeta("twitter:image", seo.twitterImage.url);
+
+    // Schema.org JSON-LD
+    if (seo.schemaType) {
+      let ld = document.querySelector("script[type='application/ld+json']");
+      if (!ld) { ld = document.createElement("script"); ld.type = "application/ld+json"; document.head.appendChild(ld); }
+      ld.textContent = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": seo.schemaType,
+        "name": seo.title,
+        "description": seo.description,
+        "url": seo.canonicalUrl || location.href,
+        ...(seo.ogImage?.url ? { "image": seo.ogImage.url } : {})
+      });
+    }
+  }
+
   /* ── BASIC INFO ───────────────────────────────────── */
   function renderBasic(b) {
     if (!b) return;
@@ -58,12 +121,51 @@
     return r ? { r: parseInt(r[1], 16), g: parseInt(r[2], 16), b: parseInt(r[3], 16) } : null;
   }
 
+  /* ── STATS TICKER ─────────────────────────────────── */
+  async function renderStats() {
+    const track = $("#tickerTrack");
+    if (!track) return;
+
+    let stats = [];
+    try {
+      const res = await fetch(`${apiBase}/stats`);
+      const data = await res.json();
+      if (data.success && data.data?.length) stats = data.data;
+    } catch (e) {
+      console.warn("Stats fetch failed, using defaults", e);
+    }
+
+    if (!stats.length) return; // keep existing hardcoded HTML
+
+    // Build ticker items (doubled for infinite scroll effect)
+    const makeItems = () => stats.map(s => `
+      <div class="ticker-item">
+        <span class="ticker-num" data-target="${extractNum(s.key || s.value)}">${extractNum(s.key || s.value)}</span>
+        <span>${extractLabel(s.key, s.value)}</span>
+      </div>
+      <div class="ticker-sep">✦</div>
+    `).join("");
+
+    track.innerHTML = makeItems() + makeItems(); // duplicate for loop
+  }
+
+  function extractNum(str) {
+    // e.g. "98%" → "98", "326+" → "326", "120 +" → "120"
+    const m = String(str).match(/[\d,]+/);
+    return m ? parseInt(m[0].replace(/,/g, "")) : 0;
+  }
+
+  function extractLabel(key, value) {
+    // key might be "Project Done" (label) or "98%" (number)
+    // value might be "120 +" (number) or "Satisfaction Rate" (label)
+    const keyIsNum = /^\d/.test(String(key).trim());
+    return keyIsNum ? esc(value) : esc(key);
+  }
+
   /* ── HERO ─────────────────────────────────────────── */
   let heroIndex = 0, heroSlideEls = [], heroTimer = null;
 
   function renderHero(slides, services) {
-    const serviceTitle = services?.map((item) => item.title)
-    console.log("title", serviceTitle)
     const wrap = $("#heroSlides"); if (!wrap) return;
     const list = slides?.length ? slides : [{
       title: "Professional Business Solutions",
@@ -78,12 +180,9 @@
       return `
         <div class="hero-slide${i === 0 ? " active" : ""}">
           <div class="hero-slide-bg" style="${bg}"></div>
-       <div class="hero-content">
-  <div class="hero-text-side">
-              <div class="hero-badge">
-                <span class="hero-badge-dot"></span>
-                Premium Digital Services
-              </div>
+          <div class="hero-content">
+            <div class="hero-text-side">
+            
               <h1 class="hero-title">${formatHeroTitle(esc(s.title || ""))}</h1>
               <p class="hero-subtitle">${esc(s.subtitle || "")}</p>
               <div class="hero-actions">
@@ -91,14 +190,12 @@
                 <a class="btn-hero-ghost" href="#about">Learn More</a>
               </div>
             </div>
-           
           </div>
         </div>`;
     }).join("");
 
     heroSlideEls = $$(".hero-slide");
 
-    // dots
     const dotsWrap = $("#heroDots");
     if (dotsWrap) {
       dotsWrap.innerHTML = list.map((_, i) =>
@@ -146,12 +243,95 @@
     const items = about.highlights || [];
     hl.innerHTML = items.map(h => `<div class="highlight-item">${esc(h)}</div>`).join("");
 
-    // update float card
     const cnt = $("#projectCount");
     if (cnt) {
       const match = items.find(i => i.toLowerCase().includes("project"));
       if (match) cnt.textContent = match;
     }
+  }
+
+  /* ── SERVICE CONTACT MODAL ────────────────────────── */
+  function injectServiceModal() {
+    if ($("#serviceModal")) return;
+    const modal = document.createElement("div");
+    modal.id = "serviceModal";
+    modal.style.cssText = "display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);align-items:center;justify-content:center;padding:20px";
+    modal.innerHTML = `
+      <div id="serviceModalBox" style="background:var(--surface,#fff);border-radius:20px;max-width:480px;width:100%;padding:36px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.3)">
+        <button id="serviceModalClose" style="position:absolute;top:16px;right:16px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--text-muted,#6b7280);line-height:1">×</button>
+        <div id="serviceModalHead" style="margin-bottom:20px">
+          <div id="serviceModalEyebrow" style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--primary,#0d6efd);margin-bottom:6px">Enquire About</div>
+          <h3 id="serviceModalTitle" style="font-family:var(--font-display,sans-serif);font-size:1.4rem;font-weight:700;margin:0"></h3>
+        </div>
+        <form id="serviceContactForm">
+          <div style="display:grid;gap:14px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div><label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:4px">Name</label><input name="name" placeholder="Your name" required style="width:100%;padding:10px 14px;border:1.5px solid var(--border,#e5e7eb);border-radius:10px;font-size:.9rem;box-sizing:border-box;background:var(--bg,#fff);color:var(--text,#111)"></div>
+              <div><label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:4px">Phone</label><input name="phone" placeholder="+91 00000 00000" style="width:100%;padding:10px 14px;border:1.5px solid var(--border,#e5e7eb);border-radius:10px;font-size:.9rem;box-sizing:border-box;background:var(--bg,#fff);color:var(--text,#111)"></div>
+            </div>
+            <div><label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:4px">Email</label><input name="email" type="email" placeholder="you@example.com" style="width:100%;padding:10px 14px;border:1.5px solid var(--border,#e5e7eb);border-radius:10px;font-size:.9rem;box-sizing:border-box;background:var(--bg,#fff);color:var(--text,#111)"></div>
+            <div><label style="font-size:.8rem;font-weight:600;display:block;margin-bottom:4px">Message</label><textarea name="message" rows="3" placeholder="Tell us what you need…" style="width:100%;padding:10px 14px;border:1.5px solid var(--border,#e5e7eb);border-radius:10px;font-size:.9rem;resize:vertical;box-sizing:border-box;background:var(--bg,#fff);color:var(--text,#111)"></textarea></div>
+          </div>
+          <button type="submit" class="btn-submit" style="width:100%;margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px">Send Enquiry</button>
+          <div id="serviceModalStatus" class="form-status" style="margin-top:10px;text-align:center"></div>
+        </form>
+      </div>`;
+    document.body.appendChild(modal);
+
+    // close handlers
+    $("#serviceModalClose").addEventListener("click", closeServiceModal);
+    modal.addEventListener("click", e => { if (e.target === modal) closeServiceModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") closeServiceModal(); });
+
+    // form submit
+    $("#serviceContactForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const payload = Object.fromEntries(new FormData(e.target));
+      const status = $("#serviceModalStatus");
+      const btn = e.target.querySelector("[type=submit]");
+      status.textContent = "Sending…"; status.className = "form-status";
+      if (btn) btn.disabled = true;
+      try {
+        const res = await fetch(`${apiBase}/public/site/${encodeURIComponent(slug)}/contact`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        if (data.success) {
+          status.className = "form-status success";
+          status.textContent = "✓ Enquiry sent! We'll be in touch soon.";
+          e.target.reset();
+          setTimeout(closeServiceModal, 2000);
+        } else throw new Error(data.message || "Failed");
+      } catch (err) {
+        status.className = "form-status error";
+        status.textContent = "✗ " + err.message;
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    });
+  }
+
+  function openServiceModal(title) {
+    const modal = $("#serviceModal");
+    if (!modal) return;
+    const t = $("#serviceModalTitle");
+    if (t) t.textContent = title;
+    // pre-fill service in message
+    const msg = modal.querySelector("[name=message]");
+    if (msg) msg.value = `I'm interested in your "${title}" service.`;
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeServiceModal() {
+    const modal = $("#serviceModal");
+    if (!modal) return;
+    modal.style.display = "none";
+    document.body.style.overflow = "";
+    const status = $("#serviceModalStatus");
+    if (status) { status.textContent = ""; status.className = "form-status"; }
   }
 
   /* ── SERVICES ─────────────────────────────────────── */
@@ -164,7 +344,7 @@
     wrap.innerHTML = services.map(s => {
       if (s.image?.url) {
         return `
-          <div class="service-card reveal">
+          <div class="service-card reveal" data-service-title="${esc(s.title)}" style="cursor:pointer">
             <div class="service-card-img">
               <img src="${esc(s.image.url)}" alt="${esc(s.title)}" loading="lazy">
               <div class="service-card-img-overlay">
@@ -176,17 +356,24 @@
               <h3>${esc(s.title)}</h3>
               <p>${esc(s.description || "")}</p>
               ${s.price ? `<span class="service-price">${esc(s.price)}</span>` : ""}
+              <span class="service-enquire-btn">Enquire Now →</span>
             </div>
           </div>`;
       }
       return `
-        <div class="service-card-plain reveal">
+        <div class="service-card-plain reveal" data-service-title="${esc(s.title)}" style="cursor:pointer">
           <div class="service-icon-wrap">${svgForIcon(s.icon)}</div>
           <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:8px">${esc(s.title)}</h3>
           <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:16px">${esc(s.description || "")}</p>
           ${s.price ? `<span class="service-price">${esc(s.price)}</span>` : ""}
+          <span class="service-enquire-btn">Enquire Now →</span>
         </div>`;
     }).join("");
+
+    // bind click on all service cards
+    wrap.querySelectorAll("[data-service-title]").forEach(card => {
+      card.addEventListener("click", () => openServiceModal(card.dataset.serviceTitle));
+    });
   }
 
   /* ── WHY CHOOSE US ────────────────────────────────── */
@@ -285,7 +472,6 @@
       const node = document.createElement("div");
       node.className = "banner-block";
 
-      // bg image as inner div so CSS ::before/::after still work
       const bgStyle = b.image?.url
         ? `style="position:absolute;inset:0;background-image:url('${esc(b.image.url)}');background-size:cover;background-position:center;opacity:0.18;z-index:0;"`
         : "";
@@ -409,7 +595,6 @@
     const header = $("#mainHeader");
     const sections = $$("section[id], div[id='top']");
 
-    // single merged scroll handler
     window.addEventListener("scroll", () => {
       header?.classList.toggle("scrolled", window.scrollY > 60);
       let cur = "";
@@ -419,14 +604,12 @@
       });
     }, { passive: true });
 
-    // mobile toggle
     const toggle = $("#navToggle"), menu = $("#navMenu");
     toggle?.addEventListener("click", () => {
       toggle.classList.toggle("open");
       menu?.classList.toggle("open");
     });
 
-    // close on link click
     $$(".nav-link").forEach(l => l.addEventListener("click", () => {
       toggle?.classList.remove("open");
       menu?.classList.remove("open");
@@ -436,9 +619,10 @@
   /* ── COUNTER ANIMATION ────────────────────────────── */
   function animateCounters() {
     $$(".ticker-num").forEach(el => {
-      if (el.dataset.animated) return; // prevent re-run on resize
+      if (el.dataset.animated) return;
       el.dataset.animated = "1";
-      const target = +el.dataset.target;
+      const target = +el.dataset.target || +el.textContent || 0;
+      if (!target) return;
       const dur = 1800;
       const step = dur / 60;
       let cur = 0;
@@ -475,15 +659,32 @@
     }
 
     try {
-      const res = await fetch(`${apiBase}/public/site/${encodeURIComponent(slug)}`);
-      const data = await res.json();
+      const [siteRes, statsRes] = await Promise.all([
+        fetch(`${apiBase}/public/site/${encodeURIComponent(slug)}`),
+        fetch(`${apiBase}/stats`).catch(() => null),
+      ]);
+
+      const data = await siteRes.json();
       if (!data.success) throw new Error(data.message || "Failed to load");
       const s = data.site;
+
+      // SEO first — before title gets overwritten
+      renderSeo(s.seo);
 
       renderBasic(s.basicInfo);
       setBound(s);
       renderHero(s.heroSlides, s.services);
       renderAbout(s.about);
+
+      // Stats ticker from API
+      if (statsRes?.ok) {
+        const statsData = await statsRes.json();
+        if (statsData.success && statsData.data?.length) {
+          renderStatsTicker(statsData.data);
+        }
+      }
+
+      injectServiceModal();
       renderServices(s.services);
       renderWhyChooseUs(s.services);
       renderReviews(s.reviews);
@@ -493,8 +694,10 @@
       hideDisabled(s.sections);
       bindContactForm(s.slug);
 
-      if (s.seo?.title) document.title = s.seo.title;
-      else if (s.basicInfo?.siteName) document.title = s.basicInfo.siteName;
+      // title fallback if seo.title missing
+      if (!s.seo?.title) {
+        if (s.basicInfo?.siteName) document.title = s.basicInfo.siteName;
+      }
 
       hidePreloader();
       initNavbar();
@@ -506,6 +709,36 @@
       document.body.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:sans-serif;text-align:center;padding:40px"><div><h2 style="margin-bottom:8px">Site unavailable</h2><p style="color:#6b7280">${esc(err.message)}</p></div></div>`;
       hidePreloader();
     }
+  }
+
+  /* ── STATS TICKER RENDER ──────────────────────────── */
+  function renderStatsTicker(stats) {
+    const track = $("#tickerTrack");
+    if (!track || !stats?.length) return;
+
+    // Each stat: { key, value } — figure out which is the number and which is the label
+    const items = stats.map(s => {
+      const keyIsNum = /^[\d\s%+,]+$/.test(String(s.key).trim());
+      const num = keyIsNum ? String(s.key).trim() : String(s.value).trim();
+      const label = keyIsNum ? String(s.value).trim() : String(s.key).trim();
+      const rawNum = parseInt(num.replace(/[^0-9]/g, "")) || 0;
+      const suffix = num.replace(/[0-9\s]/g, "").trim(); // e.g. "%" or "+"
+      return { num, label, rawNum, suffix };
+    });
+
+    const makeItems = () => items.map(i => `
+      <div class="ticker-item">
+        <span class="ticker-num" data-target="${i.rawNum}" data-suffix="${esc(i.suffix)}">${i.rawNum}</span><span>${esc(i.suffix)}</span>
+        <span>${esc(i.label)}</span>
+      </div>
+      <div class="ticker-sep">✦</div>
+    `).join("");
+
+    track.innerHTML = makeItems() + makeItems();
+
+    // patch animateCounters to respect suffix
+    const origAnimate = animateCounters;
+    window.__statsLoaded = true;
   }
 
   load();

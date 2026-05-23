@@ -142,12 +142,123 @@ const BasicInfoSchema = new mongoose.Schema(
 
 const SeoSchema = new mongoose.Schema(
   {
-    title: { type: String, default: "" },
-    description: { type: String, default: "" },
-    keywords: [{ type: String }],
+    // BASIC SEO
+    title: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 70,
+      index: true,
+    },
+
+    description: {
+      type: String,
+      trim: true,
+      default: "",
+      maxlength: 160,
+    },
+
+    keywords: [
+      {
+        type: String,
+        trim: true,
+      },
+    ],
+
+    // CANONICAL URL
+    canonicalUrl: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    // SEARCH ENGINE CONTROL
+    robots: {
+      type: String,
+      default: "index, follow",
+    },
+
+    // AUTHOR
+    author: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    // LANGUAGE
+    language: {
+      type: String,
+      default: "en",
+    },
+
+    // OPEN GRAPH
+    ogTitle: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    ogDescription: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    ogType: {
+      type: String,
+      default: "website",
+    },
+
+    ogUrl: {
+      type: String,
+      default: "",
+    },
+
     ogImage: ImageSchema,
+
+    // TWITTER SEO
+    twitterCard: {
+      type: String,
+      default: "summary_large_image",
+    },
+
+    twitterTitle: {
+      type: String,
+      default: "",
+    },
+
+    twitterDescription: {
+      type: String,
+      default: "",
+    },
+
+    twitterImage: ImageSchema,
+
+    // EXTRA INDEXING SIGNALS
+    revisitAfter: {
+      type: String,
+      default: "7 days",
+    },
+
+    rating: {
+      type: String,
+      default: "general",
+    },
+
+    distribution: {
+      type: String,
+      default: "global",
+    },
+
+    // STRUCTURED DATA TYPE
+    schemaType: {
+      type: String,
+      default: "WebPage",
+    },
   },
-  { _id: false }
+  {
+    _id: false,
+  }
 );
 
 /* ---------- main schema ---------- */

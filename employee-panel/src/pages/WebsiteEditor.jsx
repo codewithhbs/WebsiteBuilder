@@ -9,6 +9,8 @@ import FlatSection from "./editor/FlatSection";
 import VisibilitySection from "./editor/VisibilitySection";
 import SubmissionsSection from "./editor/SubmissionsSection";
 import ConfirmModal from "../components/ConfirmModal";
+import StatsSection from "./editor/StatsSection";
+import SeoSection from "./editor/SeoSection";
 
 const TABS = [
   { key: "basic", label: "Basic & Theme", icon: "bi-gear" },
@@ -20,6 +22,7 @@ const TABS = [
   { key: "contact", label: "Contact", icon: "bi-envelope" },
   { key: "footer", label: "Footer", icon: "bi-bottom" },
   { key: "seo", label: "SEO", icon: "bi-search" },
+{ key: "stats", label: "Website Stats", icon: "bi bi-bar-chart" },
   { key: "visibility", label: "Visibility", icon: "bi-eye" },
   { key: "submissions", label: "Submissions", icon: "bi-inbox" },
 ];
@@ -169,7 +172,9 @@ export default function WebsiteEditor() {
           {tab === "banners" && <ArraySection key={tab} site={site} section="banners" reload={load} />}
           {tab === "contact" && <FlatSection key={tab} site={site} section="contact" reload={load} />}
           {tab === "footer" && <FlatSection key={tab} site={site} section="footer" reload={load} />}
-          {tab === "seo" && <FlatSection key={tab} site={site} section="seo" reload={load} />}
+          {tab === "seo" && <SeoSection key={tab} site={site} section="seo" reload={load} />}
+          {tab === "stats" && <StatsSection site={site} section="stats" reload={load} />}
+
           {tab === "visibility" && <VisibilitySection site={site} reload={load} />}
           {tab === "submissions" && <SubmissionsSection site={site} />}
         </div>
