@@ -1,7 +1,7 @@
 /* render.js – hydration engine */
 (function () {
   const params = new URLSearchParams(location.search);
-  const apiBase = "http://localhost:5400/api";
+  const apiBase = "https://webgmbapi.hovermedia.in/api";
   console.log("params",params)
   let slug = window.__SITE_SLUG__ || params.get("slug");
   console.log("Slug",slug)
