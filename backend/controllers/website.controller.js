@@ -101,7 +101,8 @@ exports.getWebsite = asyncHandler(async (req, res) => {
 /* ---------- create ---------- */
 
 exports.createWebsite = asyncHandler(async (req, res) => {
-  const { clientId, themeId, slug, siteName } = req.body;
+  const { clientId, themeId, slug, siteName, pageType } = req.body;
+  console.log(req.body)
   if (!clientId || !themeId || !slug) {
     return res.status(400).json({ success: false, message: "clientId, themeId, slug required" });
   }
@@ -109,6 +110,9 @@ exports.createWebsite = asyncHandler(async (req, res) => {
   if (!SLUG_RE.test(clean)) {
     return res.status(400).json({ success: false, message: "Invalid slug" });
   }
+
+  // Validate pageType
+  const wantedPageType = pageType === "multi" ? "multi" : "single";
 
   // employees can only attach their own clients
   const clientFilter = req.user.role === "admin"
@@ -122,8 +126,19 @@ exports.createWebsite = asyncHandler(async (req, res) => {
     return res.status(404).json({ success: false, message: "Theme not found" });
   }
 
+  // Theme must support the requested pageType (single or multi)
+  const themePageType = theme.pageType || "single";
+  if (themePageType !== wantedPageType) {
+    return res.status(400).json({
+      success: false,
+      message: `Selected theme is for ${themePageType}-page websites, but you requested ${wantedPageType}-page. Pick a compatible theme.`,
+    });
+  }
+
   const slugTaken = await Website.findOne({ slug: clean });
   if (slugTaken) return res.status(409).json({ success: false, message: "Slug already taken" });
+
+  const resolvedSiteName = siteName || client.businessName || client.name;
 
   const site = await Website.create({
     slug: clean,
@@ -131,16 +146,27 @@ exports.createWebsite = asyncHandler(async (req, res) => {
     ownerEmployee: req.user.role === "admin" ? (req.body.ownerEmployee || req.user._id) : req.user._id,
     theme: theme._id,
     themeKey: theme.themeKey,
+    pageType: wantedPageType,
     isLive: false,
-    basicInfo: { siteName: siteName || client.businessName || client.name },
+    basicInfo: { siteName: resolvedSiteName },
     lastEditedBy: req.user._id,
   });
+
+  // For multi-page sites, seed Home / About / Services / Contact pages with starter sections
+  if (wantedPageType === "multi") {
+    try {
+      const pageCtrl = require("./page.controller");
+      await pageCtrl.seedDefaultPages(site._id, { siteName: resolvedSiteName });
+    } catch (err) {
+      console.error("[createWebsite] seedDefaultPages failed:", err.message);
+    }
+  }
 
   await writeAudit(req, {
     action: "website.create",
     targetType: "Website",
     targetId: site._id,
-    meta: { slug: site.slug, clientId: client._id },
+    meta: { slug: site.slug, clientId: client._id, pageType: wantedPageType },
   });
 
   res.status(201).json({
@@ -158,7 +184,7 @@ exports.createWebsite = asyncHandler(async (req, res) => {
 // generic helper: patch top-level subdoc/section (basicInfo, about, contact, footer, sections, seo)
 exports.updateSection = asyncHandler(async (req, res) => {
   const { section } = req.params;
-  const allowed = ["basicInfo", "about", "contact", "footer", "sections", "seo"];
+  const allowed = ["basicInfo", "about", "contact", "footer", "sections", "seo", "heroSettings"];
   if (!allowed.includes(section)) {
     return res.status(400).json({ success: false, message: "Invalid section" });
   }

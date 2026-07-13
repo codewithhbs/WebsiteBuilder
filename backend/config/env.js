@@ -11,6 +11,11 @@ module.exports = {
   CLOUD_API: process.env.CLOUD_KEY,
   CLOUD_SECRET_KEY: process.env.CLOUD_SECRET_KEY,
   ROOT_DOMAIN: process.env.ROOT_DOMAIN || "yoursite.com",
+  // Public API base URL injected into theme HTML as window.__API_BASE__.
+  // Default "/api" is a same-origin relative URL — works for both local
+  // dev (localhost:5400/api) and production (subdomain/api routes to the
+  // same backend). Override in .env if the API is on a separate host.
+  PUBLIC_API_BASE: process.env.PUBLIC_API_BASE || "/api",
   CORS_ORIGINS: process.env.CORS_ORIGINS || "*",
   SEED_ADMIN_EMAIL: process.env.SEED_ADMIN_EMAIL || "admin@yoursite.com",
   SEED_ADMIN_PASSWORD: process.env.SEED_ADMIN_PASSWORD || "Admin@12345",

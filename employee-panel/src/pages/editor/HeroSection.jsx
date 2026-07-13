@@ -6,6 +6,17 @@ import ConfirmModal from "../../components/ConfirmModal";
 
 const blank = { title: "", subtitle: "", ctaText: "", ctaLink: "", displayOrder: 0, isActive: true };
 
+const HERO_LAYOUTS = [
+  { value: "form",      label: "Callback Form — text left, form right (default)" },
+  { value: "imageForm", label: "Image + Form — bg photo, content left, form right" },
+  { value: "centered",  label: "Centered — text in the middle, no form" },
+  { value: "split",     label: "Split — text left, image card right (no form)" },
+  { value: "imageBg",   label: "Image Background — full photo + overlay" },
+  { value: "slider",    label: "Slider — rotating background images + overlay" },
+  { value: "banner",    label: "Banner — pure auto-rotating images, no text" },
+  { value: "gradient",  label: "Gradient — theme color background" },
+];
+
 export default function HeroSection({ site, reload }) {
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(blank);
@@ -14,7 +25,36 @@ export default function HeroSection({ site, reload }) {
   const [confirm, setConfirm] = useState(null);
   const [deleting, setDeleting] = useState(false);
 
+  // hero appearance settings (website-level)
+  const [hs, setHs] = useState({
+    layout: "form",
+    overlayColor: "primary",
+    overlayStyle: "gradient",
+    overlayOpacity: 60,
+    slideInterval: 5000,
+    showForm: true,
+    ...(site.heroSettings || {}),
+  });
+  const [savingHs, setSavingHs] = useState(false);
+
   const slides = site.heroSlides || [];
+
+  const saveHeroSettings = async () => {
+    setSavingHs(true);
+    try {
+      await api.patch(`/employee/websites/${site._id}/section/heroSettings`, hs);
+      toast.success("Hero style saved");
+      reload();
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Failed to save hero style");
+    } finally {
+      setSavingHs(false);
+    }
+  };
+
+  const usesOverlay = ["imageBg", "imageForm", "slider", "banner"].includes(hs.layout);
+  const usesForm = ["form", "imageBg", "imageForm", "slider"].includes(hs.layout);
+  const isBanner = hs.layout === "banner";
 
   const openNew = () => {
     setForm({ ...blank, displayOrder: slides.length });
@@ -75,6 +115,100 @@ export default function HeroSection({ site, reload }) {
 
   return (
     <div>
+      {/* ── HERO STYLE SETTINGS ── */}
+      <div className="card border-0 shadow-sm mb-4">
+        <div className="card-body">
+          <div className="d-flex align-items-center mb-3">
+            <i className="bi bi-sliders text-primary fs-5 me-2"></i>
+            <h6 className="mb-0">Hero Style</h6>
+          </div>
+
+          <div className="row g-3">
+            <div className="col-md-6">
+              <label className="form-label small fw-semibold">Layout</label>
+              <select className="form-select" value={hs.layout} onChange={(e) => setHs({ ...hs, layout: e.target.value })}>
+                {HERO_LAYOUTS.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+              <div className="form-text small">
+                {hs.layout === "slider" && "Add 2+ slide images below — they rotate automatically behind the text."}
+                {hs.layout === "imageBg" && "The first slide image becomes the full background. Add more to rotate."}
+                {hs.layout === "imageForm" && "Background photo with content on the left and the callback form on the right. Add 2+ images to rotate."}
+                {hs.layout === "banner" && "Pure image carousel — no text or form. Add 2+ slide images; they auto-rotate. Great as a top banner."}
+                {hs.layout === "split" && "Content on the left, the first slide image shown as a card on the right. No form."}
+                {hs.layout === "gradient" && "Uses your theme's primary color — no image needed."}
+                {hs.layout === "centered" && "Clean centered text, no callback form."}
+                {hs.layout === "form" && "Classic layout with the callback form on the right."}
+              </div>
+            </div>
+
+            {usesForm && (
+              <div className="col-md-6 d-flex align-items-start pt-4">
+                <div className="form-check form-switch">
+                  <input id="hsShowForm" className="form-check-input" type="checkbox"
+                    checked={hs.showForm !== false}
+                    onChange={(e) => setHs({ ...hs, showForm: e.target.checked })} />
+                  <label htmlFor="hsShowForm" className="form-check-label small">Show callback form on the hero</label>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {isBanner && (
+            <div className="alert alert-info small mt-3 mb-0">
+              <i className="bi bi-info-circle me-1"></i>
+              Banner mode sirf images dikhata hai (koi text/form nahi). Neeche "Hero Slides" me 2+ images add karo — wo auto-rotate karengi. Overlay optional hai.
+            </div>
+          )}
+
+          {usesOverlay && (
+            <div className="border rounded-3 p-3 mt-3" style={{ background: "#f8fafc" }}>
+              <div className="small fw-bold text-uppercase text-muted mb-2">
+                <i className="bi bi-layers-half me-1"></i>Overlay (text readability)
+              </div>
+              <div className="row g-3">
+                <div className="col-md-6">
+                  <label className="form-label small fw-semibold">Overlay Color</label>
+                  <select className="form-select form-select-sm" value={hs.overlayColor} onChange={(e) => setHs({ ...hs, overlayColor: e.target.value })}>
+                    <option value="primary">Theme color (recommended)</option>
+                    <option value="dark">Dark / black</option>
+                  </select>
+                </div>
+                <div className="col-md-6">
+                  <label className="form-label small fw-semibold">Overlay Style</label>
+                  <select className="form-select form-select-sm" value={hs.overlayStyle} onChange={(e) => setHs({ ...hs, overlayStyle: e.target.value })}>
+                    <option value="gradient">Gradient (diagonal fade)</option>
+                    <option value="solid">Solid tint</option>
+                    <option value="none">No overlay</option>
+                  </select>
+                </div>
+                <div className="col-12">
+                  <label className="form-label small fw-semibold">Overlay Darkness — {hs.overlayOpacity}%</label>
+                  <input type="range" className="form-range" min="0" max="100" step="5"
+                    value={hs.overlayOpacity}
+                    onChange={(e) => setHs({ ...hs, overlayOpacity: Number(e.target.value) })} />
+                </div>
+              </div>
+              <div className="small text-muted">Overlay ka color theme ke primary color se match hota hai. Darkness badhao agar text photo pe clearly na dikhe.</div>
+            </div>
+          )}
+
+          {hs.layout === "slider" && (
+            <div className="mt-3" style={{ maxWidth: 260 }}>
+              <label className="form-label small fw-semibold">Slide interval (ms)</label>
+              <input type="number" className="form-control form-control-sm" value={hs.slideInterval}
+                onChange={(e) => setHs({ ...hs, slideInterval: Number(e.target.value) || 5000 })} />
+            </div>
+          )}
+
+          <div className="mt-3">
+            <button className="btn btn-sm btn-primary" onClick={saveHeroSettings} disabled={savingHs}>
+              {savingHs ? <><span className="spinner-border spinner-border-sm me-2"></span>Saving…</> : <><i className="bi bi-check-lg me-1"></i>Save Hero Style</>}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ── HERO SLIDES ── */}
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div className="d-flex align-items-center">
           <i className="bi bi-images text-primary fs-5 me-2"></i>

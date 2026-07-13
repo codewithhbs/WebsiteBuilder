@@ -11,32 +11,43 @@ import SubmissionsSection from "./editor/SubmissionsSection";
 import ConfirmModal from "../components/ConfirmModal";
 import StatsSection from "./editor/StatsSection";
 import SeoSection from "./editor/SeoSection";
+import PagesSection from "./editor/PagesSection";
 
-const TABS = [
-  { key: "basic", label: "Basic & Theme", icon: "bi-gear" },
-  { key: "hero", label: "Hero Slides", icon: "bi-images" },
-  { key: "about", label: "About", icon: "bi-info-circle" },
-  { key: "services", label: "Services", icon: "bi-grid" },
-  { key: "reviews", label: "Reviews", icon: "bi-star" },
-  { key: "banners", label: "Banners", icon: "bi-megaphone" },
-  { key: "contact", label: "Contact", icon: "bi-envelope" },
-  { key: "footer", label: "Footer", icon: "bi-bottom" },
-  { key: "seo", label: "SEO", icon: "bi-search" },
-{ key: "stats", label: "Website Stats", icon: "bi bi-bar-chart" },
-  { key: "visibility", label: "Visibility", icon: "bi-eye" },
-  { key: "submissions", label: "Submissions", icon: "bi-inbox" },
+// Tab definitions with pageType visibility flags
+// - "single" only tabs (heroSlides, about, services, reviews, banners) are hidden for multi-page sites
+// - "pages" only appears for multi-page sites
+// - shared tabs (basic, contact, footer, seo, stats, visibility, submissions) show for both
+const ALL_TABS = [
+  { key: "basic",       label: "Basic & Theme", icon: "bi-gear",         show: () => true },
+  { key: "pages",       label: "Pages",         icon: "bi-files",        show: (s) => s.pageType === "multi" },
+  { key: "hero",        label: "Hero Slides",   icon: "bi-images",       show: (s) => s.pageType !== "multi" },
+  { key: "about",       label: "About",         icon: "bi-info-circle",  show: (s) => s.pageType !== "multi" },
+  { key: "services",    label: "Services",      icon: "bi-grid",         show: (s) => s.pageType !== "multi" },
+  { key: "reviews",     label: "Reviews",       icon: "bi-star",         show: (s) => s.pageType !== "multi" },
+  { key: "banners",     label: "Banners",       icon: "bi-megaphone",    show: (s) => s.pageType !== "multi" },
+  { key: "contact",     label: "Contact",       icon: "bi-envelope",     show: () => true },
+  { key: "footer",      label: "Footer",        icon: "bi-bottom",       show: () => true },
+  { key: "seo",         label: "SEO",           icon: "bi-search",       show: () => true },
+  { key: "stats",       label: "Website Stats", icon: "bi bi-bar-chart", show: () => true },
+  { key: "visibility",  label: "Visibility",    icon: "bi-eye",          show: () => true },
+  { key: "submissions", label: "Submissions",   icon: "bi-inbox",        show: () => true },
 ];
 
 export default function WebsiteEditor() {
   const { id } = useParams();
   const [params, setParams] = useSearchParams();
-  const tab = TABS.some((t) => t.key === params.get("tab")) ? params.get("tab") : "basic";
 
   const [site, setSite] = useState(null);
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [publishing, setPublishing] = useState(false);
   const [confirm, setConfirm] = useState(null);
+
+  // filter tabs by current site's pageType (fallback to empty during loading)
+  const visibleTabs = site ? ALL_TABS.filter((t) => t.show(site)) : [];
+  const defaultTab  = site?.pageType === "multi" ? "pages" : "basic";
+  const requested   = params.get("tab");
+  const tab = visibleTabs.some((t) => t.key === requested) ? requested : defaultTab;
 
   const setTab = (key) => {
     const next = new URLSearchParams(params);
@@ -131,6 +142,10 @@ export default function WebsiteEditor() {
                   <span className="badge bg-light text-dark border">
                     <i className="bi bi-palette me-1"></i>{site.themeKey}
                   </span>
+                  <span className={"badge " + (site.pageType === "multi" ? "bg-primary-subtle text-primary" : "bg-secondary-subtle text-secondary")}>
+                    <i className={"bi me-1 " + (site.pageType === "multi" ? "bi-files" : "bi-file")}></i>
+                    {site.pageType === "multi" ? "Multi-page" : "Single-page"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -150,7 +165,7 @@ export default function WebsiteEditor() {
       </div>
 
       <ul className="nav nav-pills mb-3 flex-nowrap p-2 bg-light rounded shadow-sm" style={{ overflowX: "auto" }}>
-        {TABS.map((t) => (
+        {visibleTabs.map((t) => (
           <li className="nav-item" key={t.key}>
             <button
               className={"nav-link text-nowrap " + (tab === t.key ? "active" : "text-dark")}
@@ -164,18 +179,19 @@ export default function WebsiteEditor() {
 
       <div className="card border-0 shadow-sm">
         <div className="card-body p-4">
-          {tab === "basic" && <BasicSection site={site} reload={load} themes={themes} />}
-          {tab === "hero" && <HeroSection site={site} reload={load} />}
-          {tab === "about" && <FlatSection key={tab} site={site} section="about" reload={load} />}
-          {tab === "services" && <ArraySection key={tab} site={site} section="services" reload={load} />}
-          {tab === "reviews" && <ArraySection key={tab} site={site} section="reviews" reload={load} />}
-          {tab === "banners" && <ArraySection key={tab} site={site} section="banners" reload={load} />}
-          {tab === "contact" && <FlatSection key={tab} site={site} section="contact" reload={load} />}
-          {tab === "footer" && <FlatSection key={tab} site={site} section="footer" reload={load} />}
-          {tab === "seo" && <SeoSection key={tab} site={site} section="seo" reload={load} />}
-          {tab === "stats" && <StatsSection site={site} section="stats" reload={load} />}
+          {tab === "basic"       && <BasicSection site={site} reload={load} themes={themes} />}
+          {tab === "pages"       && <PagesSection key={site._id} site={site} />}
+          {tab === "hero"        && <HeroSection site={site} reload={load} />}
+          {tab === "about"       && <FlatSection key={tab} site={site} section="about" reload={load} />}
+          {tab === "services"    && <ArraySection key={tab} site={site} section="services" reload={load} />}
+          {tab === "reviews"     && <ArraySection key={tab} site={site} section="reviews" reload={load} />}
+          {tab === "banners"     && <ArraySection key={tab} site={site} section="banners" reload={load} />}
+          {tab === "contact"     && <FlatSection key={tab} site={site} section="contact" reload={load} />}
+          {tab === "footer"      && <FlatSection key={tab} site={site} section="footer" reload={load} />}
+          {tab === "seo"         && <SeoSection key={tab} site={site} section="seo" reload={load} />}
+          {tab === "stats"       && <StatsSection site={site} section="stats" reload={load} />}
 
-          {tab === "visibility" && <VisibilitySection site={site} reload={load} />}
+          {tab === "visibility"  && <VisibilitySection site={site} reload={load} />}
           {tab === "submissions" && <SubmissionsSection site={site} />}
         </div>
       </div>

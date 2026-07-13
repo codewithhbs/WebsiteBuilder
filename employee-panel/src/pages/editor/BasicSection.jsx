@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import api from "../../api/client";
 import ImagePicker from "../../components/ImagePicker";
 import ConfirmModal from "../../components/ConfirmModal";
+import ThemePreviewCard from "../../components/ThemePreviewCard";
 
 export default function BasicSection({ site, reload, themes }) {
   const [form, setForm] = useState({
@@ -148,39 +149,27 @@ export default function BasicSection({ site, reload, themes }) {
       <div className="d-flex align-items-center mb-3">
         <i className="bi bi-palette-fill text-primary fs-5 me-2"></i>
         <h6 className="mb-0">Theme</h6>
+        <span className="badge bg-light text-muted border ms-2">
+          {site.pageType === "multi" ? "Multi-page" : "Single-page"}
+        </span>
       </div>
       <p className="text-muted small">Choose how your site looks. Switching theme keeps all your content intact.</p>
 
       <div className="row g-3">
-        {themes.map((t) => {
-          const active = site.themeKey === t.themeKey;
-          return (
-            <div key={t._id} className="col-md-4">
-              <div className={"card h-100 " + (active ? "border-primary shadow-sm" : "border")}>
-                <div className="card-body">
-                  <div className="d-flex justify-content-between align-items-start">
-                    <div>
-                      <div className="fw-bold">{t.name}</div>
-                      <code className="small text-muted">{t.themeKey}</code>
-                    </div>
-                    {active && <i className="bi bi-check-circle-fill text-primary fs-5"></i>}
-                  </div>
-                  {active ? (
-                    <span className="badge bg-primary mt-3">Active theme</span>
-                  ) : (
-                    <button
-                      className="btn btn-sm btn-outline-primary mt-3 w-100"
-                      onClick={() => askChangeTheme(t)}
-                      disabled={themeBusy}
-                    >
-                      Switch to this
-                    </button>
-                  )}
-                </div>
+        {(themes || [])
+          .filter((t) => (t.pageType || "single") === (site.pageType || "single"))
+          .map((t) => {
+            const active = site.themeKey === t.themeKey;
+            return (
+              <div key={t._id} className="col-md-6 col-lg-4">
+                <ThemePreviewCard
+                  theme={t}
+                  active={active}
+                  onSelect={() => { if (!active && !themeBusy) askChangeTheme(t); }}
+                />
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
 
       <ConfirmModal data={confirm} onClose={() => !themeBusy && setConfirm(null)} loading={themeBusy} />

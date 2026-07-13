@@ -1,0 +1,86 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m2.css — Crimson · Service Business
+   Bold red, urgency-focused. Best for: home services, emergency,
+   repair, healthcare, legal. Vibe: confident, action-driven, strong.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap');
+
+:root {
+  --primary: #dc2626;
+  --primary-dark: #b91c1c;
+  --primary-light: #fef2f2;
+  --primary-rgb: 220, 38, 38;
+  --accent: #25d366;
+  --accent-rgb: 37, 211, 102;
+
+  --bg: #ffffff;
+  --bg-soft: #fff7f7;
+  --bg-section: #fafafa;
+  --bg-deep: #1c0d0d;
+
+  --text: #18181b;
+  --text-muted: #52525b;
+  --text-light: #a1a1aa;
+
+  --border: #e4e4e7;
+  --border-soft: #fee2e2;
+
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Poppins', 'Inter', sans-serif;
+}
+
+/* Hero — dramatic red wash */
+.ms-hero {
+  background:
+    radial-gradient(ellipse 900px 500px at 90% -10%, rgba(220,38,38,.14) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 400px at 10% 110%, rgba(220,38,38,.09) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+}
+
+/* Hero title — more punch */
+.ms-hero-title {
+  font-weight: 900;
+  letter-spacing: -.024em;
+}
+
+/* Eyebrow — bigger tracking for urgency */
+.ms-eyebrow { letter-spacing: .18em; font-weight: 800; }
+
+/* Buttons — stronger shadow presence */
+.ms-btn-primary { box-shadow: 0 10px 26px rgba(var(--primary-rgb), .38); }
+.ms-btn-primary:hover { box-shadow: 0 18px 40px rgba(var(--primary-rgb), .5); }
+
+/* Feature icons — solid filled red squares with tilt on hover */
+.ms-feature-icon {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(var(--primary-rgb), .3);
+}
+.ms-feature:hover .ms-feature-icon { transform: scale(1.06) rotate(-8deg); }
+
+/* Service cards — thicker borders, red on hover */
+.ms-service { border-width: 2px; }
+.ms-service:hover { border-color: var(--primary); }
+
+/* CTA — full saturated red with white radial */
+.ms-cta {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+.ms-cta::before {
+  background: radial-gradient(circle, rgba(255,255,255,.15) 0%, transparent 70%);
+}
+.ms-cta::after {
+  background: radial-gradient(circle, rgba(255,255,255,.1) 0%, transparent 70%);
+}
+
+/* Stats — bold red gradient */
+.ms-stats-grid {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+}
+
+/* Pricing featured — extra glow */
+.ms-pricing-card--featured {
+  box-shadow: 0 24px 48px rgba(var(--primary-rgb), .22);
+}

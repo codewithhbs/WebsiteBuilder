@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m1.css — Aurora · Modern Corporate
+   Cool sophisticated blue. Best for: consultancies, agencies, B2B,
+   professional services. Vibe: trustworthy, spacious, premium.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
+
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-light: #eff6ff;
+  --primary-rgb: 37, 99, 235;
+  --accent: #25d366;
+  --accent-rgb: 37, 211, 102;
+
+  --bg: #ffffff;
+  --bg-soft: #f8fafc;
+  --bg-section: #f8fafc;
+  --bg-deep: #0f172a;
+
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-light: #94a3b8;
+
+  --border: #e2e8f0;
+  --border-soft: #f1f5f9;
+
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* Slightly larger hero title */
+.ms-hero-title { font-size: clamp(2.6rem, 5.8vw, 4.4rem); letter-spacing: -.028em; }
+.ms-hero { padding: 120px 0 100px; }
+
+/* Feature cards with cleaner minimal look */
+.ms-feature {
+  border-color: var(--border-soft);
+  background: var(--bg);
+}
+
+/* CTA — richer blue depth */
+.ms-cta {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+}
+
+/* Stats — matching gradient */
+.ms-stats-grid {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+}

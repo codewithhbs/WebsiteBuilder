@@ -20,6 +20,33 @@ const HeroSlideSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Website-level hero appearance controls (single-page themes).
+// Applies to the whole hero regardless of how many slides exist.
+const HeroSettingsSchema = new mongoose.Schema(
+  {
+    // layout: how the hero is arranged
+    //   "form"     = default callback-form layout (text left, form right)
+    //   "centered" = text centered, no form
+    //   "split"    = text left, image right (no form)
+    //   "imageBg"  = full background image + overlay + centered text
+    //   "slider"   = rotating background images + overlay + centered text
+    //   "gradient" = theme gradient background, centered text
+    layout: { type: String, default: "form" },
+
+    // overlay (used when an image/slider sits behind the text)
+    overlayColor: { type: String, default: "primary" }, // "primary" | "dark" | hex
+    overlayStyle: { type: String, default: "gradient" }, // "gradient" | "solid" | "none"
+    overlayOpacity: { type: Number, default: 60, min: 0, max: 100 },
+
+    // slider behaviour
+    slideInterval: { type: Number, default: 5000 },
+
+    // show the callback form on top of image/slider layouts too
+    showForm: { type: Boolean, default: true },
+  },
+  { _id: false }
+);
+
 const AboutSchema = new mongoose.Schema(
   {
     heading: { type: String, default: "About Us" },
@@ -291,10 +318,20 @@ const WebsiteSchema = new mongoose.Schema(
     theme: { type: mongoose.Schema.Types.ObjectId, ref: "Theme", required: true },
     themeKey: { type: String, required: true }, // denormalized for fast public fetch
 
+    // "single" = legacy single-page layout driven by hero/about/services/etc.
+    // "multi"  = uses Page collection for multi-page layout with flexible section blocks
+    pageType: {
+      type: String,
+      enum: ["single", "multi"],
+      default: "single",
+      index: true,
+    },
+
     isLive: { type: Boolean, default: false, index: true },
 
     basicInfo: { type: BasicInfoSchema, default: {} },
     heroSlides: { type: [HeroSlideSchema], default: [] },
+    heroSettings: { type: HeroSettingsSchema, default: {} },
     about: { type: AboutSchema, default: {} },
     services: { type: [ServiceSchema], default: [] },
     reviews: { type: [ReviewSchema], default: [] },

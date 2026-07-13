@@ -1,0 +1,133 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m5.css — Saffron · Hospitality
+   Warm saffron + cream, elegant serif headings, generous letter-spacing.
+   Best for: restaurants, hotels, cafes, salons, wellness centers.
+   Vibe: warm, inviting, sensory, editorial.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700;800&display=swap');
+
+:root {
+  --primary: #ea580c;
+  --primary-dark: #c2410c;
+  --primary-light: #fff7ed;
+  --primary-rgb: 234, 88, 12;
+  --accent: #25d366;
+  --accent-rgb: 37, 211, 102;
+
+  --bg: #fffbf5;
+  --bg-soft: #fef9f0;
+  --bg-section: #fef3e8;
+  --bg-deep: #1c1917;
+
+  --text: #1c1917;
+  --text-muted: #57534e;
+  --text-light: #a8a29e;
+
+  --border: #f5e9d8;
+  --border-soft: #fef3e8;
+
+  --radius-sm: 8px;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+}
+
+body { background: var(--bg); font-size: 17px; }
+.ms-header { background: rgba(255,251,245,.9); }
+
+/* Hero — warm sunset wash */
+.ms-hero {
+  background:
+    radial-gradient(ellipse at top, rgba(234,88,12,.14) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom right, rgba(251,191,36,.16) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+}
+
+/* Editorial serif hero title — very large, tight spacing */
+.ms-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(3rem, 6.5vw, 5rem);
+  letter-spacing: 0;
+  line-height: 1;
+}
+.ms-hero-sub {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+}
+.ms-h2 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Eyebrow — softer, editorial style */
+.ms-eyebrow {
+  background: transparent;
+  color: var(--primary);
+  font-size: .74rem;
+  letter-spacing: .24em;
+  font-weight: 700;
+  padding: 0;
+  border: none;
+}
+.ms-eyebrow::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--primary);
+  border-radius: 0;
+  animation: none;
+  box-shadow: none;
+}
+
+/* Buttons — rounded pill with warm shadow */
+.ms-btn {
+  border-radius: 999px;
+  padding: 14px 30px;
+  font-weight: 600;
+}
+.ms-btn-primary {
+  background: var(--primary);
+  box-shadow: 0 10px 24px rgba(var(--primary-rgb), .28);
+}
+.ms-btn-primary:hover { background: var(--primary-dark); }
+.ms-btn-outline { border-color: var(--primary); color: var(--primary); }
+
+/* Cards — warm cream surfaces */
+.ms-feature, .ms-service, .ms-testimonial, .ms-team-card,
+.ms-pricing-card, .ms-blog-card, .ms-faq-item, .ms-contact-form {
+  background: var(--bg);
+  border-color: var(--border);
+}
+
+.ms-feature-icon {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 50%;
+  width: 68px;
+  height: 68px;
+}
+
+/* Service — image-forward, taller */
+.ms-service-img { aspect-ratio: 4/3; }
+.ms-service:hover { border-color: var(--primary); }
+
+/* CTA — warm dusk gradient */
+.ms-cta {
+  background: linear-gradient(135deg, var(--primary) 0%, #f97316 50%, #fbbf24 100%);
+}
+
+/* Stats */
+.ms-stats-grid {
+  background: linear-gradient(135deg, var(--primary) 0%, #f97316 100%);
+}
+
+/* Pricing featured with warm glow */
+.ms-pricing-card--featured {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--primary-light) 100%);
+}

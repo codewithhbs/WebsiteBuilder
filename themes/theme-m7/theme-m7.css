@@ -1,0 +1,150 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m7.css — Slate · Legal / Consulting
+   Navy + slate palette, sharp typography, structured. Best for: law
+   firms, financial advisors, consultants, accounting, insurance.
+   Vibe: authoritative, established, precise, institutional.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&display=swap');
+
+:root {
+  --primary: #1e40af;
+  --primary-dark: #1e3a8a;
+  --primary-light: #eff6ff;
+  --primary-rgb: 30, 64, 175;
+  --accent: #b45309;
+  --accent-rgb: 180, 83, 9;
+
+  --bg: #ffffff;
+  --bg-soft: #f8fafc;
+  --bg-section: #f1f5f9;
+  --bg-deep: #0f172a;
+
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-light: #94a3b8;
+
+  --border: #cbd5e1;
+  --border-soft: #e2e8f0;
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+
+  --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
+  --shadow: 0 4px 16px rgba(15,23,42,.08);
+  --shadow-lg: 0 16px 40px rgba(15,23,42,.12);
+
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Libre Baskerville', 'Georgia', serif;
+}
+
+/* Header — cleaner, more architectural */
+.ms-header { border-bottom-color: var(--border); background: rgba(255,255,255,.94); }
+.ms-brand-tagline { text-transform: uppercase; letter-spacing: .12em; }
+
+/* Hero — restrained sophistication */
+.ms-hero {
+  padding: 100px 0 90px;
+  background:
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+}
+.ms-hero::before, .ms-hero::after { opacity: .35; }
+
+.ms-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  letter-spacing: -.008em;
+  line-height: 1.15;
+}
+.ms-h2 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -.005em;
+  font-size: clamp(1.75rem, 3.4vw, 2.2rem);
+}
+.ms-hero-sub { font-size: 1.08rem; }
+
+/* Eyebrow — squared, institutional */
+.ms-eyebrow {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  font-weight: 700;
+  letter-spacing: .2em;
+  font-size: .72rem;
+  padding: 8px 16px;
+}
+.ms-eyebrow::before { animation: none; box-shadow: none; opacity: .8; }
+
+/* Buttons — squared, professional */
+.ms-btn { border-radius: var(--radius); font-weight: 600; }
+
+/* Cards — sharp corners, subtle borders */
+.ms-feature, .ms-service, .ms-testimonial, .ms-team-card,
+.ms-pricing-card, .ms-blog-card, .ms-faq-item, .ms-contact-form {
+  border-radius: var(--radius-lg);
+  border-color: var(--border);
+}
+
+.ms-feature { border-width: 1px; }
+.ms-feature-icon {
+  background: var(--bg-section);
+  color: var(--primary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+}
+.ms-feature:hover .ms-feature-icon {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+  transform: none;
+}
+.ms-feature:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px);
+}
+
+/* Service — restrained */
+.ms-service-img { aspect-ratio: 16/9; }
+
+/* CTA — deep navy */
+.ms-cta {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+}
+.ms-cta-inner { position: relative; z-index: 1; }
+
+/* Stats — navy with gold accent */
+.ms-stats-grid {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  border-radius: var(--radius-xl);
+}
+.ms-stat-num { color: #fbbf24; }
+
+/* Pricing — structured, less flashy */
+.ms-pricing-card--featured {
+  background: var(--bg);
+  border-color: var(--primary);
+  transform: none;
+}
+.ms-pricing-badge {
+  background: var(--primary);
+  border-radius: 0;
+  letter-spacing: .12em;
+}
+.ms-pricing-price { color: var(--primary); }
+
+/* FAQ — structural feel */
+.ms-faq-item.open { box-shadow: 0 0 0 1px var(--primary), 0 8px 20px rgba(var(--primary-rgb),.08); }
+
+/* Testimonial quote — deep blue */
+.ms-testimonial::before {
+  color: rgba(var(--primary-rgb), .1);
+  font-family: var(--font-heading);
+}
+
+/* Body — slightly narrower reading */
+body { line-height: 1.7; }

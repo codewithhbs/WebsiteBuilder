@@ -1660,3 +1660,24 @@ h1, h2, h3, h4, h5 { margin: 0; font-weight: 600; letter-spacing: -0.01em; }
 /* Hide outline on mouse, show on keyboard */
 :focus:not(:focus-visible) { outline: none; }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+/* Prevent Chrome Auto-Dark / dark-mode extensions from inverting the theme */
+:root { color-scheme: only light; }
+html { forced-color-adjust: none; }
+
+/* ─── v5 polish ─── */
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2.5px solid var(--primary);
+  outline-offset: 2px;
+}
+img { image-rendering: auto; }
+::selection { background: var(--primary); color: #fff; }
+
+[class^="btn-"], [class*=" btn-"] {
+  transition: transform .18s ease, box-shadow .25s ease, background .2s ease, filter .2s ease;
+}
+[class^="btn-"]:hover, [class*=" btn-"]:hover {
+  transform: translateY(-2px);
+}
+.btn-primary:hover, .btn-hero-primary:hover, .btn-cta:hover, .btn-submit:hover {
+  box-shadow: 0 16px 36px rgba(var(--primary-rgb, 37,99,235), .35);
+}

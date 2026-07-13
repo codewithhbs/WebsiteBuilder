@@ -42,7 +42,7 @@ app.use(
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "http://localhost:5400",
+  "https://webgmbapi.hovermedia.in",
 
   "https://hovermedia.in",
   "https://www.hovermedia.in",
@@ -194,7 +194,7 @@ function buildSeoTags(seo = {}) {
   return tags.join("\n  ");
 }
 
-function serveThemeWithSeo(res, themeKey, site) {
+function serveThemeWithSeo(res, themeKey, site, pageKey) {
   try {
     const htmlPath = path.join(__dirname, `../themes/${themeKey}/index.html`);
     let html = fs.readFileSync(htmlPath, "utf8");
@@ -204,7 +204,11 @@ function serveThemeWithSeo(res, themeKey, site) {
     html = html.replace(/<meta\s+name="description"[^>]*>/i, "");
 
     // inject slug so render.js doesn't need URL param
-    const slugScript = `<script>window.__SITE_SLUG__="${site.slug}";</script>`;
+    const slugScript = `<script>window.__SITE_SLUG__="${site.slug}";window.__API_BASE__="${ENV.PUBLIC_API_BASE}";${
+      site.pageType === "multi"
+        ? `window.__PAGE_TYPE__="multi";window.__PAGE_KEY__="${pageKey || "home"}";`
+        : `window.__PAGE_TYPE__="single";`
+    }</script>`;
 
     // inject SEO tags + slug script before </head>
     const injection = `  ${buildSeoTags(site.seo || {})}\n  ${slugScript}`;
@@ -219,25 +223,40 @@ function serveThemeWithSeo(res, themeKey, site) {
 }
 
 
+// pageKey from URL path: "/about" → "about", "/" → "home"
+function pageKeyFromPath(p) {
+  if (!p || p === "/") return "home";
+  const cleaned = String(p).replace(/^\/+|\/+$/g, "").toLowerCase();
+  if (!cleaned) return "home";
+  // only first segment matters
+  const first = cleaned.split("/")[0];
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(first)) return "home";
+  return first;
+}
+
+
 // ─────────────────────────────────────────────
 // LOCAL SLUG ROUTE
-// localhost:5400/pooja-enterprises
+// localhost:5400/pooja-enterprises        (single-page or multi homepage)
+// localhost:5400/pooja-enterprises/about  (multi-page sub-page)
 // ─────────────────────────────────────────────
 
-app.get("/:slug", async (req, res) => {
+async function serveLocalSlug(slug, pageKey, res) {
   try {
-    const site = await websiteModel.findOne({
-      slug: req.params.slug,
-      isLive: true,
-    });
-
+    const site = await websiteModel.findOne({ slug, isLive: true });
     if (!site) return res.status(404).send("Website not found");
-
-    return serveThemeWithSeo(res, site.themeKey, site);
+    return serveThemeWithSeo(res, site.themeKey, site, pageKey);
   } catch (err) {
     console.error(err);
     return res.status(500).send("Server Error");
   }
+}
+
+app.get("/:slug", (req, res) => serveLocalSlug(req.params.slug, "home", res));
+
+app.get("/:slug/:pageKey", (req, res) => {
+  const pageKey = pageKeyFromPath("/" + req.params.pageKey);
+  return serveLocalSlug(req.params.slug, pageKey, res);
 });
 
 
@@ -279,7 +298,9 @@ app.use(async (req, res, next) => {
 
     if (!site) return res.status(404).send("Website not found");
 
-    return serveThemeWithSeo(res, site.themeKey, site);
+    const pageKey = site.pageType === "multi" ? pageKeyFromPath(req.path) : "home";
+
+    return serveThemeWithSeo(res, site.themeKey, site, pageKey);
   } catch (err) {
     console.error(err);
     return res.status(500).send("Server Error");

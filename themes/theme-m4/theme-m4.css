@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m4.css — Nimbus · SaaS / Tech
+   Vibrant purple + teal gradients, glassy feel. Best for: startups,
+   software, tech products. Vibe: modern, energetic, conversion-friendly.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
+
+:root {
+  --primary: #7c3aed;
+  --primary-dark: #6d28d9;
+  --primary-light: #f5f3ff;
+  --primary-rgb: 124, 58, 237;
+  --accent: #14b8a6;
+  --accent-rgb: 20, 184, 166;
+
+  --bg: #ffffff;
+  --bg-soft: #fafaff;
+  --bg-section: #f8f9ff;
+  --bg-deep: #1a1140;
+
+  --text: #111827;
+  --text-muted: #4b5563;
+  --text-light: #9ca3af;
+
+  --border: #e5e7eb;
+  --border-soft: #eef0ff;
+
+  --radius-sm: 12px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+
+  --shadow: 0 12px 32px rgba(124,58,237,.1);
+  --shadow-lg: 0 24px 60px rgba(124,58,237,.16);
+  --shadow-xl: 0 40px 80px rgba(124,58,237,.2);
+
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+/* Hero — vibrant gradient mesh */
+.ms-hero {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(124,58,237,.22) 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(20,184,166,.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(168,85,247,.12) 0%, transparent 55%),
+    linear-gradient(180deg, #fafaff 0%, #ffffff 100%);
+}
+
+/* Gradient hero title */
+.ms-hero-title {
+  font-weight: 800;
+  letter-spacing: -.028em;
+  background: linear-gradient(135deg, #111827 0%, #4c1d95 65%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Eyebrow — gradient pill */
+.ms-eyebrow {
+  background: linear-gradient(135deg, rgba(124,58,237,.12) 0%, rgba(20,184,166,.12) 100%);
+  color: var(--primary);
+  border-color: rgba(124,58,237,.18);
+  font-weight: 700;
+}
+
+/* Primary button — gradient */
+.ms-btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+  border: none;
+  box-shadow: 0 12px 32px rgba(var(--primary-rgb), .38);
+}
+.ms-btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #9333ea 100%);
+  box-shadow: 0 20px 48px rgba(var(--primary-rgb), .5);
+}
+
+/* Feature cards — glassy with animated glow */
+.ms-feature {
+  background: linear-gradient(180deg, #ffffff 0%, #fafaff 100%);
+  border-color: var(--border);
+}
+.ms-feature:hover {
+  border-color: transparent;
+  box-shadow: 0 0 0 1.5px rgba(var(--primary-rgb), .35), 0 28px 56px rgba(var(--primary-rgb), .15);
+}
+.ms-feature-icon {
+  background: linear-gradient(135deg, rgba(124,58,237,.14) 0%, rgba(20,184,166,.14) 100%);
+  color: var(--primary);
+  border-radius: 18px;
+}
+
+/* Service cards */
+.ms-service:hover {
+  border-color: rgba(var(--primary-rgb), .35);
+  box-shadow: 0 28px 56px rgba(var(--primary-rgb), .15);
+}
+.ms-service-img--icon { color: var(--primary); }
+
+/* CTA — bold purple → teal gradient */
+.ms-cta {
+  background: linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #14b8a6 100%);
+}
+
+/* Pricing featured with gradient ring */
+.ms-pricing-card--featured {
+  background: linear-gradient(180deg, #ffffff 0%, #fafaff 100%);
+  box-shadow: 0 0 0 2px var(--primary), 0 28px 64px rgba(var(--primary-rgb), .28);
+}
+.ms-pricing-badge {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+}
+.ms-pricing-price {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Stats — vibrant gradient */
+.ms-stats-grid {
+  background: linear-gradient(135deg, var(--primary) 0%, #a855f7 50%, var(--accent) 100%);
+}
+
+/* Testimonial quote mark — gradient */
+.ms-testimonial::before {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: .18;
+}
+
+/* Logo cloud heading — gradient text */
+.ms-logocloud-heading {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* FAQ item */
+.ms-faq-item.open {
+  background: var(--primary-light);
+}

@@ -4,6 +4,7 @@ const upload = require("../config/multer");
 const dash = require("../controllers/dashboard.controller");
 const client = require("../controllers/client.controller");
 const site = require("../controllers/website.controller");
+const page = require("../controllers/page.controller");
 
 router.use(auth, requireRole("employee", "admin"));
 
@@ -51,5 +52,22 @@ router.delete(
 // contact submissions
 router.get("/websites/:id/submissions", site.listSubmissions);
 router.patch("/websites/:id/submissions/:submissionId/read", site.markSubmissionRead);
+
+/* ─── MULTI-PAGE: Page CRUD ──────────────────────────────── */
+// image upload for section content (hero images, gallery, team photos, etc.)
+router.post("/uploads/image", upload.single("image"), page.uploadSectionImage);
+
+// pages list / get
+router.get("/websites/:websiteId/pages", page.listPages);
+router.get("/pages/:id", page.getPage);
+// page CRUD
+router.post("/websites/:websiteId/pages", page.createPage);
+router.patch("/pages/:id", page.updatePage);
+router.delete("/pages/:id", page.deletePage);
+// section CRUD inside a page
+router.put("/pages/:id/sections", page.replaceSections);
+router.post("/pages/:id/sections", page.addSection);
+router.patch("/pages/:id/sections/:sectionId", page.updateSection);
+router.delete("/pages/:id/sections/:sectionId", page.deleteSection);
 
 module.exports = router;

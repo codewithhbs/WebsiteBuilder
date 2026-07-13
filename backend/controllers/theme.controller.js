@@ -15,7 +15,7 @@ exports.getTheme = asyncHandler(async (req, res) => {
 });
 
 exports.createTheme = asyncHandler(async (req, res) => {
-  const { themeKey, name, description } = req.body;
+  const { themeKey, name, description, pageType } = req.body;
   if (!themeKey || !name) {
     return res.status(400).json({ success: false, message: "themeKey & name required" });
   }
@@ -27,7 +27,13 @@ exports.createTheme = asyncHandler(async (req, res) => {
     const r = await uploadBuffer(req.file.buffer, "service-platform/themes");
     previewImage = { url: r.secure_url, publicId: r.public_id };
   }
-  const theme = await Theme.create({ themeKey, name, description, previewImage });
+  const theme = await Theme.create({
+    themeKey,
+    name,
+    description,
+    previewImage,
+    pageType: pageType === "multi" ? "multi" : "single",
+  });
   await writeAudit(req, { action: "theme.create", targetType: "Theme", targetId: theme._id });
   res.status(201).json({ success: true, theme });
 });
@@ -36,7 +42,7 @@ exports.updateTheme = asyncHandler(async (req, res) => {
   const theme = await Theme.findById(req.params.id);
   if (!theme) return res.status(404).json({ success: false, message: "Theme not found" });
 
-  ["name", "description", "isActive"].forEach((k) => {
+  ["name", "description", "isActive", "pageType"].forEach((k) => {
     if (req.body[k] !== undefined) theme[k] = req.body[k];
   });
 

@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="color-scheme" content="only light">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title data-bind="seo.title">Loading…</title>
+  <meta name="description" data-bind-attr="seo.description|content" content="" />
+  <link id="favicon" rel="icon" href="" />
+
+  <!-- Fonts: Archivo (bold display) + Space Grotesk (body/mono feel) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Theme styles -->
+  <link rel="stylesheet" href="/themes/theme6/theme6.css">
+</head>
+
+<body>
+
+  <!-- ─────────── PRELOADER ─────────── -->
+  <div id="preloader">
+    <div class="pl-box">⚡</div>
+    <div class="pl-text" data-bind="basicInfo.siteName">Loading…</div>
+  </div>
+
+
+  <!-- ═══════════ TOPBAR ═══════════ -->
+  <div class="topbar" data-section="basicInfo">
+    <div class="container topbar-inner">
+      <span class="tb-item"><span class="tb-dot"></span><span data-bind="contact.workingHours">Available Now</span></span>
+      <div class="tb-right">
+        <a class="tb-item" id="topbarEmailLink" href="mailto:"><span data-bind="contact.email">info@example.com</span></a>
+        <a class="tb-item tb-phone" id="topbarPhoneLink" href="tel:"><span data-bind="contact.phone">+91 00000 00000</span></a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <header class="navbar-wrap" id="mainHeader">
+    <nav class="navbar container">
+      <a class="brand" href="#home">
+        <img id="brandLogo" src="" alt="" style="display:none">
+        <div class="brand-text">
+          <span class="brand-name" data-bind="basicInfo.siteName">Your Business</span>
+          <span class="brand-tagline" data-bind="basicInfo.tagline">Tagline goes here</span>
+        </div>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-menu" id="navMenu">
+        <ul class="nav-links">
+          <li><a class="nav-link" href="#home">Home</a></li>
+          <li><a class="nav-link" href="#about">About</a></li>
+          <li><a class="nav-link" href="#services">Services</a></li>
+          <li><a class="nav-link" href="#areas">Areas</a></li>
+          <li><a class="nav-link" href="#faq">FAQ</a></li>
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-ctas">
+          <a id="headerWhatsappBtn" class="nav-wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </a>
+          <a id="headerCallBtn" class="nav-call" href="tel:">
+            <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+            <span>Call Now</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- ═══════════ HERO ═══════════ -->
+  <section id="home" class="hero-section" data-section="hero">
+    <div class="container">
+      <div class="hero-grid">
+
+        <div class="hero-left">
+          <div class="hero-pill">
+            <span class="pill-dot"></span>
+            <span id="heroPillText" data-bind="heroSlides.0.subtitle">Welcome — Let's Get Started</span>
+          </div>
+          <h1 class="hero-title" id="heroTitle" data-bind="heroSlides.0.title">Building Trust Through Quality &amp; Care</h1>
+          <p class="hero-subtitle" data-bind="about.shortText">We deliver premium services with reliability and customer-first focus. Reach out today and our team will get back to you within minutes.</p>
+
+          <div class="hero-chips" id="heroChips"></div>
+
+          <div class="hero-actions">
+            <a id="heroCallBtn" href="tel:" class="btn-call-lg">
+              <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+              <span>Call <span data-bind="contact.phone">+91 00000 00000</span></span>
+            </a>
+            <a id="heroWhatsappBtn" href="#" target="_blank" rel="noopener" class="btn-whatsapp-lg">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              WhatsApp Now
+            </a>
+          </div>
+
+          <div class="hero-stats" id="heroStats"></div>
+        </div>
+
+        <div class="hero-right">
+          <div class="callback-card">
+            <div class="cb-sticker" aria-hidden="true">FAST<br>REPLY ⚡</div>
+            <div class="cb-tag">Request Callback</div>
+            <h3 class="cb-heading">We'll get back to you within minutes</h3>
+            <form id="callbackForm" class="cb-form">
+              <div class="cb-field">
+                <label>Your Name</label>
+                <input name="name" placeholder="Full name" required>
+              </div>
+              <div class="cb-field">
+                <label>Mobile Number</label>
+                <input name="phone" placeholder="+91 00000 00000" required>
+              </div>
+              <div class="cb-field">
+                <label>Email Address</label>
+                <input name="email" type="email" placeholder="you@example.com">
+              </div>
+              <div class="cb-field">
+                <label>Service Required</label>
+                <select name="service" id="cbServiceSelect">
+                  <option value="">Select a service</option>
+                </select>
+              </div>
+              <div class="cb-field">
+                <label>Message</label>
+                <textarea name="message" rows="3" placeholder="Tell us briefly about your requirement"></textarea>
+              </div>
+              <button type="submit" class="btn-cb-submit">Request Callback →</button>
+              <div id="callbackStatus" class="cb-status"></div>
+              <p class="cb-note">For urgent matters, please
+                <a id="cbNoteCall" href="tel:">call us directly</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ MARQUEE STRIP ═══════════ -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack">
+      <span class="mq-item" data-bind="basicInfo.siteName">Your Business</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.tagline">Tagline goes here</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.siteName">Your Business</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.tagline">Tagline goes here</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.siteName">Your Business</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.tagline">Tagline goes here</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.siteName">Your Business</span><span class="mq-star">⚡</span>
+      <span class="mq-item" data-bind="basicInfo.tagline">Tagline goes here</span><span class="mq-star">⚡</span>
+    </div>
+  </div>
+
+
+  <!-- BANNERS TOP -->
+  <section data-section="banners" data-position="top" class="banner-zone container">
+    <div id="bannersTop"></div>
+  </section>
+
+
+  <!-- ═══════════ ABOUT ═══════════ -->
+  <section id="about" class="about-section section-pad" data-section="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-img-wrap">
+            <img id="aboutImage" src="" alt="" style="display:none">
+            <div id="aboutImagePlaceholder" class="about-placeholder">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.29 1.51 4.04 3 5.5l7 7Z"/></svg>
+            </div>
+            <div class="about-float-badge">
+              <span class="afb-num" id="aboutBadgeNum">5+</span>
+              <span class="afb-label" id="aboutBadgeLabel">Years of trusted service</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-content">
+          <div class="section-eyebrow">About Us</div>
+          <h2 class="section-heading" data-bind="about.heading">Who We Are</h2>
+          <p class="about-long" data-bind="about.longText">We are a trusted name in our industry, delivering quality services with reliability and a customer-first approach.</p>
+          <div class="about-checklist" id="aboutChecklist"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ SERVICES — ticket cards ═══════════ -->
+  <section id="services" class="services-section section-pad" data-section="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">What We Offer</div>
+        <h2 class="section-heading">Our Services<span class="dot">.</span></h2>
+        <p class="section-sub">Comprehensive solutions tailored to meet your needs — from quick consultations to end-to-end delivery.</p>
+      </div>
+      <div class="services-grid" id="servicesList"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ WHY — checkerboard tiles ═══════════ -->
+  <section class="why-section section-pad" id="why">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Why Choose Us</div>
+        <h2 class="section-heading">Why Customers Choose Us<span class="dot">.</span></h2>
+      </div>
+      <div class="why-grid" id="whyGrid"></div>
+      <div class="stats-strip" id="statsStrip"></div>
+    </div>
+  </section>
+
+
+  <!-- BANNERS MIDDLE -->
+  <section data-section="banners" data-position="middle" class="banner-zone container">
+    <div id="bannersMiddle"></div>
+  </section>
+
+
+  <!-- ═══════════ HOW IT WORKS — arrow boxes ═══════════ -->
+  <section class="how-section section-pad" id="how">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-eyebrow">How It Works</div>
+        <h2 class="section-heading">Get Started in Just a Few Steps<span class="dot">.</span></h2>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="hs-num">1</div>
+          <h4>Reach Out</h4>
+          <p>Get in touch via call, WhatsApp, or the form.</p>
+        </div>
+        <div class="how-arrow" aria-hidden="true">→</div>
+        <div class="how-step">
+          <div class="hs-num">2</div>
+          <h4>Share Your Needs</h4>
+          <p>Tell us what you're looking for and your requirements.</p>
+        </div>
+        <div class="how-arrow" aria-hidden="true">→</div>
+        <div class="how-step">
+          <div class="hs-num">3</div>
+          <h4>We Get Started</h4>
+          <p>Our team gets to work right away with a clear plan.</p>
+        </div>
+        <div class="how-arrow" aria-hidden="true">→</div>
+        <div class="how-step">
+          <div class="hs-num">4</div>
+          <h4>Quality Delivery</h4>
+          <p>We deliver on time, every time, without compromise.</p>
+        </div>
+        <div class="how-arrow" aria-hidden="true">→</div>
+        <div class="how-step">
+          <div class="hs-num">5</div>
+          <h4>Ongoing Support</h4>
+          <p>We stay with you for follow-ups and any future needs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ AREAS — sticker cloud ═══════════ -->
+  <section id="areas" class="areas-section section-pad">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-eyebrow">Coverage</div>
+        <h2 class="section-heading">Areas We Serve<span class="dot">.</span></h2>
+      </div>
+      <div class="areas-chips" id="areasChips"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ TESTIMONIALS — speech bubbles ═══════════ -->
+  <section id="testimonials" class="testimonials-section section-pad" data-section="reviews">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Real Stories</div>
+        <h2 class="section-heading">What Customers Say<span class="dot">.</span></h2>
+      </div>
+      <div class="testimonials-grid" id="testimonialsList"></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ FAQ ═══════════ -->
+  <section id="faq" class="faq-section section-pad">
+    <div class="container">
+      <div class="section-header center">
+        <div class="section-eyebrow">Common Questions</div>
+        <h2 class="section-heading">Frequently Asked Questions<span class="dot">.</span></h2>
+      </div>
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>What services do you offer?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>We offer a comprehensive range of services tailored to our customers' needs. You can see the full list in our Services section above, or call us to discuss your specific requirement.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>How can I request a quote?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>You can request a quote by filling out the callback form on this page, calling our number directly, or messaging us on WhatsApp. We respond as quickly as possible.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>What areas do you serve?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Our service coverage is listed in the Areas We Serve section. If you don't see your location, please call us — we may still be able to help.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>What are your working hours?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>Our working hours are displayed at the top of this page. For urgent requests outside of these hours, please call us directly.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button"><span>How can I get in touch with you?</span><span class="faq-icon">+</span></button>
+          <div class="faq-a"><p>You can reach us by phone, WhatsApp, email, or the contact form on this page. All our contact details are listed in the footer below.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BANNERS BOTTOM -->
+  <section data-section="banners" data-position="bottom" class="banner-zone container">
+    <div id="bannersBottom"></div>
+  </section>
+
+
+  <!-- ═══════════ FINAL CTA ═══════════ -->
+  <section class="final-cta" id="contact-cta">
+    <div class="container">
+      <div class="section-eyebrow light">Ready to get started?</div>
+      <h2 class="final-cta-heading">TALK TO US TODAY</h2>
+      <p class="final-cta-sub">We're available now — reach out and we'll respond quickly.</p>
+      <div class="final-cta-actions">
+        <a id="finalCallBtn" href="tel:" class="btn-call-xl">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/></svg>
+          <span data-bind="contact.phone">+91 00000 00000</span>
+        </a>
+        <a id="finalWhatsappBtn" href="#" target="_blank" rel="noopener" class="btn-whatsapp-xl">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Message on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════ FOOTER ═══════════ -->
+  <footer id="contact" class="footer" data-section="footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand-col">
+        <div class="footer-brand-name" data-bind="basicInfo.siteName">Your Business</div>
+        <p class="footer-tagline" data-bind="footer.tagline">Quality services delivered with care.</p>
+        <div id="footerSocials" class="footer-socials"></div>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Quick Links</h4>
+        <ul class="footer-links-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#areas">Areas We Serve</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Our Services</h4>
+        <ul class="footer-links-list" id="footerServices"></ul>
+      </div>
+      <div class="footer-col">
+        <h4 class="footer-col-title">Contact</h4>
+        <p class="footer-addr" data-bind="contact.address">Address line</p>
+        <p class="footer-line"><a id="footerPhoneLink" href="tel:" data-bind="contact.phone">+91 00000 00000</a></p>
+        <p class="footer-line muted" data-bind="contact.workingHours">Available Now</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <p data-bind="footer.copyrightText">© 2026 All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- POPUP BANNER -->
+  <div id="popupBanner" style="display:none;position:fixed;bottom:24px;left:24px;max-width:340px;z-index:9999"></div>
+
+
+    <script>
+  /* Static preview filler — demo content only (no API). */
+  (function(){
+    const $ = s => document.querySelector(s);
+    const $$ = s => [...document.querySelectorAll(s)];
+    const setHTML = (s, h) => { const el = $(s); if (el) el.innerHTML = h; };
+
+    // bind demo brand everywhere
+    $$("[data-bind='basicInfo.siteName']").forEach(el => el.textContent = "Acme Services");
+    $$("[data-bind='basicInfo.tagline']").forEach(el => el.textContent = "Quality you can trust");
+    $$("[data-bind='contact.phone']").forEach(el => el.textContent = "+91 98765 43210");
+    $$("[data-bind='contact.email']").forEach(el => el.textContent = "hello@acme.in");
+    $$("[data-bind='contact.workingHours']").forEach(el => el.textContent = "Open · Mon–Sat 9AM–8PM");
+    $$("[data-bind='contact.address']").forEach(el => el.textContent = "12, Main Market Road, New Delhi 110001");
+    $$("[data-bind='footer.tagline']").forEach(el => el.textContent = "Quality services delivered with care since 2014.");
+    $$("[data-bind='footer.copyrightText']").forEach(el => el.textContent = "© 2026 Acme Services. All rights reserved.");
+    $$("[data-bind='heroSlides.0.subtitle']").forEach(el => el.textContent = "Trusted by 500+ customers");
+    $$("[data-bind='heroSlides.0.title']").forEach(el => el.textContent = "Premium Service, Delivered Right");
+    $$("[data-bind='about.shortText']").forEach(el => el.textContent = "We deliver premium services with reliability and a customer-first focus. Reach out today — our team responds within minutes.");
+    $$("[data-bind='about.heading']").forEach(el => el.textContent = "A Team That Cares About Your Success");
+    $$("[data-bind='about.longText']").forEach(el => el.textContent = "For over a decade we have served homes and businesses with honest pricing, skilled professionals, and a commitment to doing the job right the first time. Our customers stay with us because we treat every project like our own.");
+    document.title = "Acme Services — Preview";
+
+    setHTML("#heroChips", ["Certified Team","Fast Response","Transparent Pricing"]
+      .map(c => `<span class="hero-chip">${c}</span>`).join(""));
+
+    setHTML("#heroStats", [["500+","Happy Clients"],["10+","Years"],["24/7","Support"]]
+      .map(s => `<div class="hs-item"><strong>${s[0]}</strong><span>${s[1]}</span></div>`).join(""));
+
+    setHTML("#statsStrip", [["500+","Happy Clients"],["10+","Years Experience"],["24/7","Support"],["4.9★","Avg. Rating"]]
+      .map(s => `<div class="ss-item"><span class="ss-num">${s[0]}</span><span class="ss-label">${s[1]}</span></div>`).join(""));
+
+    setHTML("#aboutChecklist", ["Licensed & insured professionals","Upfront, honest pricing","Same-day service available","100% satisfaction guarantee"]
+      .map(t => `<div class="about-check">${t}</div>`).join(""));
+
+    setHTML("#servicesList", [
+      ["Consultation","Expert advice tailored to your needs with a clear action plan."],
+      ["Installation","Professional setup done right the first time, on schedule."],
+      ["Maintenance","Ongoing care and support to keep everything running smoothly."],
+      ["Emergency Support","24/7 rapid response when you need us the most."],
+      ["Custom Solutions","Bespoke packages designed around your exact requirements."],
+      ["Free Estimates","Transparent, no-obligation quotes before any work begins."]
+    ].map((s, i) => `<article class="service-card">
+          <div class="sc-topbar"><span>Service <em>#${String(i+1).padStart(2,"0")}</em></span><span>★</span></div>
+          <div class="sc-media"><div class="sc-media-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 2"/></svg></div></div>
+          <div class="service-card-body">
+            <h3>${s[0]}</h3><p>${s[1]}</p>
+            <div class="service-card-actions">
+              <a class="svc-btn call" href="#">Call</a>
+              <a class="svc-btn wa" href="#">WhatsApp</a>
+            </div>
+          </div>
+        </article>`).join(""));
+
+    setHTML("#whyGrid", [
+      ["Trusted Quality","Years of proven service and hundreds of satisfied customers."],
+      ["Fast Response","Quick turnaround with clear communication at every step."],
+      ["Fair Pricing","Honest, upfront quotes with no hidden charges — ever."],
+      ["Expert Team","Skilled, background-checked professionals you can rely on."]
+    ].map(w => `<div class="why-block">
+          <div class="wb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <h4 class="wb-title">${w[0]}</h4><p class="wb-desc">${w[1]}</p>
+        </div>`).join(""));
+
+    const areas = ["Delhi NCR","Gurgaon","Noida","Faridabad","Ghaziabad","Greater Noida","Dwarka","Rohini"];
+    setHTML("#areasChips", areas.map(a => `<a class="area-chip" href="#">${a}</a>`).join(""));
+
+    setHTML("#testimonialsList", [
+      ["Priya Sharma","Homeowner","Absolutely brilliant service from start to finish. The team was punctual, polite, and the pricing was exactly as quoted. Highly recommend."],
+      ["Arjun Mehta","Business Owner","The team understood exactly what we needed. Fast, professional, and reliable — our go-to for everything now."],
+      ["Ravi Iyer","Property Manager","A rare find — punctual, honest, and genuinely great to work with. Every job has been completed on time."]
+    ].map(t => `
+      <article class="testimonial-card">
+        <div class="tc-quote">"</div>
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">${t[2]}</p>
+        <div class="tc-author">
+          <div class="tc-avatar">${t[0][0]}</div>
+          <div><div class="tc-name">${t[0]}</div><div class="tc-desig">${t[1]}</div></div>
+        </div>
+      </article>`).join(""));
+
+    // FAQ toggle
+    $$(".faq-item .faq-q").forEach(q => {
+      q.addEventListener("click", () => {
+        const item = q.closest(".faq-item");
+        $$(".faq-item").forEach(x => { if (x !== item) x.classList.remove("open"); });
+        item.classList.toggle("open");
+      });
+    });
+    const firstFaq = $(".faq-item"); if (firstFaq) firstFaq.classList.add("open");
+
+    // navbar scroll + mobile toggle
+    const header = $("#mainHeader");
+    window.addEventListener("scroll", () => header?.classList.toggle("scrolled", window.scrollY > 60), { passive: true });
+    $("#navToggle")?.addEventListener("click", () => {
+      $("#navToggle").classList.toggle("open");
+      $("#navMenu")?.classList.toggle("open");
+    });
+
+    const pl = document.getElementById("preloader");
+    if (pl) { pl.classList.add("gone"); setTimeout(() => pl.remove(), 500); }
+  })();
+  </script>
+</body>
+
+</html>

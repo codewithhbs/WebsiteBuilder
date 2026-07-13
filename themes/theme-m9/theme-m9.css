@@ -1,0 +1,160 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m9.css — Blush · Beauty & Lifestyle
+   Soft rose + ivory, elegant italic serif, delicate details. Best
+   for: salons, spas, makeup artists, boutiques, wedding services,
+   fashion. Vibe: feminine, luxurious, editorial-magazine.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap');
+
+:root {
+  --primary: #db2777;
+  --primary-dark: #be185d;
+  --primary-light: #fdf2f8;
+  --primary-rgb: 219, 39, 119;
+  --accent: #25d366;
+  --accent-rgb: 37, 211, 102;
+
+  --bg: #fffcfd;
+  --bg-soft: #fdf6f9;
+  --bg-section: #fbeef4;
+  --bg-deep: #2d0a1c;
+
+  --text: #2d1521;
+  --text-muted: #6b5261;
+  --text-light: #a893a0;
+
+  --border: #f4dce8;
+  --border-soft: #fbeef4;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-sm: 0 2px 8px rgba(219,39,119,.05);
+  --shadow: 0 10px 30px rgba(219,39,119,.09);
+  --shadow-lg: 0 24px 56px rgba(219,39,119,.13);
+  --shadow-brand: 0 14px 34px rgba(var(--primary-rgb), .24);
+
+  --font-body: 'Jost', system-ui, sans-serif;
+  --font-heading: 'Playfair Display', 'Georgia', serif;
+}
+
+body { background: var(--bg); font-size: 16.5px; }
+.ms-header { background: rgba(255,252,253,.9); }
+.ms-brand-name { font-family: var(--font-heading); font-weight: 700; }
+
+/* Hero — soft rose petals wash */
+.ms-hero {
+  background:
+    radial-gradient(ellipse at top right, rgba(219,39,119,.1) 0%, transparent 55%),
+    radial-gradient(ellipse at bottom left, rgba(251,207,232,.4) 0%, transparent 55%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+}
+
+/* Elegant serif with italic flourish */
+.ms-hero-title {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(2.9rem, 6.4vw, 4.9rem);
+  letter-spacing: -.008em;
+  line-height: 1.04;
+}
+.ms-hero-title em, .ms-h2 em { font-style: italic; color: var(--primary); }
+.ms-h2 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+.ms-hero-sub { font-size: 1.14rem; letter-spacing: .01em; }
+
+/* Eyebrow — delicate letterspaced */
+.ms-eyebrow {
+  background: transparent;
+  color: var(--primary);
+  font-size: .72rem;
+  letter-spacing: .3em;
+  font-weight: 600;
+  padding: 0;
+  border: none;
+}
+.ms-eyebrow::before {
+  width: 26px;
+  height: 1px;
+  border-radius: 0;
+  animation: none;
+  box-shadow: none;
+}
+
+/* Buttons — pill, refined */
+.ms-btn {
+  border-radius: 999px;
+  padding: 13px 30px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: .82rem;
+}
+.ms-btn-primary { box-shadow: var(--shadow-brand); }
+.ms-btn-outline { border-color: var(--primary); color: var(--primary); }
+
+/* Cards */
+.ms-feature, .ms-service, .ms-testimonial, .ms-team-card,
+.ms-pricing-card, .ms-blog-card, .ms-faq-item, .ms-contact-form {
+  background: var(--bg);
+  border-color: var(--border);
+}
+.ms-feature-icon {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 50%;
+  width: 66px;
+  height: 66px;
+}
+.ms-feature:hover .ms-feature-icon {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Service — portrait images (salon/beauty photography) */
+.ms-service-img { aspect-ratio: 3/4; }
+.ms-service:hover { border-color: var(--primary); }
+
+/* Team — larger circular photos */
+.ms-team-photo { width: 120px; height: 120px; }
+
+/* CTA — rose gradient */
+.ms-cta {
+  background: linear-gradient(135deg, var(--primary) 0%, #ec4899 55%, #f472b6 100%);
+}
+
+/* Stats — rose gold */
+.ms-stats-grid {
+  background: linear-gradient(135deg, var(--primary) 0%, #ec4899 100%);
+}
+
+/* Pricing featured — blush glow */
+.ms-pricing-card--featured {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--primary-light) 100%);
+}
+
+/* Testimonial quote mark — script style */
+.ms-testimonial::before {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: rgba(219,39,119,.12);
+  font-size: 110px;
+}
+
+/* Gallery — softer rounded */
+.ms-gallery-item { border-radius: var(--radius-xl); }
+
+/* Marquee — rose */
+.ms-marquee { background: var(--bg-deep); }
+.ms-marquee-item { font-family: var(--font-heading); font-style: italic; font-weight: 600; }
+
+/* Steps — circled numbers in serif */
+.ms-step-num { font-family: var(--font-heading); }
+
+/* Blog date */
+.ms-blog-date { color: var(--primary); }

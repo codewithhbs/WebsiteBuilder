@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="color-scheme" content="only light">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Loading…</title>
+  <meta name="description" content="" />
+  <link id="favicon" rel="icon" href="" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- Shared base styles (loaded first) -->
+  <link rel="stylesheet" href="/themes/multi-shared/sections.css">
+  <!-- Theme-specific overrides (loaded after to win cascade) -->
+  <link rel="stylesheet" href="/themes/theme-m5/theme-m5.css">
+</head>
+
+<body>
+
+  <!-- PRELOADER -->
+  <div id="preloader">
+    <div class="ms-pl-dot"></div>
+    <div class="ms-pl-text" data-bind="basicInfo.siteName">Loading…</div>
+  </div>
+
+
+  <!-- HEADER -->
+  <header class="ms-header" id="mainHeader">
+    <div class="ms-header-inner">
+      <a class="ms-brand" data-pagekey="home" href="/">
+        <img id="brandLogo" src="" alt="" style="display:none">
+        <div class="ms-brand-text">
+          <span class="ms-brand-name" data-bind="basicInfo.siteName">Your Business</span>
+          <span class="ms-brand-tagline" data-bind="basicInfo.tagline">Tagline</span>
+        </div>
+      </a>
+
+      <button class="ms-nav-toggle" id="navToggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav id="siteNav">
+        <!-- nav links injected from /pages -->
+      </nav>
+
+      <div class="ms-header-cta">
+        <a data-link="tel" href="tel:" class="ms-btn ms-btn-outline">
+          <span class="ms-btn-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 13 13 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 13 13 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </span>
+          Call Now
+        </a>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- DYNAMIC PAGE CONTENT -->
+  <main id="pageContent"></main>
+
+
+  <!-- FOOTER -->
+  <footer class="ms-footer">
+    <div class="ms-footer-grid">
+
+      <div class="ms-footer-col">
+        <div class="ms-footer-brand-name" data-bind="basicInfo.siteName">Your Business</div>
+        <p class="ms-footer-tagline" data-bind="footer.tagline">Quality services delivered with care.</p>
+        <div id="footerSocials" class="ms-footer-socials"></div>
+      </div>
+
+      <div class="ms-footer-col">
+        <h4 class="ms-footer-col-title">Quick Links</h4>
+        <ul class="ms-footer-links" id="footerNav"></ul>
+      </div>
+
+      <div class="ms-footer-col">
+        <h4 class="ms-footer-col-title">Contact</h4>
+        <p class="ms-footer-line" data-bind="contact.address">Address line</p>
+        <p class="ms-footer-line">
+          <a data-link="tel" href="tel:" data-bind="contact.phone">+91 00000 00000</a>
+        </p>
+        <p class="ms-footer-line">
+          <a data-link="mail" href="mailto:" data-bind="contact.email">info@example.com</a>
+        </p>
+      </div>
+
+    </div>
+    <div class="ms-footer-bottom">
+      <div class="ms-container">
+        <p data-bind="footer.copyrightText">© 2026 All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- Shared renderer engine -->
+  <script src="/themes/multi-shared/render-multi.js"></script>
+</body>
+
+</html>

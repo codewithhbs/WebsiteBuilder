@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>Hero Variants Showcase</title>
+<link rel="stylesheet" href="/themes/multi-shared/sections.css">
+<style>
+  body { background:#f4f6fa; }
+  .demo-label {
+    max-width:1220px; margin:44px auto 10px; padding:0 24px;
+    font:800 1.15rem/1.3 'Plus Jakarta Sans',sans-serif; color:#0d1526;
+    display:flex; align-items:center; gap:10px;
+  }
+  .demo-label span { font:600 .8rem/1 sans-serif; color:#5b6b82; background:#e5eaf1; padding:5px 12px; border-radius:999px; }
+  .demo-frame { border-top:1px solid #e5eaf1; border-bottom:1px solid #e5eaf1; }
+</style>
+</head>
+<body>
+
+<div class="demo-label">1. Image Background <span>full photo + themed overlay</span></div>
+<div class="demo-frame">
+  <section class="ms-hero ms-hero--imageBg ms-hero--onDark">
+    <div class="ms-hero-bgimg" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600')"></div>
+    <div class="ms-hero-overlay" style="background:linear-gradient(135deg,rgba(var(--primary-rgb),.85) 0%,rgba(var(--primary-rgb),.6) 45%,rgba(var(--primary-rgb),.3) 100%);"></div>
+    <div class="ms-container"><div class="ms-hero-inner">
+      <div class="ms-eyebrow ms-eyebrow--light">Welcome</div>
+      <h1 class="ms-hero-title">Full Image Background Hero</h1>
+      <p class="ms-hero-sub">The overlay color automatically matches your theme's primary colour, keeping text readable over any photo.</p>
+      <div class="ms-hero-actions">
+        <a class="ms-btn ms-btn-light" href="#">Get Started</a>
+        <a class="ms-btn ms-btn-outline-light" href="#">Learn More</a>
+      </div>
+    </div></div>
+  </section>
+</div>
+
+<div class="demo-label">2. Slider <span>multiple rotating background images</span></div>
+<div class="demo-frame">
+  <section class="ms-hero ms-hero--slider ms-hero--onDark" data-hero-slider data-interval="3500">
+    <div class="ms-hero-slides">
+      <div class="ms-hero-slide active" style="background-image:url('https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1600')"></div>
+      <div class="ms-hero-slide" style="background-image:url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1600')"></div>
+      <div class="ms-hero-slide" style="background-image:url('https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=1600')"></div>
+    </div>
+    <div class="ms-hero-overlay" style="background:linear-gradient(135deg,rgba(var(--primary-rgb),.82) 0%,rgba(var(--primary-rgb),.58) 45%,rgba(var(--primary-rgb),.32) 100%);"></div>
+    <div class="ms-container"><div class="ms-hero-inner">
+      <div class="ms-eyebrow ms-eyebrow--light">Featured</div>
+      <h1 class="ms-hero-title">Auto-Rotating Image Slider</h1>
+      <p class="ms-hero-sub">Add as many background images as you like — they cross-fade automatically. Dots let visitors jump between slides.</p>
+      <div class="ms-hero-actions">
+        <a class="ms-btn ms-btn-light" href="#">Book Now</a>
+        <a class="ms-btn ms-btn-outline-light" href="#">Our Work</a>
+      </div>
+    </div></div>
+    <div class="ms-hero-dots">
+      <button class="ms-hero-dot active" data-slide="0"></button>
+      <button class="ms-hero-dot" data-slide="1"></button>
+      <button class="ms-hero-dot" data-slide="2"></button>
+    </div>
+  </section>
+</div>
+
+<div class="demo-label">3. Gradient <span>theme color gradient, no image</span></div>
+<div class="demo-frame">
+  <section class="ms-hero ms-hero--gradient ms-hero--onDark">
+    <div class="ms-container"><div class="ms-hero-inner">
+      <div class="ms-eyebrow ms-eyebrow--light">Simple &amp; Bold</div>
+      <h1 class="ms-hero-title">Gradient Background Hero</h1>
+      <p class="ms-hero-sub">No photo needed — a clean gradient built from your theme colour, with soft decorative circles.</p>
+      <div class="ms-hero-actions">
+        <a class="ms-btn ms-btn-light" href="#">Start Free</a>
+        <a class="ms-btn ms-btn-outline-light" href="#">See Pricing</a>
+      </div>
+    </div></div>
+  </section>
+</div>
+
+<div class="demo-label">4. Split <span>text left, image right</span></div>
+<div class="demo-frame">
+  <section class="ms-hero ms-hero--split">
+    <div class="ms-container ms-hero-grid">
+      <div class="ms-hero-text">
+        <div class="ms-eyebrow">About Us</div>
+        <h1 class="ms-hero-title">Split Layout Hero</h1>
+        <p class="ms-hero-sub">Classic two-column hero — text on the left, image on the right. Great for products and services.</p>
+        <div class="ms-hero-chips"><span class="ms-chip">Fast</span><span class="ms-chip">Reliable</span></div>
+        <div class="ms-hero-actions"><a class="ms-btn ms-btn-primary" href="#">Get Started</a><a class="ms-btn ms-btn-outline" href="#">Learn More</a></div>
+      </div>
+      <div class="ms-hero-media"><img class="ms-hero-img" src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=900" alt=""></div>
+    </div>
+  </section>
+</div>
+
+<div class="demo-label">5. Centered <span>classic middle-aligned</span></div>
+<div class="demo-frame">
+  <section class="ms-hero ms-hero--centered">
+    <div class="ms-container"><div class="ms-hero-inner">
+      <div class="ms-eyebrow">Welcome</div>
+      <h1 class="ms-hero-title">Centered Text Hero</h1>
+      <p class="ms-hero-sub">The simple, timeless centered hero with everything stacked in the middle.</p>
+      <div class="ms-hero-actions"><a class="ms-btn ms-btn-primary" href="#">Get Started</a><a class="ms-btn ms-btn-outline" href="#">Learn More</a></div>
+    </div></div>
+  </section>
+</div>
+
+<script>
+  // init sliders for this static showcase
+  document.querySelectorAll("[data-hero-slider]").forEach(hero => {
+    const slides = hero.querySelectorAll(".ms-hero-slide");
+    const dots = hero.querySelectorAll(".ms-hero-dot");
+    if (slides.length < 2) return;
+    let idx = 0;
+    const iv = parseInt(hero.dataset.interval) || 5000;
+    function go(n){ idx=(n+slides.length)%slides.length; slides.forEach((s,i)=>s.classList.toggle("active",i===idx)); dots.forEach((d,i)=>d.classList.toggle("active",i===idx)); }
+    dots.forEach(d=>d.addEventListener("click",()=>{go(parseInt(d.dataset.slide)); reset();}));
+    let t=setInterval(()=>go(idx+1),iv);
+    function reset(){ clearInterval(t); t=setInterval(()=>go(idx+1),iv); }
+  });
+</script>
+</body>
+</html>

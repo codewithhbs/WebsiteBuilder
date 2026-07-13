@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import api from "../api/client";
+import ThemePreviewCard from "../components/ThemePreviewCard";
 
 export default function NewWebsite() {
   const nav = useNavigate();
   const [clients, setClients] = useState([]);
   const [themes, setThemes] = useState([]);
-  const [form, setForm] = useState({ clientId: "", themeId: "", slug: "", siteName: "" });
+  const [form, setForm] = useState({ clientId: "", themeId: "", slug: "", siteName: "", pageType: "single" });
   const [slugStatus, setSlugStatus] = useState(null); // {available, reason}
   const [loading, setLoading] = useState(false);
 
@@ -15,6 +16,17 @@ export default function NewWebsite() {
     api.get("/employee/clients", { params: { limit: 200 } }).then((r) => setClients(r.data.items));
     api.get("/public/themes").then((r) => setThemes(r.data.items));
   }, []);
+
+  // themes compatible with the currently selected page type
+  const compatibleThemes = themes.filter((t) => (t.pageType || "single") === form.pageType);
+
+  // if the selected theme is no longer compatible after a pageType switch, clear it
+  useEffect(() => {
+    if (form.themeId && !compatibleThemes.some((t) => t._id === form.themeId)) {
+      setForm((f) => ({ ...f, themeId: "" }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.pageType, themes]);
 
   // debounced slug check
   useEffect(() => {
@@ -80,20 +92,54 @@ export default function NewWebsite() {
           </div>
 
           <div className="mb-3">
-            <label className="form-label small">Theme</label>
-            <div className="row">
-              {themes.map((t) => (
-                <div key={t._id} className="col-md-6 mb-2">
-                  <label className={"card p-2 d-flex flex-row gap-2 align-items-center " + (form.themeId === t._id ? "border-primary" : "")}>
-                    <input type="radio" name="theme" checked={form.themeId === t._id} onChange={() => setForm({ ...form, themeId: t._id })} />
-                    <div>
-                      <div className="fw-bold small">{t.name}</div>
-                      <code className="small text-muted">{t.themeKey}</code>
-                    </div>
-                  </label>
-                </div>
-              ))}
+            <label className="form-label small">Page Type</label>
+            <div className="d-flex gap-3">
+              <label className={"card p-2 px-3 d-flex flex-row gap-2 align-items-center " + (form.pageType === "single" ? "border-primary" : "")}>
+                <input
+                  type="radio"
+                  name="pageType"
+                  checked={form.pageType === "single"}
+                  onChange={() => setForm((f) => ({ ...f, pageType: "single" }))}
+                />
+                <span className="small fw-bold">Single Page</span>
+              </label>
+              <label className={"card p-2 px-3 d-flex flex-row gap-2 align-items-center " + (form.pageType === "multi" ? "border-primary" : "")}>
+                <input
+                  type="radio"
+                  name="pageType"
+                  checked={form.pageType === "multi"}
+                  onChange={() => setForm((f) => ({ ...f, pageType: "multi" }))}
+                />
+                <span className="small fw-bold">Multi Page</span>
+              </label>
             </div>
+            <div className="form-text">Multi-page sites get starter Home / About / Services / Contact pages auto-seeded.</div>
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label small fw-semibold d-flex align-items-center gap-2">
+              <i className="bi bi-palette-fill text-primary"></i>
+              Choose a Theme
+              <span className="badge bg-light text-muted border ms-1">{compatibleThemes.length}</span>
+            </label>
+            {compatibleThemes.length === 0 ? (
+              <div className="alert alert-warning small mb-0">
+                <i className="bi bi-exclamation-triangle me-1"></i>
+                No {form.pageType}-page themes available. Ask an admin to seed them.
+              </div>
+            ) : (
+              <div className="row g-3">
+                {compatibleThemes.map((t) => (
+                  <div key={t._id} className="col-md-6 col-lg-4">
+                    <ThemePreviewCard
+                      theme={t}
+                      active={form.themeId === t._id}
+                      onSelect={() => setForm({ ...form, themeId: t._id })}
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={loading || !form.clientId || !form.themeId}>

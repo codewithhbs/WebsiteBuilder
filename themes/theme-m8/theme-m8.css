@@ -1,0 +1,204 @@
+/* ═══════════════════════════════════════════════════════════════════
+   theme-m8.css — Midnight · Dark Glassmorphism
+   Deep navy-black with electric cyan, frosted-glass cards, glowing
+   accents. Best for: fintech, crypto, security firms, IT services,
+   gaming, modern B2B. Vibe: futuristic, sleek, premium-tech.
+   ═══════════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --primary: #22d3ee;
+  --primary-dark: #06b6d4;
+  --primary-light: rgba(34,211,238,.12);
+  --primary-rgb: 34, 211, 238;
+  --accent: #25d366;
+  --accent-rgb: 37, 211, 102;
+
+  --bg: #070d1a;
+  --bg-soft: #0c1526;
+  --bg-section: #0a1220;
+  --bg-deep: #04080f;
+
+  --text: #e8eef7;
+  --text-muted: #8b9bb3;
+  --text-light: #5c6b82;
+
+  --border: #1a2942;
+  --border-soft: #12203a;
+
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.5);
+  --shadow: 0 12px 32px rgba(0,0,0,.55);
+  --shadow-lg: 0 24px 56px rgba(0,0,0,.65);
+  --shadow-xl: 0 40px 80px rgba(0,0,0,.7);
+  --shadow-brand: 0 16px 40px rgba(var(--primary-rgb), .25);
+
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Space Grotesk', 'Inter', sans-serif;
+}
+
+body { background: var(--bg); color: var(--text); }
+
+/* Header — frosted dark glass */
+.ms-header {
+  background: rgba(7,13,26,.75);
+  border-bottom-color: var(--border);
+}
+.ms-brand-name { color: var(--text); }
+.ms-brand-tagline { color: var(--text-muted); }
+.ms-nav-link { color: var(--text); }
+
+/* Hero — glowing cyan orbs on deep navy */
+.ms-hero {
+  background:
+    radial-gradient(circle 500px at 80% 10%, rgba(34,211,238,.18) 0%, transparent 60%),
+    radial-gradient(circle 400px at 15% 90%, rgba(99,102,241,.15) 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.ms-hero::before { background-image: radial-gradient(circle, rgba(34,211,238,.3) 1.5px, transparent 1.5px); }
+.ms-hero-title {
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+/* subtle glow behind title text */
+.ms-hero-title {
+  text-shadow: 0 0 60px rgba(34,211,238,.25);
+}
+.ms-hero-sub { color: var(--text-muted); }
+.ms-h2 { color: var(--text); }
+.ms-body, .ms-sub { color: var(--text-muted); }
+
+.ms-chip { background: rgba(34,211,238,.06); border-color: var(--border); color: var(--text); }
+
+/* Sections on dark */
+.ms-about, .ms-services, .ms-team, .ms-faq, .ms-contact, .ms-text,
+.ms-stats, .ms-video, .ms-map, .ms-steps, .ms-callback { background: var(--bg); }
+.ms-features, .ms-testimonials, .ms-gallery, .ms-pricing,
+.ms-blog, .ms-logocloud, .ms-areas { background: var(--bg-section); }
+
+/* Glass cards */
+.ms-feature, .ms-service, .ms-testimonial, .ms-team-card,
+.ms-pricing-card, .ms-blog-card, .ms-faq-item, .ms-contact-form,
+.ms-area-chip {
+  background: rgba(255,255,255,.03);
+  border-color: var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text);
+}
+.ms-feature:hover, .ms-service:hover {
+  border-color: rgba(var(--primary-rgb), .5);
+  box-shadow: 0 0 40px rgba(var(--primary-rgb), .12), var(--shadow-lg);
+}
+.ms-feature-title, .ms-service-title, .ms-team-name, .ms-pricing-name,
+.ms-blog-title, .ms-form-heading, .ms-step-title { color: var(--text); }
+.ms-feature-desc, .ms-service-desc, .ms-team-bio, .ms-blog-excerpt,
+.ms-step-desc { color: var(--text-muted); }
+.ms-testimonial-text { color: var(--text); }
+
+.ms-feature-icon {
+  background: rgba(34,211,238,.1);
+  color: var(--primary);
+  border: 1px solid rgba(34,211,238,.25);
+  box-shadow: 0 0 20px rgba(34,211,238,.12);
+}
+
+.ms-eyebrow {
+  background: rgba(34,211,238,.08);
+  color: var(--primary);
+  border-color: rgba(34,211,238,.22);
+}
+
+/* Buttons — cyan glow */
+.ms-btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: #04121a;
+  font-weight: 800;
+  box-shadow: 0 0 32px rgba(var(--primary-rgb), .35);
+}
+.ms-btn-primary:hover { box-shadow: 0 0 48px rgba(var(--primary-rgb), .55); }
+.ms-btn-outline { border-color: var(--border); color: var(--text); }
+.ms-btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+.ms-btn-light { background: var(--primary); color: #04121a; }
+
+/* CTA — neon panel */
+.ms-cta {
+  background:
+    radial-gradient(circle at 25% 30%, rgba(34,211,238,.2) 0%, transparent 55%),
+    radial-gradient(circle at 75% 70%, rgba(99,102,241,.18) 0%, transparent 55%),
+    linear-gradient(135deg, #0c1526 0%, #070d1a 100%);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Stats — glass panel with cyan numbers */
+.ms-stats-grid {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(34,211,238,.25);
+  box-shadow: 0 0 60px rgba(34,211,238,.1);
+  backdrop-filter: blur(10px);
+}
+.ms-stat-num { color: var(--primary); text-shadow: 0 0 24px rgba(34,211,238,.4); }
+.ms-stat-label { color: var(--text-muted); }
+.ms-stat { border-color: var(--border); }
+
+/* Steps on dark */
+.ms-step-num {
+  background: var(--bg);
+  border-color: var(--primary);
+  color: var(--primary);
+  box-shadow: 0 0 0 6px var(--bg), 0 0 20px rgba(34,211,238,.2);
+}
+.ms-steps-grid::before {
+  background: repeating-linear-gradient(90deg, var(--border) 0 10px, transparent 10px 18px);
+}
+
+/* Pricing featured — neon ring */
+.ms-pricing-card--featured {
+  background: rgba(34,211,238,.05);
+  box-shadow: 0 0 0 1.5px var(--primary), 0 0 60px rgba(34,211,238,.2);
+}
+.ms-pricing-badge { background: var(--primary); color: #04121a; }
+.ms-pricing-price { color: var(--primary); }
+
+/* Inputs */
+.ms-field input, .ms-field textarea, .ms-field select {
+  background: rgba(255,255,255,.04);
+  border-color: var(--border);
+  color: var(--text);
+}
+.ms-field label { color: var(--text); }
+
+/* FAQ */
+.ms-faq-q { color: var(--text); }
+.ms-faq-a p { color: var(--text-muted); }
+.ms-faq-icon { background: rgba(34,211,238,.12); color: var(--primary); }
+.ms-faq-icon svg { stroke: currentColor; }
+.ms-faq-item.open .ms-faq-icon { background: var(--primary); color: #04121a; }
+
+.ms-avatar { background: var(--primary); color: #04121a; }
+.ms-testimonial::before { color: rgba(34,211,238,.14); }
+
+/* Callback panel */
+.ms-callback-info {
+  background: linear-gradient(135deg, #0e1b33 0%, #0a1220 100%);
+  border: 1px solid rgba(34,211,238,.2);
+}
+.ms-callback-form { background: var(--bg-soft); }
+
+/* Marquee */
+.ms-marquee { background: var(--bg-deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ms-marquee-item { color: var(--primary); }
+
+#preloader { background: var(--bg); }
+.ms-pl-text { color: var(--text); }
+.ms-footer { background: var(--bg-deep); }
+
+:root { color-scheme: only dark; }
