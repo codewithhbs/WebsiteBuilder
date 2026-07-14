@@ -1,133 +1,236 @@
 /* ═══════════════════════════════════════════════════════════════════
-   theme-m5.css — Saffron · Hospitality
-   Warm saffron + cream, elegant serif headings, generous letter-spacing.
-   Best for: restaurants, hotels, cafes, salons, wellness centers.
-   Vibe: warm, inviting, sensory, editorial.
+   theme-m5.css — Saffron · Warm Editorial Menu
+   Cream paper · big italic Cormorant headings · ruled list rows
+   instead of cards · dotted price leaders feel · sepia photos ·
+   double-rule footer. Vibe: restaurant menu / boutique hospitality.
    ═══════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@400;500;600;700&display=swap');
 
 :root {
-  --primary: #ea580c;
-  --primary-dark: #c2410c;
-  --primary-light: #fff7ed;
-  --primary-rgb: 234, 88, 12;
+  --primary: #b4530a;                 /* burnt saffron */
+  --primary-dark: #92430a;
+  --primary-light: #fdf0e3;
+  --primary-rgb: 180, 83, 10;
   --accent: #25d366;
   --accent-rgb: 37, 211, 102;
 
-  --bg: #fffbf5;
-  --bg-soft: #fef9f0;
-  --bg-section: #fef3e8;
-  --bg-deep: #1c1917;
+  --bg: #fdf9f0;
+  --bg-soft: #f8f1e2;
+  --bg-section: #f8f2e6;
+  --bg-deep: #241a10;
 
-  --text: #1c1917;
-  --text-muted: #57534e;
-  --text-light: #a8a29e;
+  --text: #2b2117;
+  --text-muted: #6f6353;
+  --text-light: #a39682;
 
-  --border: #f5e9d8;
-  --border-soft: #fef3e8;
+  --border: #e6dcc8;
+  --border-soft: #efe7d6;
 
-  --radius-sm: 8px;
-  --radius: 12px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  --radius-sm: 3px;
+  --radius: 5px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+
+  --shadow-sm: none;
+  --shadow: 0 4px 18px rgba(43, 33, 23, .06);
+  --shadow-lg: 0 22px 46px rgba(43, 33, 23, .1);
+  --shadow-xl: 0 34px 70px rgba(43, 33, 23, .13);
+  --shadow-brand: 0 14px 30px rgba(var(--primary-rgb), .22);
 
   --font-body: 'Outfit', system-ui, sans-serif;
   --font-heading: 'Cormorant Garamond', 'Georgia', serif;
 }
 
-body { background: var(--bg); font-size: 17px; }
-.ms-header { background: rgba(255,251,245,.9); }
-
-/* Hero — warm sunset wash */
-.ms-hero {
-  background:
-    radial-gradient(ellipse at top, rgba(234,88,12,.14) 0%, transparent 55%),
-    radial-gradient(ellipse at bottom right, rgba(251,191,36,.16) 0%, transparent 55%),
-    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
-}
-
-/* Editorial serif hero title — very large, tight spacing */
-.ms-hero-title {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: clamp(3rem, 6.5vw, 5rem);
-  letter-spacing: 0;
-  line-height: 1;
-}
-.ms-hero-sub {
-  font-family: var(--font-body);
-  font-size: 1.2rem;
-}
+/* headings: large italic serif */
 .ms-h2 {
-  font-family: var(--font-heading);
   font-weight: 600;
+  font-style: italic;
+  font-size: clamp(2.1rem, 4.6vw, 3.3rem);
   letter-spacing: 0;
 }
+.ms-hero-title {
+  font-weight: 600;
+  font-style: italic;
+  font-size: clamp(2.8rem, 6.4vw, 5rem);
+  line-height: 1.05;
+}
+.ms-sub, .ms-hero-sub { font-size: 1.02rem; }
 
-/* Eyebrow — softer, editorial style */
+/* eyebrow: dashed small caps */
 .ms-eyebrow {
-  background: transparent;
-  color: var(--primary);
-  font-size: .74rem;
-  letter-spacing: .24em;
-  font-weight: 700;
+  background: none;
+  border: 0;
   padding: 0;
-  border: none;
+  color: var(--primary);
+  letter-spacing: .32em;
+  font-size: .7rem;
+  gap: 12px;
 }
 .ms-eyebrow::before {
-  content: '';
-  width: 30px;
-  height: 1px;
-  background: var(--primary);
+  width: 34px; height: 1px;
   border-radius: 0;
+  background: var(--primary);
   animation: none;
   box-shadow: none;
 }
 
-/* Buttons — rounded pill with warm shadow */
-.ms-btn {
-  border-radius: 999px;
-  padding: 14px 30px;
+/* header: paper bar with hairline + serif brand */
+.ms-header { background: rgba(253, 249, 240, .95); border-bottom: 1px solid var(--border); box-shadow: none; }
+.ms-brand-name { font-family: var(--font-heading); font-style: italic; font-weight: 700; font-size: 1.4rem; }
+.ms-nav-link {
+  background: none !important;
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+  font-size: .72rem;
   font-weight: 600;
 }
-.ms-btn-primary {
-  background: var(--primary);
-  box-shadow: 0 10px 24px rgba(var(--primary-rgb), .28);
-}
-.ms-btn-primary:hover { background: var(--primary-dark); }
-.ms-btn-outline { border-color: var(--primary); color: var(--primary); }
 
-/* Cards — warm cream surfaces */
-.ms-feature, .ms-service, .ms-testimonial, .ms-team-card,
-.ms-pricing-card, .ms-blog-card, .ms-faq-item, .ms-contact-form {
-  background: var(--bg);
-  border-color: var(--border);
-}
+/* buttons: bordered stamps */
+.ms-btn { border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: .14em; font-size: .74rem; font-weight: 700; }
+.ms-btn-primary { box-shadow: none; }
+.ms-btn-primary:hover { transform: none; box-shadow: var(--shadow-brand); }
+.ms-btn-outline { border: 1.5px solid var(--text); color: var(--text); }
+.ms-btn-outline:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
 
+/* hero: warm paper, ornament rule under */
+.ms-hero { background: var(--bg); padding: 108px 0 92px; }
+.ms-hero::before, .ms-hero::after { display: none; }
+.ms-hero-inner { position: relative; }
+.ms-hero-img { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); filter: sepia(.12) saturate(1.05); }
+.ms-hero--split .ms-hero-media::before { border: 1px solid var(--border); background: none; border-radius: var(--radius-lg); }
+.ms-hero--split .ms-hero-media::after { display: none; }
+
+/* features: RULED MENU ROWS — no cards */
+.ms-features-grid { display: flex !important; flex-direction: column; gap: 0 !important; max-width: 860px; margin: 0 auto; }
+.ms-feature {
+  display: grid;
+  grid-template-columns: 58px 1fr;
+  gap: 20px;
+  align-items: start;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 26px 6px;
+  text-align: left;
+}
+.ms-feature:first-child { border-top: 1px solid var(--border); }
+.ms-feature:hover { transform: none; box-shadow: none; background: rgba(var(--primary-rgb), .04); }
 .ms-feature-icon {
-  background: var(--primary-light);
-  color: var(--primary);
+  background: none;
+  border: 1px solid var(--border);
   border-radius: 50%;
-  width: 68px;
-  height: 68px;
+  color: var(--primary);
+  margin: 0;
+}
+.ms-feature-title { font-family: var(--font-heading); font-style: italic; font-weight: 600; font-size: 1.35rem; margin-bottom: 4px; }
+
+/* services: menu rows with photo thumb */
+.ms-services-grid { display: flex !important; flex-direction: column; gap: 22px !important; max-width: 940px; margin: 0 auto; }
+.ms-service {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+  background: var(--bg);
+  overflow: hidden;
+}
+.ms-service:hover { transform: none; box-shadow: var(--shadow-lg); }
+.ms-service-img { height: 100%; min-height: 168px; border-radius: 0; }
+.ms-service-img img { height: 100%; filter: sepia(.14) saturate(1.05); }
+.ms-service-title { font-family: var(--font-heading); font-style: italic; font-weight: 600; font-size: 1.5rem; }
+.ms-service-price { background: none; border: 0; color: var(--primary); font-family: var(--font-heading); font-style: italic; font-size: 1.2rem; padding: 0; }
+@media (max-width: 720px) {
+  .ms-service { grid-template-columns: 1fr; }
 }
 
-/* Service — image-forward, taller */
-.ms-service-img { aspect-ratio: 4/3; }
-.ms-service:hover { border-color: var(--primary); }
-
-/* CTA — warm dusk gradient */
-.ms-cta {
-  background: linear-gradient(135deg, var(--primary) 0%, #f97316 50%, #fbbf24 100%);
+/* steps: numbered courses */
+.ms-step { background: none; border: 0; border-top: 1px solid var(--border); border-radius: 0; box-shadow: none; text-align: left; padding-top: 24px; }
+.ms-step:hover { transform: none; box-shadow: none; }
+.ms-step-num {
+  background: none;
+  color: var(--primary);
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 2.4rem;
+  width: auto; height: auto;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0 0 10px;
+  display: block;
 }
+.ms-step-icon { display: none; }
+.ms-step-title { font-family: var(--font-heading); font-style: italic; font-weight: 600; font-size: 1.25rem; }
 
-/* Stats */
+/* stats: ruled row, serif numbers */
 .ms-stats-grid {
-  background: linear-gradient(135deg, var(--primary) 0%, #f97316 100%);
+  background: none;
+  border-top: 3px double var(--text);
+  border-bottom: 3px double var(--text);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 42px 0;
 }
+.ms-stat-num { color: var(--primary); font-family: var(--font-heading); font-style: italic; font-weight: 600; }
+.ms-stat-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: .2em; font-size: .68rem; }
 
-/* Pricing featured with warm glow */
-.ms-pricing-card--featured {
-  background: linear-gradient(180deg, var(--bg) 0%, var(--primary-light) 100%);
-}
+/* testimonials: guestbook entries */
+.ms-testimonial { background: none; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: none; }
+.ms-testimonial:hover { transform: none; box-shadow: var(--shadow); }
+.ms-testimonial::before { color: rgba(var(--primary-rgb), .3); font-family: var(--font-heading); }
+.ms-testimonial-text { font-family: var(--font-heading); font-style: italic; font-size: 1.18rem; line-height: 1.6; }
+.ms-stars { color: var(--primary); }
+.ms-avatar { border-radius: 50%; }
+
+/* pricing */
+.ms-pricing-card { border: 1px solid var(--border); border-radius: var(--radius); box-shadow: none; background: var(--bg); }
+.ms-pricing-card--featured { border: 3px double var(--primary); transform: none; box-shadow: var(--shadow-lg); }
+.ms-pricing-name { font-family: var(--font-heading); font-style: italic; font-weight: 600; font-size: 1.4rem; }
+.ms-pricing-price { font-family: var(--font-heading); font-style: italic; color: var(--primary); }
+.ms-pricing-badge { border-radius: 0; letter-spacing: .18em; text-transform: uppercase; }
+
+/* team */
+.ms-team-card { background: none; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: none; }
+.ms-team-photo { border-radius: var(--radius-sm); }
+.ms-team-photo img { filter: sepia(.14) saturate(1.05); }
+.ms-team-name { font-family: var(--font-heading); font-style: italic; font-weight: 600; font-size: 1.3rem; }
+.ms-team-role { color: var(--primary); text-transform: uppercase; letter-spacing: .16em; font-size: .68rem; }
+
+/* faq */
+.ms-faq-item { background: none; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.ms-faq-item:first-child { border-top: 1px solid var(--border); }
+.ms-faq-item.open { box-shadow: none; }
+.ms-faq-q { font-family: var(--font-heading); font-style: italic; font-weight: 600; font-size: 1.2rem; }
+.ms-faq-icon { border-radius: 50%; border: 1px solid var(--border); background: none; color: var(--primary); }
+
+/* CTA: framed invitation card */
+.ms-cta, .ms-cta--primary, .ms-cta--dark { background: var(--bg-deep); border-radius: 0; }
+.ms-cta-inner { border: 3px double rgba(255, 255, 255, .35); padding: 64px 44px; }
+.ms-cta .ms-h2--light { font-style: italic; font-weight: 600; }
+.ms-cta .ms-btn-light { border-radius: var(--radius-sm); }
+
+/* about: sepia framed */
+.ms-about-img, .ms-about-placeholder { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+.ms-about-img { filter: sepia(.14) saturate(1.05); }
+.ms-about-media::before { border: 1px solid var(--border); background: none; border-radius: var(--radius-lg); }
+.ms-check { border-radius: 50%; }
+
+/* gallery */
+.ms-gallery-item { border-radius: var(--radius-sm); }
+.ms-gallery-item img { filter: sepia(.1) saturate(1.05); }
+
+/* footer: double rule, serif brand */
+.ms-footer { background: var(--bg-deep); border-top: 3px double var(--primary); }
+.ms-footer-brand-name { font-family: var(--font-heading); font-style: italic; font-weight: 600; }
+.ms-footer-col-title { letter-spacing: .26em; color: var(--primary); font-size: .68rem; }
+.ms-social { border-radius: 50%; }
+
+/* area chips */
+.ms-area-chip { border-radius: var(--radius-sm); background: none; border: 1px solid var(--border); text-transform: uppercase; letter-spacing: .1em; font-size: .74rem; }
+.ms-area-chip:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: none; }

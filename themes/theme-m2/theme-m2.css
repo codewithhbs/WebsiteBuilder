@@ -1,10 +1,11 @@
 /* ═══════════════════════════════════════════════════════════════════
-   theme-m2.css — Crimson · Service Business
-   Bold red, urgency-focused. Best for: home services, emergency,
-   repair, healthcare, legal. Vibe: confident, action-driven, strong.
+   theme-m2.css — Crimson · Dynamic Diagonal Service
+   Skewed chips · angled section clips · thick left-border cards ·
+   chevron steps · uppercase Poppins headings. Vibe: energetic, urgent,
+   action-first. Best for repair, emergency & trade services.
    ═══════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800;900&display=swap');
 
 :root {
   --primary: #dc2626;
@@ -15,72 +16,205 @@
   --accent-rgb: 37, 211, 102;
 
   --bg: #ffffff;
-  --bg-soft: #fff7f7;
-  --bg-section: #fafafa;
-  --bg-deep: #1c0d0d;
+  --bg-soft: #fafafa;
+  --bg-section: #f8f7f7;
+  --bg-deep: #17181c;
 
-  --text: #18181b;
-  --text-muted: #52525b;
-  --text-light: #a1a1aa;
+  --text: #17181c;
+  --text-muted: #55575e;
+  --text-light: #9a9ca3;
 
-  --border: #e4e4e7;
-  --border-soft: #fee2e2;
+  --border: #e8e6e6;
+  --border-soft: #f2f0f0;
+
+  --radius-sm: 4px;
+  --radius: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  --shadow-sm: 0 2px 6px rgba(23, 24, 28, .06);
+  --shadow: 0 8px 24px rgba(23, 24, 28, .09);
+  --shadow-lg: 0 20px 44px rgba(23, 24, 28, .13);
+  --shadow-xl: 0 32px 64px rgba(23, 24, 28, .16);
+  --shadow-brand: 0 16px 36px rgba(var(--primary-rgb), .32);
 
   --font-body: 'Inter', system-ui, sans-serif;
   --font-heading: 'Poppins', 'Inter', sans-serif;
 }
 
-/* Hero — dramatic red wash */
+/* headings: uppercase punch */
+.ms-h2, .ms-hero-title {
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+}
+.ms-h2 { font-size: clamp(1.7rem, 3.6vw, 2.5rem); }
+.ms-hero-title { font-size: clamp(2.2rem, 5.2vw, 3.7rem); line-height: 1.06; }
+
+/* eyebrow: skewed slash tag */
+.ms-eyebrow {
+  background: var(--primary);
+  color: #fff;
+  border: 0;
+  border-radius: 0;
+  transform: skewX(-10deg);
+  padding: 7px 18px;
+  box-shadow: 4px 4px 0 rgba(var(--primary-rgb), .22);
+}
+.ms-eyebrow::before { background: #fff; border-radius: 0; animation: none; box-shadow: none; width: 5px; height: 12px; transform: skewX(0deg); }
+.ms-eyebrow--light { background: #fff; color: var(--primary); }
+.ms-eyebrow--light::before { background: var(--primary); }
+
+/* header: red top strip + skewed CTA */
+.ms-header { border-top: 5px solid var(--primary); }
+.ms-nav-link { border-radius: 0; font-weight: 600; text-transform: uppercase; font-size: .8rem; letter-spacing: .05em; }
+.ms-header-cta .ms-btn { border-radius: 0; }
+
+/* buttons: sharp skewed slabs */
+.ms-btn { border-radius: 0; text-transform: uppercase; font-size: .82rem; letter-spacing: .06em; font-weight: 700; }
+.ms-btn-primary { box-shadow: 5px 5px 0 rgba(var(--primary-rgb), .25); }
+.ms-btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 rgba(var(--primary-rgb), .3); }
+
+/* hero: angled bottom edge + diagonal wash */
 .ms-hero {
   background:
-    radial-gradient(ellipse 900px 500px at 90% -10%, rgba(220,38,38,.14) 0%, transparent 60%),
-    radial-gradient(ellipse 700px 400px at 10% 110%, rgba(220,38,38,.09) 0%, transparent 60%),
-    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
+    linear-gradient(105deg, rgba(var(--primary-rgb), .07) 0%, transparent 45%),
+    var(--bg-soft);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 56px), 0 100%);
+  padding-bottom: 130px;
+}
+.ms-hero::before, .ms-hero::after { display: none; }
+.ms-hero--gradient, .ms-hero--image, .ms-hero--slider { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 56px), 0 100%); }
+.ms-hero-img { border-radius: var(--radius-lg); box-shadow: var(--shadow-xl); transform: rotate(1.2deg); }
+.ms-hero--split .ms-hero-media::before { display: none; }
+.ms-hero--split .ms-hero-media::after {
+  border-radius: var(--radius-lg);
+  background: var(--primary);
+  transform: rotate(-1.2deg);
+  opacity: .15;
 }
 
-/* Hero title — more punch */
-.ms-hero-title {
-  font-weight: 900;
-  letter-spacing: -.024em;
+/* features: thick left border rail */
+.ms-feature {
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  box-shadow: var(--shadow-sm);
 }
-
-/* Eyebrow — bigger tracking for urgency */
-.ms-eyebrow { letter-spacing: .18em; font-weight: 800; }
-
-/* Buttons — stronger shadow presence */
-.ms-btn-primary { box-shadow: 0 10px 26px rgba(var(--primary-rgb), .38); }
-.ms-btn-primary:hover { box-shadow: 0 18px 40px rgba(var(--primary-rgb), .5); }
-
-/* Feature icons — solid filled red squares with tilt on hover */
+.ms-feature:hover { transform: translateX(6px); box-shadow: var(--shadow-lg); }
 .ms-feature-icon {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #fff;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(var(--primary-rgb), .3);
+  border-radius: 0;
+  transform: skewX(-6deg);
+  background: var(--primary-light);
+  color: var(--primary);
 }
-.ms-feature:hover .ms-feature-icon { transform: scale(1.06) rotate(-8deg); }
+.ms-feature-title { text-transform: uppercase; font-size: 1rem; letter-spacing: .02em; }
 
-/* Service cards — thicker borders, red on hover */
-.ms-service { border-width: 2px; }
-.ms-service:hover { border-color: var(--primary); }
+/* services: image cards with red baseline sweep */
+.ms-service {
+  border-radius: var(--radius);
+  border-bottom: 4px solid transparent;
+  transition: border-color .25s, transform .25s, box-shadow .25s;
+}
+.ms-service:hover { border-bottom-color: var(--primary); transform: translateY(-6px); }
+.ms-service-title { text-transform: uppercase; font-size: 1.02rem; }
+.ms-service-price { transform: skewX(-8deg); border-radius: 0; }
 
-/* CTA — full saturated red with white radial */
-.ms-cta {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+/* steps: chevron strip */
+.ms-step {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  clip-path: polygon(0 0, calc(100% - 22px) 0, 100% 50%, calc(100% - 22px) 100%, 0 100%);
+  padding-right: 40px;
+  text-align: left;
+  box-shadow: none;
 }
-.ms-cta::before {
-  background: radial-gradient(circle, rgba(255,255,255,.15) 0%, transparent 70%);
+.ms-step:hover { transform: none; background: var(--primary-light); }
+.ms-step-num {
+  border-radius: 0;
+  transform: skewX(-8deg);
+  box-shadow: 4px 4px 0 rgba(var(--primary-rgb), .2);
+  margin-left: 0;
 }
-.ms-cta::after {
-  background: radial-gradient(circle, rgba(255,255,255,.1) 0%, transparent 70%);
-}
+.ms-step-icon { display: none; }
+.ms-step-title { text-transform: uppercase; font-size: .95rem; }
 
-/* Stats — bold red gradient */
+/* stats: dark slab with red skew accents */
 .ms-stats-grid {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+  background: var(--bg-deep);
+  border-radius: 0;
+  clip-path: polygon(0 0, 100% 12px, 100% 100%, 0 calc(100% - 12px));
+  padding: 56px 40px;
 }
+.ms-stat-num { color: var(--primary); text-transform: uppercase; }
+.ms-stat-label { color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; }
 
-/* Pricing featured — extra glow */
-.ms-pricing-card--featured {
-  box-shadow: 0 24px 48px rgba(var(--primary-rgb), .22);
+/* testimonials: bold quote slab corner */
+.ms-testimonial { border-radius: var(--radius); border-top: 4px solid var(--primary); }
+.ms-testimonial::before {
+  color: #fff;
+  background: var(--primary);
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  font-size: 1.8rem;
+  border-radius: 0;
+  transform: skewX(-8deg);
+  top: -18px;
+  line-height: 1.4;
 }
+.ms-avatar { border-radius: 0; }
+
+/* pricing: featured tilted */
+.ms-pricing-card { border-radius: var(--radius); }
+.ms-pricing-card--featured {
+  border: 2px solid var(--primary);
+  transform: rotate(-1deg) scale(1.03);
+}
+.ms-pricing-badge { border-radius: 0; transform: skewX(-10deg); text-transform: uppercase; }
+
+/* team */
+.ms-team-card { border-radius: var(--radius); border-bottom: 4px solid var(--primary); }
+.ms-team-photo { border-radius: var(--radius-sm); }
+.ms-team-role { text-transform: uppercase; letter-spacing: .1em; font-size: .72rem; }
+
+/* faq: bold left rail on open */
+.ms-faq-item { border-radius: 0; border-left: 4px solid transparent; }
+.ms-faq-item.open { border-left-color: var(--primary); }
+.ms-faq-icon { border-radius: 0; transform: skewX(-8deg); }
+.ms-faq-item.open .ms-faq-icon { transform: skewX(-8deg) rotate(45deg); }
+
+/* CTA: diagonal red energy */
+.ms-cta, .ms-cta--primary {
+  background: linear-gradient(105deg, var(--primary-dark) 0%, var(--primary) 60%, #ef4444 100%);
+  clip-path: polygon(0 26px, 100% 0, 100% calc(100% - 26px), 0 100%);
+  padding-top: 110px;
+  padding-bottom: 110px;
+  border-radius: 0;
+}
+.ms-cta--dark { background: var(--bg-deep); clip-path: polygon(0 26px, 100% 0, 100% calc(100% - 26px), 0 100%); }
+.ms-cta .ms-h2--light { text-transform: uppercase; }
+.ms-cta .ms-btn-light { border-radius: 0; box-shadow: 5px 5px 0 rgba(0,0,0,.25); }
+
+/* about */
+.ms-about-img, .ms-about-placeholder { border-radius: var(--radius-lg); }
+.ms-about-media::before {
+  border-radius: var(--radius-lg);
+  background: repeating-linear-gradient(-45deg, rgba(var(--primary-rgb), .5), rgba(var(--primary-rgb), .5) 6px, transparent 6px, transparent 14px);
+  border: 0;
+}
+.ms-check { border-radius: 0; transform: skewX(-8deg); }
+
+/* gallery / blog */
+.ms-gallery-item { border-radius: var(--radius-sm); }
+.ms-blog-card { border-radius: var(--radius); border-top: 4px solid var(--primary); }
+
+/* footer: charcoal with red strip */
+.ms-footer { background: var(--bg-deep); border-top: 5px solid var(--primary); }
+.ms-footer-col-title { text-transform: uppercase; letter-spacing: .16em; color: var(--primary); }
+.ms-social { border-radius: 0; transform: skewX(-6deg); }
+.ms-social svg { transform: skewX(6deg); }
+
+/* area chips */
+.ms-area-chip { border-radius: 0; }
+.ms-area-chip:hover { background: var(--primary); color: #fff; border-color: var(--primary); transform: none; }

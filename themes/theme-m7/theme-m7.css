@@ -1,150 +1,202 @@
 /* ═══════════════════════════════════════════════════════════════════
-   theme-m7.css — Slate · Legal / Consulting
-   Navy + slate palette, sharp typography, structured. Best for: law
-   firms, financial advisors, consultants, accounting, insurance.
-   Vibe: authoritative, established, precise, institutional.
+   theme-m7.css — Slate · Institutional Formal
+   Navy & parchment · zero radius · double rules · small-caps serif ·
+   table-like stats with column rules · thick navy top bar.
+   Vibe: law firm, chartered accountants, old-money consulting.
    ═══════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Libre+Baskerville:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  --primary: #1e40af;
-  --primary-dark: #1e3a8a;
-  --primary-light: #eff6ff;
-  --primary-rgb: 30, 64, 175;
-  --accent: #b45309;
-  --accent-rgb: 180, 83, 9;
+  --primary: #1e3a6e;                /* institutional navy */
+  --primary-dark: #16294f;
+  --primary-light: #eef2f9;
+  --primary-rgb: 30, 58, 110;
+  --accent: #25d366;
+  --accent-rgb: 37, 211, 102;
 
-  --bg: #ffffff;
-  --bg-soft: #f8fafc;
-  --bg-section: #f1f5f9;
-  --bg-deep: #0f172a;
+  --bg: #fdfcfa;
+  --bg-soft: #f5f4f0;
+  --bg-section: #f6f5f1;
+  --bg-deep: #101d38;
 
-  --text: #0f172a;
-  --text-muted: #475569;
-  --text-light: #94a3b8;
+  --text: #1a2233;
+  --text-muted: #4e576b;
+  --text-light: #8b93a5;
 
-  --border: #cbd5e1;
-  --border-soft: #e2e8f0;
+  --border: #d9d7cf;
+  --border-soft: #e9e7e0;
 
-  --radius-sm: 4px;
-  --radius: 6px;
-  --radius-lg: 10px;
-  --radius-xl: 14px;
+  --radius-sm: 0px;
+  --radius: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
 
-  --shadow-sm: 0 1px 2px rgba(15,23,42,.06);
-  --shadow: 0 4px 16px rgba(15,23,42,.08);
-  --shadow-lg: 0 16px 40px rgba(15,23,42,.12);
+  --shadow-sm: none;
+  --shadow: 0 2px 8px rgba(26, 34, 51, .06);
+  --shadow-lg: 0 16px 36px rgba(26, 34, 51, .09);
+  --shadow-xl: 0 26px 54px rgba(26, 34, 51, .12);
+  --shadow-brand: none;
 
   --font-body: 'Inter', system-ui, sans-serif;
   --font-heading: 'Libre Baskerville', 'Georgia', serif;
 }
 
-/* Header — cleaner, more architectural */
-.ms-header { border-bottom-color: var(--border); background: rgba(255,255,255,.94); }
-.ms-brand-tagline { text-transform: uppercase; letter-spacing: .12em; }
+/* headings: serif with double underline rule */
+.ms-h2 { font-weight: 700; letter-spacing: 0; font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.25; }
+.ms-section-header { padding-bottom: 22px; border-bottom: 3px double var(--border); }
+.ms-hero-title { font-weight: 700; font-size: clamp(2.1rem, 4.8vw, 3.4rem); line-height: 1.16; }
 
-/* Hero — restrained sophistication */
-.ms-hero {
-  padding: 100px 0 90px;
-  background:
-    linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
-}
-.ms-hero::before, .ms-hero::after { opacity: .35; }
-
-.ms-hero-title {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
-  letter-spacing: -.008em;
-  line-height: 1.15;
-}
-.ms-h2 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  letter-spacing: -.005em;
-  font-size: clamp(1.75rem, 3.4vw, 2.2rem);
-}
-.ms-hero-sub { font-size: 1.08rem; }
-
-/* Eyebrow — squared, institutional */
+/* eyebrow: small caps, no chip */
 .ms-eyebrow {
-  background: transparent;
+  background: none;
+  border: 0;
+  padding: 0;
   color: var(--primary);
+  letter-spacing: .3em;
+  font-size: .68rem;
+  font-weight: 600;
+}
+.ms-eyebrow::before {
+  width: 26px; height: 2px;
+  border-radius: 0;
+  animation: none;
+  box-shadow: none;
+}
+
+/* header: thick navy crown bar */
+.ms-header { border-top: 6px solid var(--primary); box-shadow: none; border-bottom: 1px solid var(--border); }
+.ms-brand-name { font-family: var(--font-heading); font-weight: 700; }
+.ms-brand-tagline { letter-spacing: .2em; text-transform: uppercase; font-size: .6rem; }
+.ms-nav-link {
+  background: none !important;
+  border-radius: 0;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.ms-nav-link:hover, .ms-nav-link.active { color: var(--primary); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
+.ms-nav-link::after { display: none; }
+
+/* buttons: square institutional */
+.ms-btn { border-radius: 0; font-weight: 600; letter-spacing: .04em; }
+.ms-btn-primary { box-shadow: none; }
+.ms-btn-primary:hover { transform: none; background: var(--primary-dark); box-shadow: none; }
+.ms-btn-outline { border: 1px solid var(--primary); color: var(--primary); }
+.ms-btn-outline:hover { background: var(--primary); color: #fff; }
+
+/* hero: parchment, quiet */
+.ms-hero { background: var(--bg-soft); padding: 100px 0 88px; border-bottom: 1px solid var(--border); }
+.ms-hero::before, .ms-hero::after { display: none; }
+.ms-hero-img { border-radius: 0; border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+.ms-hero--split .ms-hero-media::before { display: none; }
+.ms-hero--split .ms-hero-media::after { display: none; }
+
+/* features: square panels, small caps titles */
+.ms-feature {
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 0;
-  font-weight: 700;
-  letter-spacing: .2em;
-  font-size: .72rem;
-  padding: 8px 16px;
+  box-shadow: none;
 }
-.ms-eyebrow::before { animation: none; box-shadow: none; opacity: .8; }
+.ms-feature:hover { transform: none; box-shadow: var(--shadow-lg); border-color: var(--primary); }
+.ms-feature-icon { background: var(--primary-light); border-radius: 0; color: var(--primary); }
+.ms-feature-title { font-family: var(--font-heading); font-size: 1rem; }
 
-/* Buttons — squared, professional */
-.ms-btn { border-radius: var(--radius); font-weight: 600; }
+/* services */
+.ms-service { border: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.ms-service:hover { transform: none; box-shadow: var(--shadow-lg); border-color: var(--primary); }
+.ms-service-img { border-radius: 0; }
+.ms-service-title { font-family: var(--font-heading); }
+.ms-service-price { border-radius: 0; background: var(--primary-light); color: var(--primary); }
 
-/* Cards — sharp corners, subtle borders */
-.ms-feature, .ms-service, .ms-testimonial, .ms-team-card,
-.ms-pricing-card, .ms-blog-card, .ms-faq-item, .ms-contact-form {
-  border-radius: var(--radius-lg);
-  border-color: var(--border);
-}
-
-.ms-feature { border-width: 1px; }
-.ms-feature-icon {
-  background: var(--bg-section);
-  color: var(--primary);
-  border-radius: var(--radius);
-  border: 1px solid var(--border-soft);
-}
-.ms-feature:hover .ms-feature-icon {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-  transform: none;
-}
-.ms-feature:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-}
-
-/* Service — restrained */
-.ms-service-img { aspect-ratio: 16/9; }
-
-/* CTA — deep navy */
-.ms-cta {
-  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
-}
-.ms-cta-inner { position: relative; z-index: 1; }
-
-/* Stats — navy with gold accent */
-.ms-stats-grid {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-  border-radius: var(--radius-xl);
-}
-.ms-stat-num { color: #fbbf24; }
-
-/* Pricing — structured, less flashy */
-.ms-pricing-card--featured {
-  background: var(--bg);
-  border-color: var(--primary);
-  transform: none;
-}
-.ms-pricing-badge {
+/* steps: docket numbering */
+.ms-step { background: var(--bg); border: 1px solid var(--border); border-radius: 0; box-shadow: none; text-align: left; }
+.ms-step:hover { transform: none; box-shadow: none; border-color: var(--primary); }
+.ms-step-num {
   background: var(--primary);
   border-radius: 0;
-  letter-spacing: .12em;
-}
-.ms-pricing-price { color: var(--primary); }
-
-/* FAQ — structural feel */
-.ms-faq-item.open { box-shadow: 0 0 0 1px var(--primary), 0 8px 20px rgba(var(--primary-rgb),.08); }
-
-/* Testimonial quote — deep blue */
-.ms-testimonial::before {
-  color: rgba(var(--primary-rgb), .1);
+  box-shadow: none;
   font-family: var(--font-heading);
+  margin-left: 0;
 }
+.ms-step-icon { display: none; }
+.ms-step-title { font-family: var(--font-heading); font-size: 1rem; }
 
-/* Body — slightly narrower reading */
-body { line-height: 1.7; }
+/* stats: ledger table */
+.ms-stats-grid {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-top: 3px double var(--primary);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 40px 0;
+  gap: 0;
+}
+.ms-stat { border-left: 1px solid var(--border); }
+.ms-stat:first-child { border-left: 0; }
+.ms-stat-num { color: var(--primary); font-family: var(--font-heading); }
+.ms-stat-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: .16em; font-size: .68rem; }
+
+/* testimonials: attestation cards */
+.ms-testimonial { border: 1px solid var(--border); border-radius: 0; box-shadow: none; background: var(--bg); }
+.ms-testimonial:hover { transform: none; box-shadow: var(--shadow); }
+.ms-testimonial::before { color: rgba(var(--primary-rgb), .2); font-family: var(--font-heading); }
+.ms-testimonial-text { font-family: var(--font-heading); font-style: italic; font-size: .98rem; line-height: 1.75; }
+.ms-stars { color: var(--primary); }
+.ms-avatar { border-radius: 0; }
+
+/* pricing */
+.ms-pricing-card { border: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.ms-pricing-card--featured { border: 1px solid var(--primary); border-top: 6px solid var(--primary); transform: none; box-shadow: var(--shadow-lg); }
+.ms-pricing-badge { border-radius: 0; letter-spacing: .16em; text-transform: uppercase; }
+.ms-pricing-name, .ms-pricing-price { font-family: var(--font-heading); }
+
+/* team: formal portraits */
+.ms-team-card { border: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.ms-team-photo { border-radius: 0; }
+.ms-team-name { font-family: var(--font-heading); }
+.ms-team-role { text-transform: uppercase; letter-spacing: .16em; font-size: .66rem; color: var(--primary); }
+
+/* faq: filing rows */
+.ms-faq-item { background: none; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; }
+.ms-faq-item:first-child { border-top: 1px solid var(--border); }
+.ms-faq-item.open { box-shadow: none; }
+.ms-faq-q { font-family: var(--font-heading); font-size: 1rem; }
+.ms-faq-icon { border-radius: 0; border: 1px solid var(--border); background: none; color: var(--primary); }
+.ms-faq-item.open .ms-faq-icon { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* CTA: navy chamber */
+.ms-cta, .ms-cta--primary, .ms-cta--dark {
+  background: var(--bg-deep);
+  border-radius: 0;
+  border-top: 3px double rgba(255,255,255,.3);
+  border-bottom: 3px double rgba(255,255,255,.3);
+}
+.ms-cta .ms-h2--light { font-family: var(--font-heading); }
+.ms-cta .ms-btn-light { border-radius: 0; }
+.ms-cta .ms-btn-outline-light { border-radius: 0; }
+
+/* about: framed portrait */
+.ms-about-img, .ms-about-placeholder { border-radius: 0; border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+.ms-about-media::before { border: 1px solid var(--border); background: none; border-radius: 0; }
+.ms-check { border-radius: 0; }
+.ms-checklist li { border-bottom: 1px dotted var(--border); padding-bottom: 12px; }
+
+/* gallery / blog */
+.ms-gallery-item { border-radius: 0; border: 1px solid var(--border); }
+.ms-blog-card { border-radius: 0; border: 1px solid var(--border); box-shadow: none; }
+.ms-blog-card:hover { transform: none; box-shadow: var(--shadow-lg); }
+.ms-blog-title { font-family: var(--font-heading); }
+
+/* footer: navy with serif */
+.ms-footer { background: var(--bg-deep); border-top: 6px solid var(--primary); }
+.ms-footer-brand-name { font-family: var(--font-heading); }
+.ms-footer-col-title { letter-spacing: .22em; font-size: .66rem; }
+.ms-footer-links a:hover { text-decoration: underline; }
+.ms-social { border-radius: 0; }
+
+/* area chips */
+.ms-area-chip { border-radius: 0; border: 1px solid var(--border); background: var(--bg); font-size: .78rem; }
+.ms-area-chip:hover { border-color: var(--primary); color: var(--primary); transform: none; }

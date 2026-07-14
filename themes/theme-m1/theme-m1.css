@@ -1,10 +1,11 @@
 /* ═══════════════════════════════════════════════════════════════════
-   theme-m1.css — Aurora · Modern Corporate
-   Cool sophisticated blue. Best for: consultancies, agencies, B2B,
-   professional services. Vibe: trustworthy, spacious, premium.
+   theme-m1.css — Aurora · Swiss Minimal Corporate
+   Left-aligned section headers with rule lines · flat hairline cards
+   with top accent bar · underline nav · bordered stats row · oversized
+   outlined step numerals. Vibe: precise, editorial-corporate, airy.
    ═══════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
 
 :root {
   --primary: #2563eb;
@@ -15,42 +16,255 @@
   --accent-rgb: 37, 211, 102;
 
   --bg: #ffffff;
-  --bg-soft: #f8fafc;
-  --bg-section: #f8fafc;
-  --bg-deep: #0f172a;
+  --bg-soft: #f7f9fc;
+  --bg-section: #f7f9fc;
+  --bg-deep: #0b1220;
 
   --text: #0f172a;
-  --text-muted: #475569;
+  --text-muted: #47536b;
   --text-light: #94a3b8;
 
-  --border: #e2e8f0;
-  --border-soft: #f1f5f9;
+  --border: #e3e8f0;
+  --border-soft: #eef2f7;
 
-  --radius-sm: 10px;
-  --radius: 14px;
-  --radius-lg: 22px;
-  --radius-xl: 30px;
+  /* Swiss: restrained radii */
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 14px;
+
+  --shadow-sm: none;
+  --shadow: 0 1px 2px rgba(15, 23, 42, .05);
+  --shadow-lg: 0 14px 34px rgba(15, 23, 42, .08);
+  --shadow-xl: 0 24px 54px rgba(15, 23, 42, .1);
+  --shadow-brand: 0 12px 28px rgba(var(--primary-rgb), .22);
 
   --font-body: 'Inter', system-ui, sans-serif;
   --font-heading: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
 
-/* Slightly larger hero title */
-.ms-hero-title { font-size: clamp(2.6rem, 5.8vw, 4.4rem); letter-spacing: -.028em; }
-.ms-hero { padding: 120px 0 100px; }
+/* ── section headers: LEFT aligned with rule line ── */
+.ms-section-header {
+  text-align: left;
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 680px;
+  padding-top: 22px;
+  border-top: 2px solid var(--text);
+  position: relative;
+}
+.ms-section-header::before {
+  content: "";
+  position: absolute; top: -2px; left: 0;
+  width: 72px; height: 2px;
+  background: var(--primary);
+}
+.ms-sub { margin-left: 0; }
 
-/* Feature cards with cleaner minimal look */
+/* eyebrow: square index tag, not a pill */
+.ms-eyebrow {
+  background: none;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
+  letter-spacing: .22em;
+  font-size: .72rem;
+  color: var(--text-light);
+}
+.ms-eyebrow::before {
+  width: 8px; height: 8px;
+  border-radius: 0;
+  animation: none;
+  box-shadow: none;
+  background: var(--primary);
+}
+.ms-h2 { letter-spacing: -.025em; }
+
+/* ── header: hairline bottom, quiet nav ── */
+.ms-header { box-shadow: none; border-bottom: 1px solid var(--border); }
+.ms-header.scrolled { box-shadow: 0 8px 24px rgba(15,23,42,.05); }
+.ms-nav-link { border-radius: 0; background: none !important; font-weight: 500; }
+.ms-nav-link.active { color: var(--text); }
+
+/* buttons: rectangular, precise */
+.ms-btn { border-radius: var(--radius-sm); font-weight: 600; letter-spacing: .01em; }
+.ms-btn-primary { box-shadow: none; }
+.ms-btn-primary:hover { box-shadow: var(--shadow-brand); transform: none; }
+
+/* ── hero: left aligned, decorative blobs removed ── */
+.ms-hero { padding: 110px 0 96px; }
+.ms-hero::before, .ms-hero::after { display: none; }
+.ms-hero--centered .ms-hero-inner,
+.ms-hero--minimal .ms-hero-inner {
+  text-align: left;
+  margin-left: 0;
+  max-width: 780px;
+  border-left: 2px solid var(--text);
+  padding-left: 40px;
+}
+.ms-hero--centered .ms-hero-actions,
+.ms-hero--minimal .ms-hero-actions { justify-content: flex-start; }
+.ms-hero--centered .ms-hero-chips { justify-content: flex-start; }
+.ms-hero--centered .ms-hero-sub { margin-left: 0; }
+.ms-hero-title {
+  font-size: clamp(2.6rem, 5.6vw, 4.3rem);
+  letter-spacing: -.03em;
+  line-height: 1.04;
+}
+.ms-hero-img { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+.ms-hero--split .ms-hero-media::before,
+.ms-hero--split .ms-hero-media::after { display: none; }
+
+/* ── feature cards: flat hairline + sweep-in top accent ── */
 .ms-feature {
-  border-color: var(--border-soft);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+  position: relative;
+  overflow: hidden;
+}
+.ms-feature::before {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 100%;
+  height: 3px; background: var(--primary);
+  transition: right .3s ease;
+}
+.ms-feature:hover { transform: none; box-shadow: var(--shadow-lg); border-color: var(--border); }
+.ms-feature:hover::before { right: 0; }
+.ms-feature-icon {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--primary);
+}
+
+/* ── services: same flat language ── */
+.ms-service {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
+  overflow: hidden;
+}
+.ms-service:hover { transform: none; box-shadow: var(--shadow-lg); }
+.ms-service-img { border-radius: 0; }
+
+/* ── steps: oversized outlined numerals, ruled rows ── */
+.ms-step {
+  background: none;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 26px 8px 0;
+  text-align: left;
+}
+.ms-step:hover { transform: none; box-shadow: none; }
+.ms-step-num {
+  width: auto; height: auto;
+  background: none;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--primary);
+  font-size: 3rem;
+  font-weight: 800;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0 0 14px;
+  display: block;
+  line-height: 1;
+}
+.ms-step-icon { display: none; }
+
+/* ── stats: bordered editorial row, no gradient slab ── */
+.ms-stats-grid {
+  background: none;
+  border-top: 2px solid var(--text);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 40px 0;
+  gap: 0;
+}
+.ms-stat { border-left: 1px solid var(--border); padding: 4px 32px; text-align: left; }
+.ms-stat:first-child { border-left: 0; padding-left: 0; }
+.ms-stat-num { color: var(--text); font-size: clamp(2rem, 3.6vw, 2.9rem); letter-spacing: -.02em; }
+.ms-stat-label { color: var(--text-muted); text-transform: uppercase; letter-spacing: .1em; font-size: .74rem; }
+
+/* ── testimonials: hairline cards ── */
+.ms-testimonial {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
   background: var(--bg);
 }
+.ms-testimonial::before { color: rgba(var(--primary-rgb), .18); }
+.ms-testimonial:hover { transform: none; box-shadow: var(--shadow-lg); }
+.ms-avatar { border-radius: var(--radius-sm); }
 
-/* CTA — richer blue depth */
-.ms-cta {
-  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #3b82f6 100%);
+/* ── pricing / team: flat, featured gets top bar ── */
+.ms-pricing-card, .ms-team-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: none;
 }
+.ms-pricing-card:hover, .ms-team-card:hover { transform: none; box-shadow: var(--shadow-lg); }
+.ms-pricing-card--featured {
+  border-color: var(--primary);
+  border-top-width: 3px;
+  transform: none;
+  box-shadow: var(--shadow-lg);
+}
+.ms-team-photo { border-radius: var(--radius-sm); }
 
-/* Stats — matching gradient */
-.ms-stats-grid {
-  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+/* ── faq: ruled list, no cards ── */
+.ms-faq-item {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  box-shadow: none;
 }
+.ms-faq-item:first-child { border-top: 1px solid var(--border); }
+.ms-faq-item.open { box-shadow: none; border-color: var(--border); }
+.ms-faq-q { padding-left: 4px; padding-right: 4px; }
+.ms-faq-icon { border-radius: var(--radius-sm); }
+
+/* ── CTA: deep navy slab with left accent bar ── */
+.ms-cta, .ms-cta--primary, .ms-cta--dark {
+  background: var(--bg-deep);
+  border-radius: 0;
+  position: relative;
+}
+.ms-cta::before {
+  content: "";
+  position: absolute; top: 0; left: 0; bottom: 0;
+  width: 6px; background: var(--primary);
+}
+.ms-cta-inner { text-align: left; margin-left: 0; }
+.ms-cta-actions { justify-content: flex-start; }
+
+/* ── about ── */
+.ms-about-img, .ms-about-placeholder { border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+.ms-about-media::before { display: none; }
+.ms-check { border-radius: 4px; }
+
+/* ── gallery / blog ── */
+.ms-gallery-item, .ms-blog-card { border-radius: var(--radius); border: 1px solid var(--border); box-shadow: none; }
+.ms-blog-card:hover { transform: none; box-shadow: var(--shadow-lg); }
+
+/* ── footer: light, ruled ── */
+.ms-footer { background: var(--bg); color: var(--text); border-top: 2px solid var(--text); }
+.ms-footer-col-title { color: var(--text-light); letter-spacing: .18em; }
+.ms-footer-links a, .ms-footer-line, .ms-footer-line a { color: var(--text-muted); }
+.ms-footer-links a:hover, .ms-footer-line a:hover { color: var(--primary); }
+.ms-footer-tagline { color: var(--text-muted); }
+.ms-footer-brand-name { color: var(--text); }
+.ms-social { border: 1px solid var(--border); border-radius: var(--radius-sm); background: none; color: var(--text-muted); }
+.ms-social:hover { color: var(--primary); border-color: var(--primary); background: none; }
+.ms-footer-bottom { border-top: 1px solid var(--border); }
+.ms-footer-bottom p { color: var(--text-light); }
+
+/* area chips */
+.ms-area-chip { border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); box-shadow: none; }
+.ms-area-chip:hover { border-color: var(--primary); transform: none; }
