@@ -40,7 +40,7 @@ app.use(
 app.use((req, res, next) => {
   res.setHeader(
     "Content-Security-Policy",
-    "frame-ancestors 'self' https://hovermedia.in https://www.hovermedia.in https://gmbwebadmin.hovermedia.in https://www.gmbwebadmin.hovermedia.in https://gmbemployee.hovermedia.in;"
+    "frame-ancestors 'self' https://gmb.hoverbusinessservices.in https://hovermedia.in https://www.hovermedia.in https://gmbwebadmin.hovermedia.in https://www.gmbwebadmin.hovermedia.in https://gmbemployee.hovermedia.in;"
   );
 
   next();
