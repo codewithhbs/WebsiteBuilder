@@ -29,12 +29,22 @@ const app = express();
 
 app.use(
   helmet({
-    contentSecurityPolicy: false,
+     contentSecurityPolicy: false,
     crossOriginEmbedderPolicy: false,
     crossOriginResourcePolicy: false,
+
+    // Allow this application to be loaded inside an iframe.
+    frameguard: false,
   })
 );
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "frame-ancestors 'self' https://hovermedia.in https://www.hovermedia.in https://gmbwebadmin.hovermedia.in https://www.gmbwebadmin.hovermedia.in https://gmbemployee.hovermedia.in;"
+  );
 
+  next();
+});
 
 // ─────────────────────────────────────────────
 // CORS
