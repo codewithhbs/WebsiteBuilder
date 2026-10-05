@@ -109,6 +109,11 @@ app.use(
     maxAge: "30d",
     etag: true,
     lastModified: true,
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith(".html")) {
+        res.setHeader("Cache-Control", "no-cache");
+      }
+    },
   })
 );
 
