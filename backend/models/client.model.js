@@ -7,6 +7,8 @@ const ClientSchema = new mongoose.Schema(
     phone: { type: String, default: "" },
     businessName: { type: String, default: "" },
     notes: { type: String, default: "" },
+    // link to an external system (GMB AI Cloud): "gmb:<tenantId>:<clientId>"
+    externalRef: { type: String, default: null, index: true, sparse: true },
     createdByEmployee: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

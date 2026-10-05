@@ -16,6 +16,7 @@ const adminRoutes = require("./routes/admin.routes");
 const employeeRoutes = require("./routes/employee.routes");
 const statsRoutes = require("./routes/stats.routes");
 const publicRoutes = require("./routes/public.routes");
+const integrationRoutes = require("./routes/integration.routes");
 
 const websiteModel = require("./models/website.model");
 
@@ -66,7 +67,7 @@ app.use(
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
+    allowedHeaders: ["Content-Type", "Authorization", "x-integration-key"],
   })
 );
 
@@ -134,6 +135,7 @@ app.get("/api/health", (req, res) => {
 // ─────────────────────────────────────────────
 
 app.use("/api/auth", authRoutes);
+app.use("/api/integration", integrationRoutes); // GMB AI Cloud (x-integration-key)
 app.use("/api/admin", adminRoutes);
 app.use("/api/employee", employeeRoutes);
 app.use("/api/stats", statsRoutes);

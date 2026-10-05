@@ -1,15 +1,35 @@
 import { NavLink, Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
+const isEmbedded = () => {
+  try {
+    return sessionStorage.getItem("emp_embed") === "1";
+  } catch {
+    return false;
+  }
+};
+
 export const RequireAuth = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return <div className="p-5 text-center">Loading…</div>;
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) {
+    // inside the GMB panel there is no login - ask the user to reopen from GMB
+    if (isEmbedded()) return <div className="p-5 text-center text-muted">Session expired. Reload this page from the GMB panel.</div>;
+    return <Navigate to="/login" replace />;
+  }
   return children;
 };
 
 export const EmpLayout = () => {
   const { user, logout } = useAuth();
+  // embedded in GMB AI Cloud: the GMB panel provides navigation, show only the builder
+  if (isEmbedded()) {
+    return (
+      <main className="p-3" style={{ overflowX: "auto" }}>
+        <Outlet />
+      </main>
+    );
+  }
   return (
     <div className="d-flex">
       <aside className="sidebar" style={{ width: 240 }}>

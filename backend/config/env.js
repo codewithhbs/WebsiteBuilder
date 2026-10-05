@@ -17,6 +17,8 @@ module.exports = {
   // same backend). Override in .env if the API is on a separate host.
   PUBLIC_API_BASE: process.env.PUBLIC_API_BASE || "/api",
   CORS_ORIGINS: process.env.CORS_ORIGINS || "*",
+  // GMB AI Cloud integration (server-to-server). Same value in GMB app: Admin -> Integrations -> Website Builder.
+  INTEGRATION_KEY: process.env.INTEGRATION_KEY || "",
   SEED_ADMIN_EMAIL: process.env.SEED_ADMIN_EMAIL || "admin@yoursite.com",
   SEED_ADMIN_PASSWORD: process.env.SEED_ADMIN_PASSWORD || "Admin@12345",
   SEED_ADMIN_NAME: process.env.SEED_ADMIN_NAME || "Super Admin",

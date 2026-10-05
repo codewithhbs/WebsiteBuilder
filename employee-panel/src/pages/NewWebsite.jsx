@@ -8,7 +8,9 @@ export default function NewWebsite() {
   const nav = useNavigate();
   const [clients, setClients] = useState([]);
   const [themes, setThemes] = useState([]);
-  const [form, setForm] = useState({ clientId: "", themeId: "", slug: "", siteName: "", pageType: "single" });
+  // ?clientId=<id> preselects the client (used by GMB AI Cloud "Create website")
+  const presetClient = new URLSearchParams(window.location.search).get("clientId") || "";
+  const [form, setForm] = useState({ clientId: presetClient, themeId: "", slug: "", siteName: "", pageType: "single" });
   const [slugStatus, setSlugStatus] = useState(null); // {available, reason}
   const [loading, setLoading] = useState(false);
 
